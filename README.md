@@ -20,23 +20,35 @@ Go back to your work directory and create a build directory (e.g LaBr3_v1-build)
 > cd ..
 > mkdir LaBr3_v1-build
 ````
-Switch to your build directory and run cmake using two arguments, the -D option to point to the directory holding the Geant4Config.cmake file that Geant4 installs to help CMake find and use Geant4, and the second argument is the source directory for the application you want to build. For example, if you were using the version 10.3 of G4 and it was installed in the conventional way then you would do:
+Switch to your build directory and run cmake using two arguments, the -D option to point to the directory holding the Geant4Config.cmake file that Geant4 installs to help CMake find and use Geant4, and the second argument is the source directory for the application you want to build. For example, if you were using version 10.3 of G4 and it was installed in the conventional way, do:
 ```
 > cd LaBr3_v1-build
 > cmake -DGeant4_DIR=/home/username/geant4-install/lib64/Geant4-10.3.0 /home/username/G4WorkDir/LaBr3_v1
 ```
-Then from you build directory make/compile the code
+Then, from your build directory make/compile the code
 ```
 > make
 ```
 # How to Run the LaBr3 Simulation
-The executable will be created in your build directory by default but you may change the location to somewhere else if you wish. The name of the executable can be changed by editting the CMakeLists.txt file and the filename of the executable. If it is unchanged the executable can be run by typing:
+The recommended location for the executable is you build directory and it will be created there by default. The name of the executable can be changed to anything you wish by editting the CMakeLists.txt file and the filename of the executable. If it is unchanged the default name of the executable is "LaBr3_v4" (the files uploaded to Github were the 4th iteration of the code) and it can be run by typing:
 
 In Batch Mode:
 ```
-> ./LaBr3_v4
+> ./LaBr3_v4 yourinputfile
 ```
 In Interactive Mode:
 ```
-> ./LaBr3_v4 vis.mac
+> ./LaBr3_v4
+```
+The repository includes a folder called "macros" which contains various examples for input files that can be used and modified to run the code under different conditions. If you wish to run an input macro in batch mode then do:
+```
+> ./LaBr3_v4 ../macros/yourinputfile
+```
+You can also run an input file in interactive mode directly by doing:
+```
+> ./LaBr3_v4
+```
+Then on the **G4 "session" line** type:
+```
+> /control/execute ../macros/yourinputfile
 ```
