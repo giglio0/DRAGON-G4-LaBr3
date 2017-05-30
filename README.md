@@ -18,7 +18,7 @@ Pull the entire contents of this repository to that directory
 Go back to your work directory and create a build directory (e.g LaBr3_v1-build)
 ```
 > cd ..
-> mdkir LaBr3_v1-build
+> mkdir LaBr3_v1-build
 ````
 Switch to your build directory and run cmake using two arguments, the -D option to point to the directory holding the Geant4Config.cmake file that Geant4 installs to help CMake find and use Geant4, and the second argument is the source directory for the application you want to build. For example, if you were using the version 10.3 of G4 and it was installed in the conventional way then you would do:
 ```
