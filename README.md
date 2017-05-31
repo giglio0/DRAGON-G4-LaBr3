@@ -42,7 +42,7 @@ In Interactive Mode:
 ```
 The repository includes a folder called "macros" which contains various examples for input files that can be used and modified to run the code under different conditions. If you wish to run an input macro in batch mode then do:
 ```
-> ./LaBr3_v4 ../macros/yourinputfile
+> ./LaBr3_v4 ../LaBr3_v4/macros/yourinputfile
 ```
 You can also run an input file in interactive mode directly by doing:
 ```
@@ -50,5 +50,7 @@ You can also run an input file in interactive mode directly by doing:
 ```
 Then on the **G4 "session" line** type:
 ```
-> /control/execute ../macros/yourinputfile
+> /control/macroPath ../LaBr3_v4/macros
+> /control/execute yourinputfile
 ```
+You can continue to run multiple macros in the same interactive screen my repeating the /control/execute line as needed.
