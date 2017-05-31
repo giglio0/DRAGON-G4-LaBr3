@@ -51,6 +51,7 @@ You can also run an input file in interactive mode directly by doing:
 Then on the **G4 "session" line** type:
 ```
 > /control/macroPath ../LaBr3_v4/macros
+> /control/execute vis.mac
 > /control/execute yourinputfile
 ```
 You can continue to run multiple macros in the same interactive screen my repeating the /control/execute line as needed.
