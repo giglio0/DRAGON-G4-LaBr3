@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// Si_Ion_Chamber_v4																																																											/src/DetectorConstruction.cc
+/// Si_Ion_Chamber_v4																																																											
 /// \brief Implementation of the DetectorConstruction class
 //
 // $Id$
@@ -56,8 +56,8 @@ fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
   fPMTDiameter = 7.5*cm;
   fPMTLength = 22.0*cm;
   fPMTWinThickness = 0.508*cm;
-  fLaBr3Length = 5.08*cm;
-  fLaBr3Diameter = 5.08*cm;
+  fDetectorLength = 5.08*cm;
+  fDetectorDiameter = 5.08*cm;
   fGapThickness = 0.127*cm;
   fAlCaseThickness = 0.2*cm;
   fPbCaseThickness = 0.5*cm;
@@ -68,7 +68,7 @@ fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
   DefineMaterials();
   // Default Materials
   fWorldMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Galactic");
-  fLaBrMaterial	= G4NistManager::Instance()->FindOrBuildMaterial("LaBr3");
+  fDetectorMaterial	= G4NistManager::Instance()->FindOrBuildMaterial("LaBr3");
   fAlCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("G4_Al");
   fPbCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("G4_Pb");
   fPMTWinMaterial = G4NistManager::Instance()->FindOrBuildMaterial("G4_Pyrex_Glass");
@@ -180,7 +180,7 @@ void DetectorConstruction::DefineMaterials()
 void DetectorConstruction::ComputeCalorParameters()
 {
   // Compute derived parameters of the calorimeter
-  fGapLength = fLaBr3Length + fPMTWinThickness + fGapThickness;
+  fGapLength = fDetectorLength + fPMTWinThickness + fGapThickness;
   fGapDiameter = fDetectorDiameter + 2*fGapThickness;
   fAlCaseLength = fGapLength + fAlCaseThickness;
   fAlCaseDiameter = fGapDiameter + 2*fAlCaseThickness;
@@ -199,7 +199,7 @@ void DetectorConstruction::ComputeCalorParameters()
   fZposPbCollar = 0.5*fTotalDetectorLength - fAlCaseThickness - fGapThickness - fDetectorLength - fPMTWinThickness + 0.5*fPbCaseThickness;
   fZposFaceAlCase = 0.5*fTotalDetectorLength - 0.5*fAlCaseThickness;
   fZposFaceGap = 0.5*fTotalDetectorLength - fAlCaseThickness - 0.5*fGapThickness ;
-  fZposLaBr3 = 0.5*fTotalDetectorLength - fGapThickness - fAlCaseThickness - 0.5*fDetectorLength;
+  fZpos = 0.5*fTotalDetectorLength - fGapThickness - fAlCaseThickness - 0.5*fDetectorLength;
 
   fZposAlCase = 0.5*fTotalDetectorLength - 0.5*fAlCaseLength;
   fZposGap = 0.5*fTotalDetectorLength - fAlCaseThickness - 0.5*fGapLength ;
@@ -3416,6 +3416,18 @@ void DetectorConstruction::SetGapThickness(G4double val)
   fGapThickness = val;
 }
 
+void DetectorConstruction::SetDetectorMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fDetectorMaterial != pttoMaterial) {
+    fDetectorMaterial = pttoMaterial;                  
+    if(fLogicGap) fLogicGap->SetMaterial(fDetectorMaterial);
+  }
+}
+
 void DetectorConstruction::SetGapMaterial(G4String materialChoice)
 {
   // search the material by its name
@@ -3448,12 +3460,14 @@ void DetectorConstruction::SetDetectorGeometry(G4int val)
 {
   fDetectorGeometry = val;
 }
+
 void DetectorConstruction::UpdateGeometry()
 {
-  G4RunManager::GetRunManager()->DefineWorldVolume(ConstructCalorimeter());
-  G4RunManager::GetRunManager()->PhysicsHasBeenModified();
-//  G4RunManager::GetRunManager()->ReinitializeGeometry();
+  //G4RunManager::GetRunManager()->DefineWorldVolume(ConstructCalorimeter());
+  //G4RunManager::GetRunManager()->PhysicsHasBeenModified();
+  G4RunManager::GetRunManager()->ReinitializeGeometry();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+ 
