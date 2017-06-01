@@ -127,15 +127,15 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4Material* GetDetectorMaterial()           {return fDetectorMaterial;};
      G4int       GetDetectorGeometry()           {return fDetectorGeometry;};
      G4double    GetTotalDetectorDiameter()      {return fTotalDetectorDiameter;};
-     G4double	 GetDetectorDiameter()		 {return fDetectorDiameter;};
+     G4double	 GetDetectorDiameter()		         {return fDetectorDiameter;};
      G4double    GetTotalDetectorLength()        {return fTotalDetectorLength;}; 
-     G4double	 GetDetectorLength()		 {return fDetectorLength;};
-     G4double	 GetGapThickness()		 {return fGapThickness;}; 
-     G4Material* GetGapMaterial()    	         {return fGapMaterial;};
-     G4double	 GetAlCaseThickness()	         {return fAlCaseThickness;}; 
-     G4double	 GetPbCaseThickness()	         {return fPbCaseThickness;}; 
-     G4double	 GetPMTDiameter()		 {return fPMTDiameter;};
-     G4double	 GetPMTLength()			 {return fPMTLength;};
+     G4double	 GetDetectorLength()		           {return fDetectorLength;};
+     G4double	 GetGapThickness()		             {return fGapThickness;}; 
+     G4Material* GetGapMaterial()    	           {return fGapMaterial;};
+     G4double	 GetAlCaseThickness()	             {return fAlCaseThickness;}; 
+     G4double	 GetPbCaseThickness()	             {return fPbCaseThickness;}; 
+     G4double	 GetPMTDiameter()		               {return fPMTDiameter;};
+     G4double	 GetPMTLength()			               {return fPMTLength;};
      G4VPhysicalVolume*    GetCrystal()          {return fPhysiCrystal;};
 
      const G4VPhysicalVolume* GetphysiWorld() {return fPhysiWorld;};
@@ -160,36 +160,35 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
      //LaBr3 Components
      //LaBr3 Detector Mother Holder
-     G4Tubs* 		        fSolidDetector;
+     G4Tubs* 		                fSolidDetector;
      G4Polyhedra*               fSolidDetector1;
-     G4LogicalVolume*	        fLogicDetector;
+     G4LogicalVolume*	          fLogicDetector;
      G4VPhysicalVolume*         fPhysiDetector;
      G4double                   fTotalDetectorDiameter;
-     G4double 		        fDetectorDiameter;
+     G4double 		              fDetectorDiameter;
      G4double                   fTotalDetectorLength;
-     G4double 		        fDetectorLength;
-     G4double		        fZposDetector;
+     G4double 		              fDetectorLength;
+     G4double		                fZposDetector;
      G4int                      fDetectorGeometry;
 
      // Crystal
-     G4Tubs* 		        fSolidCrystal;
+     G4Tubs* 		                fSolidCrystal;
      G4Polyhedra*               fSolidCrystal1;
-     G4LogicalVolume*	        fLogicCrystal;
+     G4LogicalVolume*	          fLogicCrystal;
      G4VPhysicalVolume*         fPhysiCrystal;
-     G4double 		        fDiameter;
-     G4double 		        fLength;
-     G4double		        fZpos;
-     G4double                   fEnergyCrystal;
+     G4double 		              fDiameter;
+     G4double 		              fLength;
+     G4double		                fZpos;
      G4Material* 	        fDetectorMaterial;
      
      //Gap between scintillator and aluminum casing (reflector?)
      //around crystal
-     G4Tubs* 		        fSolidGap;
+     G4Tubs* 		                fSolidGap;
      G4Polyhedra*               fSolidGap1;
-     G4LogicalVolume*	        fLogicGap;
+     G4LogicalVolume*	          fLogicGap;
      G4VPhysicalVolume*         fPhysiGap;
-     G4double 		        fGapLength;
-     G4double		        fZposGap;
+     G4double 		              fGapLength;
+     G4double		                fZposGap;
 
      //over face of crystal
      G4Tubs* 		        fSolidFaceGap;
