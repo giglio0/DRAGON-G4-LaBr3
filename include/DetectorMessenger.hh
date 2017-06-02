@@ -60,16 +60,18 @@ class DetectorMessenger: public G4UImessenger
     G4UIdirectory*             fTestemDir;
     G4UIdirectory*             fDetDir;
 
-	G4UIcmdWithADoubleAndUnit* fLaBr3DiamCmd;
-	G4UIcmdWithADoubleAndUnit* fLaBr3LengthCmd;
-	G4UIcmdWithADoubleAndUnit* fGapThicknessCmd;
+    G4UIcmdWithAnInteger*      fDetectorGeometryCmd;
+    G4UIcmdWithAString*        fWorldMaterialCmd;
+    G4UIcmdWithAString*        fDetectorMaterialCmd;
+    G4UIcmdWithADoubleAndUnit* fDetectorDiameterCmd;
+    G4UIcmdWithADoubleAndUnit* fDetectorLengthCmd;
+    G4UIcmdWithADoubleAndUnit* fGapThicknessCmd;
     G4UIcmdWithAString*        fGapMaterialCmd;
-	G4UIcmdWithADoubleAndUnit* fAlCaseThicknessCmd;
-	G4UIcmdWithADoubleAndUnit* fPbCaseThicknessCmd;
-	G4UIcmdWithADoubleAndUnit* fPMTDiameterCmd;
-	G4UIcmdWithADoubleAndUnit* fPMTLengthCmd;
+    G4UIcmdWithADoubleAndUnit* fAlCaseThicknessCmd;
+    G4UIcmdWithADoubleAndUnit* fPbCaseThicknessCmd;
+    G4UIcmdWithADoubleAndUnit* fPMTDiameterCmd;
+    G4UIcmdWithADoubleAndUnit* fPMTLengthCmd;
     G4UIcmdWithoutParameter*   fUpdateCmd;
-
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
