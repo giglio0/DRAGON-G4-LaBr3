@@ -15,24 +15,23 @@
 
 /run/initialize
 #
-# External Point Source 1
+# External Point Source
 #
-/gps/source/intensity 1
 /gps/particle gamma
 /gps/pos/type Point
-/gps/pos/centre 0. 0. 16. cm
+/gps/pos/centre 0. 0. 20. cm
 /gps/ang/type iso
-/gps/energy 1.17 MeV
+/gps/energy 6.0 MeV
+# Internal Source
 #
-# External Point Source 2
-#
-/gps/source/add 1.0
-/gps/particle gamma
-/gps/pos/type Point
-/gps/pos/centre 0. 0. 16. cm
+/gps/source/add 4
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 0. 0. 12.5 cm
+/gps/pos/radius 1.5 cm
+/gps/pos/halfz 2.5 cm
 /gps/ang/type iso
-/gps/energy 1.33 MeV
+/gps/energy 1.436
 
 
-/run/beamOn 1000000
-
+/run/beamOn 100000

@@ -295,7 +295,7 @@ G4VPhysicalVolume* DetectorConstruction::ConstructCalorimeter()
        				fLogicLaBr3Det, 
        				false, 
     			    	0);
-  fLogicPMTWin->SetVisAttributes(fGreenVisAtt);
+  fLogicPMTWin->SetVisAttributes(fRedVisAtt);
 
   //LaBr3 Crystal
   //
@@ -308,7 +308,7 @@ G4VPhysicalVolume* DetectorConstruction::ConstructCalorimeter()
        				fLogicLaBr3Det, 
        				false, 
     			    	0);
-  fLogicLaBr3Crystal->SetVisAttributes(fRedVisAtt);
+  fLogicLaBr3Crystal->SetVisAttributes(fGreenVisAtt);
 
   //LaBr3 Gap (gap surrounding crystal and casing or a reflector as required)
   //

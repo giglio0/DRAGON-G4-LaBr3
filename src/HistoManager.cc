@@ -74,10 +74,10 @@ void HistoManager::book()
    return;
  }
 // 1-D Histos   
- histo[1] = new TH1D("Energy", "Energy Deposited in LaBr3", 1000, 0., 10*CLHEP::MeV);
+ histo[1] = new TH1D("1", "Energy Deposited in LaBr3", 1000, 0.02, 10*CLHEP::MeV);
  if (!histo[1]) G4cout << "\n can't create histo 1" << G4endl;
 
- histo[2] = new TH1D("Energy Res", "Energy Deposited in LaBr3 with Resolution", 1000, 0., 10*CLHEP::MeV);
+ histo[2] = new TH1D("2", "Energy Deposited in LaBr3 with Resolution", 1000, 0.02, 10*CLHEP::MeV);
  if (!histo[2]) G4cout << "\n can't create histo 2" << G4endl;
 /*
  histo[3] = new TH1D("3", "Energy Deposited in DSSSD", 100, 0., 100*CLHEP::MeV);

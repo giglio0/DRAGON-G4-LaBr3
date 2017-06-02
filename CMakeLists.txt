@@ -42,6 +42,7 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 # Get examples sources from common
 #
 list(APPEND sources 
+  # uncomment the line below to include HBOOK analysis
   ${PROJECT_SOURCE_DIR}/src/DetectorConstruction.cc
   ${PROJECT_SOURCE_DIR}/src/DetectorMessenger.cc
   ${PROJECT_SOURCE_DIR}/src/EventAction.cc
@@ -60,20 +61,17 @@ target_link_libraries(LaBr3_v4 ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} )
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
-# build the executable. This is so that we can run the executable directly because it
+# build AnaEx02. This is so that we can run the executable directly because it
 # relies on these scripts being in the current working directory.
 #
-set(LaBr3_v4_SCRIPTS
-    vis.mac
-    613MeVsinglesource.in
-    co60source.in
-    co60source-internal.in
+set(LaBr3_v3_SCRIPTS
+    run.mac vis.mac
   )
 
 foreach(_script ${LaBr3_v4_SCRIPTS})
   configure_file(
-    ${PROJECT_SOURCE_DIR}/macros/${_script}
-    ${PROJECT_BINARY_DIR}/macros/${_script}
+    ${PROJECT_SOURCE_DIR}/${_script}
+    ${PROJECT_BINARY_DIR}/${_script}
     COPYONLY
     )
 endforeach()

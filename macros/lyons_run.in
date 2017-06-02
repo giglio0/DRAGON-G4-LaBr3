@@ -15,27 +15,18 @@
 
 /run/initialize
 #
-# External Point Source 1
+# External Point Source
 #
-/gps/source/intensity 1
+/gps/source/intensity 2
 /gps/particle gamma
 /gps/pos/type Point
 /gps/pos/centre 0. 0. 16. cm
 /gps/ang/type iso
-/gps/energy 1.17 MeV
+/gps/energy 6.13 MeV
 #
-# External Point Source 2
+# Internal Source
 #
-/gps/source/add 1.0
-/gps/particle gamma
-/gps/pos/type Point
-/gps/pos/centre 0. 0. 16. cm
-/gps/ang/type iso
-/gps/energy 1.33 MeV
-#
-# Internal Source 1.436 + 37keV K-shell
-#
-/gps/source/add 0.125
+/gps/source/add 0.66
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -45,11 +36,9 @@
 /gps/pos/radius 1.5 cm
 /gps/pos/halfz 2.5 cm
 /gps/ang/type iso
-/gps/energy 1.473 MeV
-#
-# Internal Source 1.436 + 5keV L-shell
-#
-/gps/source/add 0.0625
+/gps/energy 1.436 MeV
+
+/gps/source/add 0.99
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -59,10 +48,9 @@
 /gps/pos/radius 1.5 cm
 /gps/pos/halfz 2.5 cm
 /gps/ang/type iso
-/gps/energy 1.441 MeV
-#
-# Internal Source 0.789 MeV
-/gps/source/add 0.015
+/gps/energy 1.470 MeV
+
+/gps/source/add 0.15
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -74,5 +62,8 @@
 /gps/ang/type iso
 /gps/energy 0.789 MeV
 
-/run/beamOn 10000
+#Alpha contamination
+
+
+/run/beamOn 1000000
 

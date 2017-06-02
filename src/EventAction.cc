@@ -73,14 +73,9 @@ void EventAction::EndOfEventAction(const G4Event* )
   fRunAct->fillPerEvent(fEnergyResScint);
   
   //fill histograms
-
-  // do not increment the energy histogram if gamma loses no energy
-  if (fEnergyScint > 0.)
-    fHistoManager->FillHisto(1, fEnergyScint);
-  // do not increment the energy histogram if gamma loses no energy
-  if (fEnergyResScint > 0.)
-    fHistoManager->FillHisto(2, fEnergyResScint);
-
+  //
+  fHistoManager->FillHisto(1, fEnergyScint);
+  fHistoManager->FillHisto(2, fEnergyResScint);
   //fHistoManager->Fill2Histo(2, fEnergyGas,fEnergyDSSSD);
 
   

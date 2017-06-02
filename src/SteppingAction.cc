@@ -61,8 +61,6 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
  
   // collect energy and track length step by step
   G4double fEOrig = aStep->GetTotalEnergyDeposit();
-  
-  // following lines are to add resolution effects
   time_t seed = time( NULL );
   fRandomEngine = new CLHEP::HepJamesRandom( static_cast< long >( seed ) );
   fRandomGauss = new CLHEP::RandGauss( fRandomEngine );
@@ -70,13 +68,16 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   //G4double fERes = fEOrig * fRandomGauss->fire(1.0, ((76.3/(std::sqrt(fEOrig*1000))/100))); 
   G4double fERes = fEOrig * fRandomGauss->fire(1.0, 0.01); // for checking
 
-  // G4double stepLength = 0.;
-  // if (aStep->GetTrack()->GetDefinition()->GetPDGCharge() != 0.)
-  //   stepLength = aStep->GetStepLength();
+  G4double stepLength = 0.;
+  if (aStep->GetTrack()->GetDefinition()->GetPDGCharge() != 0.)
+      stepLength = aStep->GetStepLength();
      
-  if (volume == fDetector->GetScint()){
-    fEventAction->AddScint(fEOrig);
-    fEventAction->AddResScint(fERes);
+  if (volume == fDetector->GetScint() && fEOrig > 0 && fERes > 0){
+      // next two lines used for error checking	  
+	  //G4cout << "Volume is: " <<  aStep->GetPreStepPoint()->GetTouchableHandle()->GetVolume()->GetName() << "\n";
+      G4cout << "E(orig): " << fEOrig*CLHEP::MeV << " MeV " << "E(res): "<< fERes*CLHEP::MeV << " MeV" << "\n";
+      fEventAction->AddScint(fEOrig);
+      fEventAction->AddResScint(fERes);
   }
 }
 
