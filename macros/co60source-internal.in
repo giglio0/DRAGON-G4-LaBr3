@@ -1,0 +1,78 @@
+# $Id: TestEm0.in 68220 2013-03-19 15:15:02Z maire $
+#
+# Macro file for "LaBr3_v3.cc"
+#
+
+/testem/det/setLaBr3Diam 3.0 cm
+/testem/det/setLaBr3Length 5.0 cm
+/testem/det/setGapThickness 0.1 cm
+/testem/det/setGapMaterial G4_TEFLON
+/testem/det/setAlCaseThickness 0.2 cm
+/testem/det/setPbCaseThickness 0.5 cm
+/testem/det/setPMTDiameter 8.0 cm
+/testem/det/setPMTLength 25.0 cm
+/testem/det/update
+
+/run/initialize
+#
+# External Point Source 1
+#
+/gps/source/intensity 1
+/gps/particle gamma
+/gps/pos/type Point
+/gps/pos/centre 0. 0. 16. cm
+/gps/ang/type iso
+/gps/energy 1.17 MeV
+#
+# External Point Source 2
+#
+/gps/source/add 1.0
+/gps/particle gamma
+/gps/pos/type Point
+/gps/pos/centre 0. 0. 16. cm
+/gps/ang/type iso
+/gps/energy 1.33 MeV
+#
+# Internal Source 1.436 + 37keV K-shell
+#
+/gps/source/add 0.125
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 0. 0. 12.6 cm
+#/gps/pos/radius 2.5 cm
+#/gps/pos/halfz 1.5 cm
+/gps/pos/radius 1.5 cm
+/gps/pos/halfz 2.5 cm
+/gps/ang/type iso
+/gps/energy 1.473 MeV
+#
+# Internal Source 1.436 + 5keV L-shell
+#
+/gps/source/add 0.0625
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 0. 0. 12.6 cm
+#/gps/pos/radius 2.5 cm
+#/gps/pos/halfz 1.5 cm
+/gps/pos/radius 1.5 cm
+/gps/pos/halfz 2.5 cm
+/gps/ang/type iso
+/gps/energy 1.441 MeV
+#
+# Internal Source 0.789 MeV
+/gps/source/add 0.015
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 0. 0. 12.6 cm
+#/gps/pos/radius 2.5 cm
+#/gps/pos/halfz 1.5 cm
+/gps/pos/radius 1.5 cm
+/gps/pos/halfz 2.5 cm
+/gps/ang/type iso
+/gps/energy 0.789 MeV
+
+/run/beamOn 100000
+
