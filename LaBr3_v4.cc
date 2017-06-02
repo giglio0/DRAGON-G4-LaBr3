@@ -115,7 +115,7 @@ int main(int argc,char** argv)
 #ifdef G4UI_USE
       G4UIExecutive* ui = new G4UIExecutive(argc, argv);
 #endif
-      UImanager->ApplyCommand("/control/execute vis.mac");     
+//      UImanager->ApplyCommand("/control/execute vis.mac");     
 #endif
 
 #ifdef G4UI_USE
