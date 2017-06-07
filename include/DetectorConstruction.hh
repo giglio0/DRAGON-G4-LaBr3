@@ -1,9 +1,7 @@
 //
 
 // ********************************************************************
-
 // * License and Disclaimer                                           *
-
 // *                                                                  *
 // * The  Geant4 software  is  copyright of the Copyright Holders  of *
 // * the Geant4 Collaboration.  It is provided  under  the terms  and *
@@ -11,7 +9,6 @@
 // * LICENSE and available at  http://cern.ch/geant4/license .  These *
 // * include a list of copyright holders.                             *
 // *                                                                  *
-
 // * Neither the authors of this software system, nor their employing *
 // * institutes,nor the agencies providing financial support for this *
 // * work  make  any representation or  warranty, express or implied, *
@@ -19,7 +16,6 @@
 // * use.  Please see the license in the file  LICENSE  and URL above *
 // * for the full disclaimer and the limitation of liability.         *
 // *                                                                  *
-
 // * This  code  implementation is the result of  the  scientific and *
 // * technical work of the GEANT4 collaboration.                      *
 // * By using,  copying,  modifying or  distributing the software (or *
@@ -29,18 +25,13 @@
 
 // ********************************************************************
 //
-
 /// \file electromagnetic/TestEm5/include/DetectorConstruction.hh
 /// \brief Definition of the DetectorConstruction class
 //
 // $Id$
 //
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-
 
 #ifndef DetectorConstruction_h
 #define DetectorConstruction_h 1
@@ -102,17 +93,17 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      void SetTotalDetectorDiameter   (G4double);
      void SetDetectorDiameter        (G4double);
      void SetTotalDetectorLength     (G4double);
-     void SetDetectorLength	     (G4double);
-     void SetGapThickness	     (G4double);
+     void SetDetectorLength	         (G4double);
+     void SetGapThickness	           (G4double);
      void SetGapMaterial             (G4String);
      void SetAlCaseThickness         (G4double);
      void SetPbCaseThickness         (G4double);
-     void SetPMTDiameter	     (G4double);
-     void SetPMTLength		     (G4double);
+     void SetPMTDiameter	           (G4double);
+     void SetPMTLength		           (G4double);
      void SetMaterialPropertiesTable (G4String);
 
      virtual G4VPhysicalVolume* Construct();
-     virtual void ConstructSDandField();
+     //virtual void ConstructSDandField();
 
      void UpdateGeometry();
 
@@ -120,26 +111,26 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
      void PrintCalorParameters();
 
-     G4Material* GetWorldMaterial()     {return fWorldMaterial;};
-     G4double    GetWorldSizeX()        {return fWorldSizeX;};
-     G4double    GetWorldSizeYZ()       {return fWorldSizeYZ;};
+     G4Material* GetWorldMaterial()              {return fWorldMaterial;};
+     G4double    GetWorldSizeX()                 {return fWorldSizeX;};
+     G4double    GetWorldSizeYZ()                {return fWorldSizeYZ;};
 
      G4Material* GetDetectorMaterial()           {return fDetectorMaterial;};
      G4int       GetDetectorGeometry()           {return fDetectorGeometry;};
      G4double    GetTotalDetectorDiameter()      {return fTotalDetectorDiameter;};
-     G4double	 GetDetectorDiameter()		         {return fDetectorDiameter;};
+     G4double	   GetDetectorDiameter()		       {return fDetectorDiameter;};
      G4double    GetTotalDetectorLength()        {return fTotalDetectorLength;}; 
-     G4double	 GetDetectorLength()		           {return fDetectorLength;};
-     G4double	 GetGapThickness()		             {return fGapThickness;}; 
+     G4double	   GetDetectorLength()		         {return fDetectorLength;};
+     G4double	   GetGapThickness()		           {return fGapThickness;}; 
      G4Material* GetGapMaterial()    	           {return fGapMaterial;};
-     G4double	 GetAlCaseThickness()	             {return fAlCaseThickness;}; 
-     G4double	 GetPbCaseThickness()	             {return fPbCaseThickness;}; 
-     G4double	 GetPMTDiameter()		               {return fPMTDiameter;};
-     G4double	 GetPMTLength()			               {return fPMTLength;};
+     G4double	   GetAlCaseThickness()	           {return fAlCaseThickness;}; 
+     G4double	   GetPbCaseThickness()	           {return fPbCaseThickness;}; 
+     G4double	   GetPMTDiameter()		             {return fPMTDiameter;};
+     G4double	   GetPMTLength()			             {return fPMTLength;};
      G4VPhysicalVolume*    GetCrystal()          {return fPhysiCrystal;};
 
-     const G4VPhysicalVolume* GetphysiWorld() {return fPhysiWorld;};
-     const G4VPhysicalVolume* GetScint() {return fPhysiCrystal;};
+     const G4VPhysicalVolume* GetphysiWorld()    {return fPhysiWorld;};
+     const G4VPhysicalVolume* GetScint()         {return fPhysiCrystal;};
 
   private:
 
@@ -179,7 +170,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4double 		              fDiameter;
      G4double 		              fLength;
      G4double		                fZpos;
-     G4Material* 	        fDetectorMaterial;
+     G4Material* 	              fDetectorMaterial;
      
      //Gap between scintillator and aluminum casing (reflector?)
      //around crystal
@@ -191,90 +182,89 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4double		                fZposGap;
 
      //over face of crystal
-     G4Tubs* 		        fSolidFaceGap;
+     G4Tubs* 		                fSolidFaceGap;
      G4Polyhedra*               fSolidFaceGap1;
-     G4LogicalVolume*	        fLogicFaceGap;
+     G4LogicalVolume*	          fLogicFaceGap;
      G4VPhysicalVolume*         fPhysiFaceGap;
-     G4double		        fZposFaceGap;
+     G4double		                fZposFaceGap;
 
      //common to both components of gap
-     G4double 		        fGapDiameter;
-     G4double 		        fGapThickness;
-     G4Material* 	        fGapMaterial;
+     G4double 		              fGapDiameter;
+     G4double 		              fGapThickness;
+     G4Material* 	              fGapMaterial;
 
      //Aluminum casing surrounding scintillator crystal
 
      //around crystal
 
-     G4Tubs* 		        fSolidAlCase;
+     G4Tubs* 		                fSolidAlCase;
      G4Polyhedra*               fSolidAlCase1;
-     G4LogicalVolume*	        fLogicAlCase;
+     G4LogicalVolume*	          fLogicAlCase;
      G4VPhysicalVolume*         fPhysiAlCase;
-     G4double		        fAlCaseLength;
-     G4double		        fZposAlCase;
+     G4double		                fAlCaseLength;
+     G4double		                fZposAlCase;
 
      //over face of crystal
 
-     G4Tubs* 		        fSolidFaceAlCase;
+     G4Tubs* 		                fSolidFaceAlCase;
      G4Polyhedra*               fSolidFaceAlCase1;
-     G4LogicalVolume*	        fLogicFaceAlCase;
+     G4LogicalVolume*	          fLogicFaceAlCase;
      G4VPhysicalVolume*         fPhysiFaceAlCase;
-     G4double		        fZposFaceAlCase;
+     G4double		                fZposFaceAlCase;
 
      //common to both components of aluminum case
 
-     G4double 		        fAlCaseDiameter;
-     G4double 		        fAlCaseThickness;
-     G4Material* 	        fAlCaseMaterial;
+     G4double 		              fAlCaseDiameter;
+     G4double 		              fAlCaseThickness;
+     G4Material* 	              fAlCaseMaterial;
 
      //Lead casing surrounding aluminum casing
      //around casing surround
 
-     G4Tubs* 		        fSolidPbCase;
+     G4Tubs* 		                fSolidPbCase;
      G4Polyhedra*               fSolidPbCase1;
-     G4LogicalVolume*	        fLogicPbCase;
+     G4LogicalVolume*	          fLogicPbCase;
      G4VPhysicalVolume*         fPhysiPbCase;
 
       //at back in front of PMT
-     G4Tubs* 		        fSolidPbCollar;
+     G4Tubs* 		                fSolidPbCollar;
      G4Polyhedra*               fSolidPbCollar1;
-     G4LogicalVolume*	        fLogicPbCollar;
+     G4LogicalVolume*	          fLogicPbCollar;
      G4VPhysicalVolume*         fPhysiPbCollar;
-     G4double		        fZposPbCollar;
+     G4double		                fZposPbCollar;
 
      //common to both components of lead surround
-     G4double 		        fPbCaseDiameter;
-     G4double 		        fPbCaseThickness;
-     G4Material* 	        fPbCaseMaterial;
+     G4double 		             fPbCaseDiameter;
+     G4double 		             fPbCaseThickness;
+     G4Material* 	             fPbCaseMaterial;
 
      // PMT
      // PMT Body
-     G4Tubs* 		        fSolidPMT;
+     G4Tubs* 		                fSolidPMT;
      G4Polyhedra*               fSolidPMT1;
-     G4LogicalVolume*	        fLogicPMT;
+     G4LogicalVolume*	          fLogicPMT;
      G4VPhysicalVolume*         fPhysiPMT;
-     G4double 		        fPMTDiameter;
-     G4double 		        fPMTLength;
-     G4double		        fZposPMT;
-     G4Material* 	        fPMTMaterial;
+     G4double 		              fPMTDiameter;
+     G4double 		              fPMTLength;
+     G4double		                fZposPMT;
+     G4Material* 	              fPMTMaterial;
 
      // PMT Optical Window
 
-     G4Tubs* 		        fSolidPMTWin;
+     G4Tubs* 		                fSolidPMTWin;
      G4Polyhedra*               fSolidPMTWin1;
-     G4LogicalVolume*	        fLogicPMTWin;
+     G4LogicalVolume*	          fLogicPMTWin;
      G4VPhysicalVolume*         fPhysiPMTWin;
-     G4double 		        fPMTWinThickness;
-     G4double		        fZposPMTWin;
-     G4Material* 	        fPMTWinMaterial;
+     G4double 		              fPMTWinThickness;
+     G4double		                fZposPMTWin;
+     G4Material* 	              fPMTWinMaterial;
 
-      DetectorMessenger* fDetectorMessenger;
+      DetectorMessenger*        fDetectorMessenger;
 
 private:
      void DefineMaterials();
      void ComputeCalorParameters();
      G4VPhysicalVolume* ConstructCalorimeter();     
-
 };
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 #endif
