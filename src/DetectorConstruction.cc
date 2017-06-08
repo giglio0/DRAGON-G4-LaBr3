@@ -873,8 +873,7 @@ if (fDetectorGeometry == 4){
   fSolidDetector1 = new G4Polyhedra{"Detector", 0.*deg, 360.*deg, 6, 2, zPlane, rInner, rOuter};
   fLogicDetector = new G4LogicalVolume(fSolidDetector1,fWorldMaterial, "Detector");
   G4RotationMatrix rotm = G4RotationMatrix(0,0,0); 
-  G4RotationMatrix rotm180 = G4RotationMatrix(0,180.*deg,0); 
-  G4RotationMatrix rotm90 = G4RotationMatrix (0,180.*deg,90.*deg);  
+  G4RotationMatrix rotm180 = G4RotationMatrix(0,180.*deg,0);   
   G4ThreeVector P;
   G4Transform3D Tr;
   
