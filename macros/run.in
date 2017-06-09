@@ -59,7 +59,7 @@
 /testem/det/setDetectorGeometry 4
 /testem/det/update
 /run/initialize
-# /gps/pos/centre (4*sqrt(3) + 1 / (4*(sqrt(3))*fTotalDetectorDiameter fTotalDetectorDiameter fTotalDetectorDiameter - 1 cm
+# /gps/pos/centre (4*sqrt(3) + 1 / (4*(sqrt(3)))*fTotalDetectorDiameter fTotalDetectorDiameter fTotalDetectorDiameter - 1 cm
 /gps/pos/centre 8.582531755 7.5 6.5 cm
 /gps/particle gamma
 /gps/pos/type Point
