@@ -13,6 +13,7 @@
 /testem/det/setPMTDiameter 7.5 cm
 /testem/det/setPMTLength 22.0 cm
 
+# alternate dimensions
 /testem/det/setDetectorDiameter 3.0 cm
 /testem/det/setDetectorLength 5.0 cm
 /testem/det/setGapThickness 0.1 cm
@@ -25,6 +26,7 @@
 /testem/det/setDetectorGeometry 1
 /testem/det/update
 /run/initialize
+# 5 cm from the face
 /gps/pos/centre 0. 0. 18.9575 cm
 /gps/particle gamma
 /gps/pos/type Point
@@ -36,6 +38,7 @@
 /testem/det/setDetectorGeometry 2
 /testem/det/update
 /run/initialize
+# 5 cm from the face
 /gps/pos/centre 0. 0. 18.9575 cm
 /gps/particle gamma
 /gps/pos/type Point
@@ -48,7 +51,7 @@
 /testem/det/update
 /run/initialize
 # /gps/pos/centre fTotalDetectorDiameter 3*fTotalDetectorDiameter fTotalDetectorDiameter - 1 cm
-# /gps/pos/centre 7.5 22.5 6.5 cm
+# /gps/pos/centre 7.5 22.5 6.5 cm, moved to approximately (0,0,0)
 /gps/pos/centre 0. 0. 0. cm
 /gps/particle gamma
 /gps/pos/type Point
@@ -61,7 +64,7 @@
 /testem/det/update
 /run/initialize
 # /gps/pos/centre (4*sqrt(3) + 1 / (4*(sqrt(3)))*fTotalDetectorDiameter fTotalDetectorDiameter fTotalDetectorDiameter - 1 cm
-# /gps/pos/centre 8.582531755 7.5 6.5 cm
+# /gps/pos/centre 8.582531755 7.5 6.5 cm, moved to approximately (0,0,0)
 /gps/pos/centre 0. 0. 0. cm
 /gps/particle gamma
 /gps/pos/type Point
