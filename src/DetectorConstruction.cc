@@ -47,8 +47,8 @@ fSolidPMT(0),fLogicPMT(0),fPhysiPMT(0),
 fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
 {
   //Setting the default for the world for the Sim
-  fWorldSizeX = 200*cm;
-  fWorldSizeYZ = 200*cm;
+  fWorldSizeX = 100*cm;
+  fWorldSizeYZ = 100*cm;
 
   //Set Detector Defaults
   fPMTDiameter = 7.5*cm;
