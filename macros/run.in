@@ -4,14 +4,25 @@
 #
 /testem/det/setWorldMaterial G4_AIR
 /testem/det/setDetectorMaterial LaBr3
+/testem/det/setBoxMaterial Plastic
+/testem/det/setCrystalMaterial LaBr3
+/testem/det/setGapMaterial G4_TEFLON
+/testem/det/setFaceGapMaterial G4_TEFLON
+/testem/det/setAlCaseMaterial G4_Al
+/testem/det/setFaceAlCaseMaterial G4_Al
+/testem/det/setPbCaseMaterial G4_Pb
+/testem/det/setPbCollarMaterial G4_Pb
+/testem/det/setPMTMaterial G4_Pyrex_Glass
+/testem/det/setPMTWinMaterial G4_Pyrex_Glass
+
 /testem/det/setDetectorDiameter 5.08 cm
 /testem/det/setDetectorLength 5.08 cm
 /testem/det/setGapThickness 0.127 cm
-/testem/det/setGapMaterial G4_TEFLON
 /testem/det/setAlCaseThickness 0.2 cm
 /testem/det/setPbCaseThickness 0.5 cm
 /testem/det/setPMTDiameter 7.5 cm
 /testem/det/setPMTLength 22.0 cm
+/testem/det/setPMTWinThickness 0.508 cm
 
 # alternate dimensions
 /testem/det/setDetectorDiameter 3.0 cm
@@ -22,6 +33,7 @@
 /testem/det/setPbCaseThickness 0.5 cm
 /testem/det/setPMTDiameter 8.0 cm
 /testem/det/setPMTLength 25.0 cm
+/testem/det/setPMTWinThickness 0.5 cm
 
 /testem/det/setDetectorGeometry 1
 /testem/det/update
@@ -34,6 +46,7 @@
 /gps/energy 10 MeV
 /vis/disable
 /run/beamOn 10000
+/vis/reviewKeptEvents
 
 /testem/det/setDetectorGeometry 2
 /testem/det/update
@@ -46,6 +59,7 @@
 /gps/energy 10 MeV
 /vis/disable
 /run/beamOn 10000
+/vis/reviewKeptEvents
 
 /testem/det/setDetectorGeometry 3
 /testem/det/update
@@ -59,6 +73,7 @@
 /gps/energy 10 MeV
 /vis/disable
 /run/beamOn 10000
+/vis/reviewKeptEvents
 
 /testem/det/setDetectorGeometry 4
 /testem/det/update
@@ -71,4 +86,6 @@
 /gps/ang/type iso
 /gps/energy 10 MeV
 /vis/disable
+/vis/scene/endOfEventAction accumulate 10000
 /run/beamOn 10000
+/vis/reviewKeptEvents
