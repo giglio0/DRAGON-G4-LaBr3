@@ -32,6 +32,8 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 #include "DetectorConstruction.hh"
 #include "DetectorMessenger.hh"
+#include "G4TransportationManager.hh" 
+#include "G4Navigator.hh"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorConstruction::DetectorConstruction()
@@ -67,12 +69,17 @@ fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
   // Default Materials
   fWorldMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Galactic");
   fDetectorMaterial = G4NistManager::Instance()->FindOrBuildMaterial("LaBr3");
+  fBoxMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Plastic");
+  fCrystalMaterial = G4NistManager::Instance()->FindOrBuildMaterial("LaBr3");
   fAlCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("G4_Al");
+  fFaceAlCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("G4_Al");
   fPbCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("G4_Pb");
+  fPbCollarMaterial = G4NistManager::Instance()->FindOrBuildMaterial("G4_Pb");
+  fPMTMaterial = G4NistManager::Instance()->FindOrBuildMaterial("G4_Pyrex_Glass");
   fPMTWinMaterial = G4NistManager::Instance()->FindOrBuildMaterial("G4_Pyrex_Glass");
-  fPMTMaterial = G4NistManager::Instance()->FindOrBuildMaterial("G4_Al");
   //Set Default Gap Material i.e. no reflector
   fGapMaterial 	= G4NistManager::Instance()->FindOrBuildMaterial("Galactic");
+  fFaceGapMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Galactic");
 
   //G4MaterialPropertyVector* AddProperty('Energy Resolution', [1*MeV, 2*MeV, 3*MeV, 4*MeV, 5*MeV, 6*MeV, 7*MeV, 8*MeV, 9*MeV, 10*MeV],
   //[1000*eV, 1414*eV, 1732*eV, 2000*eV, 2236*eV, 2449*eV, 2646*eV, 2828*eV, 3000*eV, 3162*eV], 10);
@@ -270,6 +277,20 @@ if (fDetectorGeometry == 1){
   G4RotationMatrix rotm  = G4RotationMatrix(0,0,0);     
   G4ThreeVector position = G4ThreeVector(0.,0.,0.);
   G4Transform3D transform = G4Transform3D(rotm,position);
+  G4ThreeVector boxposition = G4ThreeVector(0.,0.,fTotalDetectorLength);
+  G4Transform3D boxtransform = G4Transform3D(rotm,boxposition);
+  
+  G4Box *outerBox = new G4Box("Outer Box", 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorLength);
+  G4Box *innerBox = new G4Box("Inner Box", 0.5*fTotalDetectorDiameter - 0.5*cm, 0.5*fTotalDetectorDiameter - 0.5*cm, 0.5*fTotalDetectorLength);
+  fSolidBox = new G4SubtractionSolid("Box",outerBox,innerBox); 
+  fLogicBox = new G4LogicalVolume(fSolidBox, fBoxMaterial, "Box");
+  fPhysiBox = new G4PVPlacement(boxtransform,
+        			fLogicBox, 
+       				"Box", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+				    false); 
 
   fSolidDetector = new G4Tubs("Detector", 0., 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorLength, 0.*deg, 360.*deg);
   fLogicDetector = new G4LogicalVolume(fSolidDetector,fWorldMaterial, "Detector");
@@ -411,6 +432,8 @@ if (fDetectorGeometry == 2){
   G4RotationMatrix rotm  = G4RotationMatrix(0,0,0);     
   G4ThreeVector position = G4ThreeVector(0.,0.,0.);
   G4Transform3D transform = G4Transform3D(rotm,position);
+  G4ThreeVector boxposition = G4ThreeVector(0.,0.,fTotalDetectorLength);
+  G4Transform3D boxtransform = G4Transform3D(rotm,boxposition);
   const G4double zPlane[2] = {-0.5*fTotalDetectorLength, 0.5*fTotalDetectorLength};
   const G4double zPlane1[2] = {-0.5*fPMTWinThickness, 0.5*fPMTWinThickness};
   const G4double zPlane2[2] = {-0.5*fDetectorLength, 0.5*fDetectorLength};
@@ -431,6 +454,18 @@ if (fDetectorGeometry == 2){
   const G4double rOuter2[2] = {0.5*fAlCaseDiameter, 0.5*fAlCaseDiameter};
   const G4double rOuter3[2] = {0.5*fPbCaseDiameter, 0.5*fPbCaseDiameter};
   const G4double rOuter4[2] = {0.5*fPMTDiameter, 0.5*fPMTDiameter};
+  
+  G4Box *outerBox = new G4Box("Outer Box", 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorLength);
+  G4Box *innerBox = new G4Box("Inner Box", 0.5*fTotalDetectorDiameter - 0.5*cm, 0.5*fTotalDetectorDiameter - 0.5*cm, 0.5*fTotalDetectorLength);
+  fSolidBox = new G4SubtractionSolid("Box",outerBox,innerBox); 
+  fLogicBox = new G4LogicalVolume(fSolidBox, fBoxMaterial, "Box");
+  fPhysiBox = new G4PVPlacement(boxtransform,
+        			fLogicBox, 
+       				"Box", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+				    false); 
   
   fSolidDetector1 = new G4Polyhedra{"Detector", 0.*deg, 360.*deg, 6, 2, zPlane, rInner, rOuter};
   fLogicDetector = new G4LogicalVolume(fSolidDetector1,fWorldMaterial, "Detector");
@@ -1120,7 +1155,7 @@ return fPhysiWorld;
 
 void DetectorConstruction::PrintCalorParameters()
 {
-  G4cout << "\n" << "The World has" << fWorldMaterial << G4endl;
+  G4cout << "\n" << "The world is made of" << fWorldMaterial << G4endl;
   G4cout << "\n" << "World Size X: " << G4BestUnit(fWorldSizeX, "Length") << G4endl;
   G4cout << "\n" << "World Size YZ: " << G4BestUnit(fWorldSizeYZ, "Length") << G4endl;  ;
 if (fDetectorGeometry == 1){
@@ -1136,7 +1171,16 @@ if (fDetectorGeometry == 4){
   G4cout << "\n" << "The geometry is hexagonal. The detectors are stacked in an array (4)." << G4endl;
 }
   G4cout << "\n" << "The detector is made of " << fDetectorMaterial << G4endl;
+  G4cout << "\n" << "The box is made of" << fBoxMaterial << G4endl;
+  G4cout << "\n" << "The crystal is made of" << fCrystalMaterial << G4endl;
   G4cout << "\n" << "The gap is made of " << fGapMaterial << G4endl;
+  G4cout << "\n" << "The face of the gap is made of " << fFaceGapMaterial << G4endl;
+  G4cout << "\n" << "The aluminum case is made of " << fAlCaseMaterial << G4endl;
+  G4cout << "\n" << "The face of the aluminum case is made of " << fFaceAlCaseMaterial << G4endl;
+  G4cout << "\n" << "The lead case is made of " << fPbCaseMaterial << G4endl;
+  G4cout << "\n" << "The lead collar is made of " << fPbCollarMaterial << G4endl;
+  G4cout << "\n" << "The photomultiplier tube is made of" << fPMTMaterial << G4endl;
+  G4cout << "\n" << "The photomultiplier tube window is made of" << fBoxMaterial << G4endl;
   G4cout << "\n" << "Total Detector Diameter: " << G4BestUnit(fTotalDetectorDiameter, "Length") << G4endl;
   G4cout << "\n" << "Detector Diameter: " << G4BestUnit(fDetectorDiameter, "Length") << G4endl;
   G4cout << "\n" << "Total Detector Length: " << G4BestUnit(fTotalDetectorLength, "Length") << G4endl;
@@ -1193,7 +1237,31 @@ void DetectorConstruction::SetDetectorMaterial(G4String materialChoice)
 
   if (pttoMaterial && fDetectorMaterial != pttoMaterial) {
     fDetectorMaterial = pttoMaterial;                  
-    if(fLogicGap) fLogicGap->SetMaterial(fDetectorMaterial);
+    if(fLogicDetector) fLogicDetector->SetMaterial(fDetectorMaterial);
+  }
+}
+
+void DetectorConstruction::SetBoxMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fBoxMaterial != pttoMaterial) {
+    fBoxMaterial = pttoMaterial;                  
+    if(fLogicBox) fLogicBox->SetMaterial(fBoxMaterial);
+  }
+}
+
+void DetectorConstruction::SetCrystalMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fCrystalMaterial != pttoMaterial) {
+    fCrystalMaterial = pttoMaterial;                  
+    if(fLogicCrystal) fLogicCrystal->SetMaterial(fCrystalMaterial);
   }
 }
 
@@ -1206,6 +1274,90 @@ void DetectorConstruction::SetGapMaterial(G4String materialChoice)
   if (pttoMaterial && fGapMaterial != pttoMaterial) {
     fGapMaterial = pttoMaterial;                  
     if(fLogicGap) fLogicGap->SetMaterial(fGapMaterial);
+  }
+}
+
+void DetectorConstruction::SetFaceGapMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fFaceGapMaterial != pttoMaterial) {
+    fFaceGapMaterial = pttoMaterial;                  
+    if(fLogicFaceGap) fLogicFaceGap->SetMaterial(fFaceGapMaterial);
+  }
+}
+
+void DetectorConstruction::SetAlCaseMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fAlCaseMaterial != pttoMaterial) {
+    fAlCaseMaterial = pttoMaterial;                  
+    if(fLogicAlCase) fLogicAlCase->SetMaterial(fAlCaseMaterial);
+  }
+}
+
+void DetectorConstruction::SetFaceAlCaseMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fFaceAlCaseMaterial != pttoMaterial) {
+    fFaceAlCaseMaterial = pttoMaterial;                  
+    if(fLogicFaceAlCase) fLogicFaceAlCase->SetMaterial(fFaceAlCaseMaterial);
+  }
+}
+
+void DetectorConstruction::SetPbCaseMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fPbCaseMaterial != pttoMaterial) {
+    fPbCaseMaterial = pttoMaterial;                  
+    if(fLogicPbCase) fLogicPbCase->SetMaterial(fPbCaseMaterial);
+  }
+}
+
+void DetectorConstruction::SetPbCollarMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fPbCollarMaterial != pttoMaterial) {
+    fPbCollarMaterial = pttoMaterial;                  
+    if(fLogicPbCollar) fLogicPbCollar->SetMaterial(fPbCollarMaterial);
+  }
+}
+
+void DetectorConstruction::SetPMTMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fPMTMaterial != pttoMaterial) {
+    fPMTMaterial = pttoMaterial;                  
+    if(fLogicPMT) fLogicPMT->SetMaterial(fPMTMaterial);
+  }
+}
+
+void DetectorConstruction::SetPMTWinMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fPMTWinMaterial != pttoMaterial) {
+    fPMTWinMaterial = pttoMaterial;                  
+    if(fLogicPMTWin) fLogicPMTWin->SetMaterial(fPMTWinMaterial);
   }
 }
 
