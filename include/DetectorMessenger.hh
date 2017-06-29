@@ -56,6 +56,7 @@ class DetectorMessenger: public G4UImessenger
     
   private:
     DetectorConstruction*      fDetector;
+    DetectorConstruction*      fBox;
     
     G4UIdirectory*             fTestemDir;
     G4UIdirectory*             fDetDir;
@@ -63,10 +64,19 @@ class DetectorMessenger: public G4UImessenger
     G4UIcmdWithAnInteger*      fDetectorGeometryCmd;
     G4UIcmdWithAString*        fWorldMaterialCmd;
     G4UIcmdWithAString*        fDetectorMaterialCmd;
+    G4UIcmdWithAString*        fBoxMaterialCmd;
     G4UIcmdWithADoubleAndUnit* fDetectorDiameterCmd;
     G4UIcmdWithADoubleAndUnit* fDetectorLengthCmd;
     G4UIcmdWithADoubleAndUnit* fGapThicknessCmd;
+    G4UIcmdWithAString*        fCrystalMaterialCmd;
     G4UIcmdWithAString*        fGapMaterialCmd;
+    G4UIcmdWithAString*        fFaceGapMaterialCmd;
+    G4UIcmdWithAString*        fAlCaseMaterialCmd;
+    G4UIcmdWithAString*        fFaceAlCaseMaterialCmd;
+    G4UIcmdWithAString*        fPbCaseMaterialCmd;
+    G4UIcmdWithAString*        fPbCollarMaterialCmd;
+    G4UIcmdWithAString*        fPMTMaterialCmd;
+    G4UIcmdWithAString*        fPMTWinMaterialCmd;
     G4UIcmdWithADoubleAndUnit* fAlCaseThicknessCmd;
     G4UIcmdWithADoubleAndUnit* fPbCaseThicknessCmd;
     G4UIcmdWithADoubleAndUnit* fPMTDiameterCmd;
@@ -77,4 +87,3 @@ class DetectorMessenger: public G4UImessenger
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
-
