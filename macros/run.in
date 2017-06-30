@@ -4,7 +4,6 @@
 # default settings
 /testem/det/setWorldMaterial Air
 /testem/det/setDetectorMaterial LaBr3
-/testem/det/setBoxMaterial Plastic
 /testem/det/setCrystalMaterial LaBr3
 /testem/det/setGapMaterial Teflon
 /testem/det/setFaceGapMaterial 
@@ -47,7 +46,7 @@
 /gps/ang/type iso
 /gps/energy 10 MeV
 /vis/disable
-/vis/scene/endOfEventAction accumulate
+/vis/scene/endOfEventAction accumulate 0
 /run/beamOn 10000
 /vis/reviewKeptEvents
 
@@ -61,7 +60,7 @@
 /gps/ang/type iso
 /gps/energy 10 MeV
 /vis/disable
-/vis/scene/endOfEventAction accumulate
+/vis/scene/endOfEventAction accumulate 0
 /run/beamOn 10000
 /vis/reviewKeptEvents
 
@@ -76,7 +75,7 @@
 /gps/ang/type iso
 /gps/energy 10 MeV
 /vis/disable
-/vis/scene/endOfEventAction accumulate
+/vis/scene/endOfEventAction accumulate 0
 /run/beamOn 10000
 /vis/reviewKeptEvents
 
@@ -91,6 +90,6 @@
 /gps/ang/type iso
 /gps/energy 10 MeV
 /vis/disable
-/vis/scene/endOfEventAction accumulate 
+/vis/scene/endOfEventAction accumulate 0
 /run/beamOn 10000
 /vis/reviewKeptEvents
