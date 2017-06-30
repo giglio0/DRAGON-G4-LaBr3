@@ -84,6 +84,20 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction * Det)
   fDetectorLengthCmd->SetRange("DetectorLength >0.");
   fDetectorLengthCmd->SetUnitCategory("Length");
   fDetectorLengthCmd->AvailableForStates(G4State_PreInit,G4State_Idle); 
+  
+  TemperatureCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setTemperature",this);
+  TemperatureCmd->SetGuidance("Set the temperature of the detector.");
+  TemperatureCmd->SetParameterName("Temperature",true);
+  TemperatureCmd->SetRange("Temperature >=0.");
+  TemperatureCmd->SetUnitCategory("Temperature");
+  TemperatureCmd->AvailableForStates(G4State_PreInit,G4State_Idle); 
+  
+  PressureCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setPressure",this);
+  PressureCmd->SetGuidance("Set the pressure of the detector.");
+  PressureCmd->SetParameterName("Pressure",true);
+  PressureCmd->SetRange("Pressure >=0.");
+  PressureCmd->SetUnitCategory("Pressure");
+  PressureCmd->AvailableForStates(G4State_PreInit,G4State_Idle); 
 
   fGapThicknessCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setGapThickness",this);
   fGapThicknessCmd->SetGuidance("Set the thickness of the gap between the aluminum case and the crystal.");
@@ -185,6 +199,8 @@ DetectorMessenger::~DetectorMessenger()
   delete fDetectorGeometryCmd;
   delete fDetectorDiameterCmd;
   delete fDetectorLengthCmd;
+  delete TemperatureCmd;
+  delete PressureCmd;
   delete fGapThicknessCmd;
   delete fCrystalMaterialCmd;
   delete fGapMaterialCmd;
@@ -220,7 +236,13 @@ void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
 
   if ( command == fDetectorLengthCmd )
    {fDetector->SetDetectorLength(fDetectorLengthCmd->GetNewDoubleValue(newValue));}
-
+   
+  if ( command == TemperatureCmd )
+   {fDetector->SetTemperature(TemperatureCmd->GetNewDoubleValue(newValue));}
+   
+  if ( command == PressureCmd )
+   {fDetector->SetPressure(PressureCmd->GetNewDoubleValue(newValue));}
+   
   if ( command == fGapThicknessCmd )
    {fDetector->SetGapThickness(fGapThicknessCmd->GetNewDoubleValue(newValue));}
       
