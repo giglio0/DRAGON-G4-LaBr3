@@ -1,19 +1,21 @@
 # $Id: TestEm0.in 68220 2013-03-19 15:15:02Z maire $
 #
 # Macro file for "LaBr3_v3.cc"
-#
-/testem/det/setWorldMaterial G4_AIR
+# default settings
+/testem/det/setWorldMaterial Air
 /testem/det/setDetectorMaterial LaBr3
 /testem/det/setBoxMaterial Plastic
 /testem/det/setCrystalMaterial LaBr3
-/testem/det/setGapMaterial G4_TEFLON
-/testem/det/setFaceGapMaterial G4_TEFLON
-/testem/det/setAlCaseMaterial G4_Al
-/testem/det/setFaceAlCaseMaterial G4_Al
-/testem/det/setPbCaseMaterial G4_Pb
-/testem/det/setPbCollarMaterial G4_Pb
-/testem/det/setPMTMaterial G4_Pyrex_Glass
-/testem/det/setPMTWinMaterial G4_Pyrex_Glass
+/testem/det/setGapMaterial Teflon
+/testem/det/setFaceGapMaterial 
+/testem/det/setAlCaseMaterial Aluminium
+/testem/det/setFaceAlCaseMaterial Aluminium
+/testem/det/setPbCaseMaterial Lead
+/testem/det/setPbCollarMaterial Lead
+/testem/det/setPMTMaterial PMTMix
+/testem/det/setPMTWinMaterial Pyrex
+/testem/det/setTemperature 298 kelvin
+/testem/det/setPressure 101325 pascal
 
 /testem/det/setDetectorDiameter 5.08 cm
 /testem/det/setDetectorLength 5.08 cm
@@ -45,6 +47,7 @@
 /gps/ang/type iso
 /gps/energy 10 MeV
 /vis/disable
+/vis/scene/endOfEventAction accumulate
 /run/beamOn 10000
 /vis/reviewKeptEvents
 
@@ -58,6 +61,7 @@
 /gps/ang/type iso
 /gps/energy 10 MeV
 /vis/disable
+/vis/scene/endOfEventAction accumulate
 /run/beamOn 10000
 /vis/reviewKeptEvents
 
@@ -72,6 +76,7 @@
 /gps/ang/type iso
 /gps/energy 10 MeV
 /vis/disable
+/vis/scene/endOfEventAction accumulate
 /run/beamOn 10000
 /vis/reviewKeptEvents
 
@@ -86,6 +91,6 @@
 /gps/ang/type iso
 /gps/energy 10 MeV
 /vis/disable
-/vis/scene/endOfEventAction accumulate 10000
+/vis/scene/endOfEventAction accumulate 
 /run/beamOn 10000
 /vis/reviewKeptEvents
