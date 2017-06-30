@@ -69,9 +69,10 @@ fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
   // materials  
   DefineMaterials();
   // Default Materials
-  fWorldMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Galactic");
+  fWorldMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Air");
   fDetectorMaterial = G4NistManager::Instance()->FindOrBuildMaterial("LaBr3");
   fBoxMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Plastic");
+  fSourceMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Copper");
   fCrystalMaterial = G4NistManager::Instance()->FindOrBuildMaterial("LaBr3");
   fAlCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Aluminium");
   fFaceAlCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Aluminium");
@@ -83,14 +84,7 @@ fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
   fGapMaterial 	= G4NistManager::Instance()->FindOrBuildMaterial("Teflon");
   fFaceGapMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Teflon");
 
-  //G4MaterialPropertyVector* AddProperty('Energy Resolution', [1*MeV, 2*MeV, 3*MeV, 4*MeV, 5*MeV, 6*MeV, 7*MeV, 8*MeV, 9*MeV, 10*MeV],
-  //[1000*eV, 1414*eV, 1732*eV, 2000*eV, 2236*eV, 2449*eV, 2646*eV, 2828*eV, 3000*eV, 3162*eV], 10);
-  //AddProperty('Energy Resolution', G4MaterialPropertyVector*);
-  //G4MaterialPropertiesTable* fResolutionDetectorMaterial = new G4MaterialPropertiesTable();
-  //fResolutionDetectorMaterial->AddConstProperty("RESOLUTIONSCALE", 1.0);
-  //fDetectorMaterial->SetMaterialPropertiesTable(fResolutionDetectorMaterial);
-
- //Set Visualization Attributes
+  //Set Visualization Attributes
 
   // Blue
   fBlueVisAtt = new G4VisAttributes(G4Colour(0.,0.,0.75));
@@ -159,9 +153,11 @@ void DetectorConstruction::DefineMaterials()
   new G4Material("Beryllium", z= 4, a= 9.01*g/mole, density= 1.848*g/cm3);
   G4Material* Silicon = new G4Material("Silicon"  , z=14, a=28.09*g/mole, density= 2.330*g/cm3);
   new G4Material("Iron",     z=26, a= 55.85*g/mole, density= 7.870*g/cm3);
-  new G4Material("Copper",   z=29, a= 63.55*g/mole, density= 8.960*g/cm3);
+  G4Material* Copper = new G4Material("Copper",   z=29, a= 63.55*g/mole, density= 8.960*g/cm3);
+  Copper->GetIonisation()->SetMeanExcitationEnergy(322.*eV);
   new G4Material("Germanium",z=32, a= 72.61*g/mole, density= 5.323*g/cm3);
   G4Material* Silver = new G4Material("Silver",   z=47, a=107.87*g/mole, density= 10.50*g/cm3);
+  Silver->GetIonisation()->SetMeanExcitationEnergy(322.*eV);
   new G4Material("Tungsten", z=74, a=183.85*g/mole, density= 19.30*g/cm3);
   new G4Material("Gold",     z=79, a=196.97*g/mole, density= 19.32*g/cm3);
   
@@ -176,12 +172,11 @@ void DetectorConstruction::DefineMaterials()
   Teflon->AddElement(F, natoms=4);
   Teflon->GetIonisation()->SetMeanExcitationEnergy(99.1*eV);
   
-  G4Material* AgOCs = new G4Material("AgOCs", density= 6.6*g/cm3, ncomponents=3, kStateSolid, Temperature, Pressure);
-  AgOCs->AddMaterial(Silver, natoms=1);
-  AgOCs->AddElement(O, natoms=1);
-  AgOCs->AddElement(Cs, natoms=1);
-  AgOCs->GetIonisation()->SetMeanExcitationEnergy(0.8*eV);
-
+  G4Material* Cs2O = new G4Material("Cs2O", density= 4.65*g/cm3, ncomponents=2, kStateSolid, Temperature, Pressure);
+  Cs2O->AddElement(Cs, natoms=2);
+  Cs2O->AddElement(O, natoms=1);
+  Cs2O->GetIonisation()->SetMeanExcitationEnergy(1.*eV);
+ 
   G4Material* NaI = new G4Material("NaI", density= 3.67*g/cm3, ncomponents=2, kStateSolid, Temperature, Pressure);
   NaI->AddElement(Na, natoms=1);
   NaI->AddElement(I , natoms=1);
@@ -226,10 +221,11 @@ void DetectorConstruction::DefineMaterials()
   Air->AddMaterial(Water, fractionmass=0.00064135);
   Air->GetIonisation()->SetMeanExcitationEnergy((85.7*0.99935865 + 75.*0.00064135)*eV);
   
-  G4Material* PMTMix = new G4Material("PMTMix", density= 1.032*g/cm3, ncomponents=2, kStateSolid, Temperature, Pressure);
-  PMTMix->AddMaterial(AgOCs, fractionmass=((3.3/0.0006125)-1)/(3.3/0.0006125));
+  G4Material* PMTMix = new G4Material("PMTMix", density= 6.109688*g/cm3, ncomponents=3, kStateSolid, Temperature, Pressure);
+  PMTMix->AddMaterial(Cs2O, fractionmass=((2.475/0.0006125)-1)/(3.3/0.0006125));
+  PMTMix->AddMaterial(Silver, fractionmass=((0.825/0.0006125)-1)/(3.3/0.0006125));
   PMTMix->AddMaterial(Air, fractionmass=1/(3.3/0.0006125));
-  PMTMix->GetIonisation()->SetMeanExcitationEnergy(0.4*eV + 0.5*(85.7*0.99935865 + 75.*0.00064135)*eV);
+  PMTMix->GetIonisation()->SetMeanExcitationEnergy(((((265.65/0.0006125)-1)/(3.3/0.0006125)) + (((2.475/0.0006125)-1))/(3.3/0.0006125)) + ((85.7*0.99935865 + 75.*0.00064135)/(3.3/0.0006125))*eV);
  
   // example of vacuum
   //from PhysicalConstants.h
@@ -319,21 +315,80 @@ if (fDetectorGeometry == 1){
   G4RotationMatrix rotm  = G4RotationMatrix(0,0,0);     
   G4ThreeVector position = G4ThreeVector(0.,0.,0.);
   G4Transform3D transform = G4Transform3D(rotm,position);
-  G4ThreeVector boxposition = G4ThreeVector(0.,0.,fTotalDetectorLength);
-  G4Transform3D boxtransform = G4Transform3D(rotm,boxposition);
+  G4ThreeVector boxposition1 = G4ThreeVector(-0.5*fTotalDetectorDiameter - 0.6*cm, 0., fTotalDetectorLength);
+  G4ThreeVector boxposition2 = G4ThreeVector(0.5*fTotalDetectorDiameter + 0.6*cm, 0., fTotalDetectorLength);
+  G4ThreeVector boxposition3 = G4ThreeVector(0., -0.5*fTotalDetectorDiameter - 0.6*cm, fTotalDetectorLength);
+  G4ThreeVector sourceposition = G4ThreeVector(0.,0., 0.5*fTotalDetectorLength + 5.*cm);
+  G4ThreeVector topboxposition = G4ThreeVector(0.,0., 1.5*fTotalDetectorLength + 0.5*cm);
+  G4ThreeVector bottomboxposition = G4ThreeVector(0.,0., 0.5*fTotalDetectorLength - 1.2*cm);
+  G4Transform3D boxtransform1 = G4Transform3D(rotm,boxposition1);
+  G4Transform3D boxtransform2 = G4Transform3D(rotm,boxposition2);
+  G4Transform3D boxtransform3 = G4Transform3D(rotm,boxposition3);
+  G4Transform3D sourcetransform = G4Transform3D(rotm,sourceposition);
+  G4Transform3D topboxtransform = G4Transform3D(rotm,topboxposition);
+  G4Transform3D bottomboxtransform = G4Transform3D(rotm,bottomboxposition);
   
-  G4Box *outerBox = new G4Box("Outer Box", 0.5*fTotalDetectorDiameter + 0.5*cm, 0.5*fTotalDetectorDiameter + 0.5*cm, 0.5*fTotalDetectorLength);
-  G4Box *innerBox = new G4Box("Inner Box", 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorLength);
-  fSolidBox = new G4SubtractionSolid("Box",outerBox,innerBox); 
-  fLogicBox = new G4LogicalVolume(fSolidBox, fBoxMaterial, "Box");
-  fPhysiBox = new G4PVPlacement(boxtransform,
-        			fLogicBox, 
-       				"Box", 
+  fSolidBox1 = new G4Box("Box 1", 0.6*cm, 0.5*fTotalDetectorDiameter + 1.2*cm, 0.5*fTotalDetectorLength);
+  fLogicBox1 = new G4LogicalVolume(fSolidBox1, fBoxMaterial, "Box 1");
+  fPhysiBox1 = new G4PVPlacement(boxtransform1,
+        			fLogicBox1, 
+       				"Box 1", 
        				fLogicWorld, 
        				false, 
     			    	0,
 				    false); 
-  fLogicBox->SetVisAttributes(fBlueVisAtt);
+				    
+  fSolidBox2 = new G4Box("Box 2", 0.6*cm, 0.5*fTotalDetectorDiameter + 1.2*cm, 0.5*fTotalDetectorLength);
+  fLogicBox2 = new G4LogicalVolume(fSolidBox2, fBoxMaterial, "Box 2");
+  fPhysiBox2 = new G4PVPlacement(boxtransform2,
+        			fLogicBox2, 
+       				"Box 2", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+				    false); 
+				    
+  fSolidBox3 = new G4Box("Box 3", 0.5*fTotalDetectorDiameter, 0.6*cm, 0.5*fTotalDetectorLength);
+  fLogicBox3 = new G4LogicalVolume(fSolidBox3, fBoxMaterial, "Box 3");
+  fPhysiBox3 = new G4PVPlacement(boxtransform3,
+        			fLogicBox3, 
+       				"Box 3", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+				    false); 
+				    
+  fSolidSource = new G4Box("Source", 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorDiameter, 0.1*cm);			    
+  fLogicSource = new G4LogicalVolume(fSolidSource, fSourceMaterial, "Source");
+  fPhysiSource = new G4PVPlacement(sourcetransform,
+        			fLogicSource, 
+       				"Source", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+				    false); 
+				    
+  fSolidTopBox = new G4Box("TopBox", 6.6*cm, 6.6*cm, 0.5*cm);
+  fLogicTopBox = new G4LogicalVolume(fSolidTopBox, fBoxMaterial, "TopBox");
+  fPhysiTopBox = new G4PVPlacement(topboxtransform,
+        			fLogicTopBox, 
+       				"TopBox", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+				    false); 
+  
+  G4Box *oBox = new G4Box("oBox", 6.6*cm, 6.6*cm, 1.2*cm);
+  G4Tubs *iTube = new G4Tubs("iTube", 0., 0.5*fTotalDetectorDiameter, 1.2*cm, 0.*deg, 360.*deg);
+  fSolidBottomBox = new G4SubtractionSolid("BottomBox", oBox, iTube);
+  fLogicBottomBox = new G4LogicalVolume(fSolidBottomBox, fBoxMaterial, "BottomBox");
+  fPhysiBottomBox = new G4PVPlacement(bottomboxtransform,
+        			fLogicBottomBox, 
+       				"BottomBox", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+				    false);  
 
   fSolidDetector = new G4Tubs("Detector", 0., 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorLength, 0.*deg, 360.*deg);
   fLogicDetector = new G4LogicalVolume(fSolidDetector,fWorldMaterial, "Detector");
@@ -472,11 +527,6 @@ if (fDetectorGeometry == 2){
 //  If rotation required  
 //  G4RotationMatrix rotm  = G4RotationMatrix(0,90*deg,-90*deg);     
 //  No Rotation Now
-  G4RotationMatrix rotm  = G4RotationMatrix(0,0,0);     
-  G4ThreeVector position = G4ThreeVector(0.,0.,0.);
-  G4Transform3D transform = G4Transform3D(rotm,position);
-  G4ThreeVector boxposition = G4ThreeVector(0.,0.,fTotalDetectorLength);
-  G4Transform3D boxtransform = G4Transform3D(rotm,boxposition);
   const G4double zPlane[2] = {-0.5*fTotalDetectorLength, 0.5*fTotalDetectorLength};
   const G4double zPlane1[2] = {-0.5*fPMTWinThickness, 0.5*fPMTWinThickness};
   const G4double zPlane2[2] = {-0.5*fDetectorLength, 0.5*fDetectorLength};
@@ -498,13 +548,79 @@ if (fDetectorGeometry == 2){
   const G4double rOuter3[2] = {0.5*fPbCaseDiameter, 0.5*fPbCaseDiameter};
   const G4double rOuter4[2] = {0.5*fPMTDiameter, 0.5*fPMTDiameter};
   
-  G4Box *outerBox = new G4Box("Outer Box", 0.5*fTotalDetectorDiameter + 0.5*cm, 0.5*fTotalDetectorDiameter + 0.5*cm, 0.5*fTotalDetectorLength);
-  G4Box *innerBox = new G4Box("Inner Box", 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorLength);
-  fSolidBox = new G4SubtractionSolid("Box",outerBox,innerBox); 
-  fLogicBox = new G4LogicalVolume(fSolidBox, fBoxMaterial, "Box");
-  fPhysiBox = new G4PVPlacement(boxtransform,
-        			fLogicBox, 
-       				"Box", 
+  G4RotationMatrix rotm  = G4RotationMatrix(0,0,0);     
+  G4ThreeVector position = G4ThreeVector(0.,0.,0.);
+  G4Transform3D transform = G4Transform3D(rotm,position);
+  G4ThreeVector boxposition1 = G4ThreeVector(-0.5*fTotalDetectorDiameter - 0.6*cm, 0., fTotalDetectorLength);
+  G4ThreeVector boxposition2 = G4ThreeVector(0.5*fTotalDetectorDiameter + 0.6*cm, 0., fTotalDetectorLength);
+  G4ThreeVector boxposition3 = G4ThreeVector(0., -0.5*fTotalDetectorDiameter - 0.6*cm, fTotalDetectorLength);
+  G4ThreeVector sourceposition = G4ThreeVector(0.,0., 0.5*fTotalDetectorLength + 5.*cm);
+  G4ThreeVector topboxposition = G4ThreeVector(0.,0., 1.5*fTotalDetectorLength + 0.5*cm);
+  G4ThreeVector bottomboxposition = G4ThreeVector(0.,0., 0.5*fTotalDetectorLength - 1.2*cm);
+  G4Transform3D boxtransform1 = G4Transform3D(rotm,boxposition1);
+  G4Transform3D boxtransform2 = G4Transform3D(rotm,boxposition2);
+  G4Transform3D boxtransform3 = G4Transform3D(rotm,boxposition3);
+  G4Transform3D sourcetransform = G4Transform3D(rotm,sourceposition);
+  G4Transform3D topboxtransform = G4Transform3D(rotm,topboxposition);
+  G4Transform3D bottomboxtransform = G4Transform3D(rotm,bottomboxposition);
+  
+  fSolidBox1 = new G4Box("Box 1", 0.6*cm, 0.5*fTotalDetectorDiameter + 1.2*cm, 0.5*fTotalDetectorLength);
+  fLogicBox1 = new G4LogicalVolume(fSolidBox1, fBoxMaterial, "Box 1");
+  fPhysiBox1 = new G4PVPlacement(boxtransform1,
+        			fLogicBox1, 
+       				"Box 1", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+				    false); 
+				    
+  fSolidBox2 = new G4Box("Box 2", 0.6*cm, 0.5*fTotalDetectorDiameter + 1.2*cm, 0.5*fTotalDetectorLength);
+  fLogicBox2 = new G4LogicalVolume(fSolidBox2, fBoxMaterial, "Box 2");
+  fPhysiBox2 = new G4PVPlacement(boxtransform2,
+        			fLogicBox2, 
+       				"Box 2", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+				    false); 
+				    
+  fSolidBox3 = new G4Box("Box 3", 0.5*fTotalDetectorDiameter, 0.6*cm, 0.5*fTotalDetectorLength);
+  fLogicBox3 = new G4LogicalVolume(fSolidBox3, fBoxMaterial, "Box 3");
+  fPhysiBox3 = new G4PVPlacement(boxtransform3,
+        			fLogicBox3, 
+       				"Box 3", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+				    false); 
+				    
+  fSolidSource = new G4Box("Source", 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorDiameter, 0.1*cm);			    
+  fLogicSource = new G4LogicalVolume(fSolidSource, fSourceMaterial, "Source");
+  fPhysiSource = new G4PVPlacement(sourcetransform,
+        			fLogicSource, 
+       				"Source", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+				    false); 
+				    
+  fSolidTopBox = new G4Box("TopBox", 6.6*cm, 6.6*cm, 0.5*cm);
+  fLogicTopBox = new G4LogicalVolume(fSolidTopBox, fBoxMaterial, "TopBox");
+  fPhysiTopBox = new G4PVPlacement(topboxtransform,
+        			fLogicTopBox, 
+       				"TopBox", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+				    false); 
+  
+  G4Box *oBox = new G4Box("oBox", 6.6*cm, 6.6*cm, 1.2*cm);
+  G4Polyhedra *iPoly = new G4Polyhedra("iPoly", 0.*deg, 360.*deg, 6, 2, zPlane, rInner, rOuter);
+  fSolidBottomBox = new G4SubtractionSolid("BottomBox", oBox, iPoly);
+  fLogicBottomBox = new G4LogicalVolume(fSolidBottomBox, fBoxMaterial, "BottomBox");
+  fPhysiBottomBox = new G4PVPlacement(bottomboxtransform,
+        			fLogicBottomBox, 
+       				"BottomBox", 
        				fLogicWorld, 
        				false, 
     			    	0,
@@ -655,7 +771,6 @@ if (fDetectorGeometry == 3){
   G4RotationMatrix rotm180 = G4RotationMatrix(0,180.*deg,0);    
   G4ThreeVector P;
   G4Transform3D Tr;
-  
   G4AssemblyVolume* assemblyDetector = new G4AssemblyVolume();
   //10 detectors with 10 straddling detectors
   //bottom 3
@@ -1293,18 +1408,6 @@ void DetectorConstruction::SetDetectorMaterial(G4String materialChoice)
   if (pttoMaterial && fDetectorMaterial != pttoMaterial) {
     fDetectorMaterial = pttoMaterial;                  
     if(fLogicDetector) fLogicDetector->SetMaterial(fDetectorMaterial);
-  }
-}
-
-void DetectorConstruction::SetBoxMaterial(G4String materialChoice)
-{
-  // search the material by its name
-  G4Material* pttoMaterial =
-    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
-
-  if (pttoMaterial && fBoxMaterial != pttoMaterial) {
-    fBoxMaterial = pttoMaterial;                  
-    if(fLogicBox) fLogicBox->SetMaterial(fBoxMaterial);
   }
 }
 
