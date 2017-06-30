@@ -346,13 +346,45 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
 
 
-     G4SubtractionSolid*    fSolidBox;
+     G4Box*                 fSolidBox1;
 
-     G4LogicalVolume*       fLogicBox;
+     G4LogicalVolume*       fLogicBox1;
 
-     G4VPhysicalVolume*     fPhysiBox;
+     G4VPhysicalVolume*     fPhysiBox1;
+
+     G4Box*                 fSolidBox2;
+
+     G4LogicalVolume*       fLogicBox2;
+
+     G4VPhysicalVolume*     fPhysiBox2;
+
+     G4Box*                 fSolidBox3;
+
+     G4LogicalVolume*       fLogicBox3;
+
+     G4VPhysicalVolume*     fPhysiBox3;
+
+     G4Box*                 fSolidSource;
+
+     G4LogicalVolume*       fLogicSource;
+
+     G4VPhysicalVolume*     fPhysiSource;
+
+     G4Box*                 fSolidTopBox;
+
+     G4LogicalVolume*       fLogicTopBox;
+
+     G4VPhysicalVolume*     fPhysiTopBox;
+
+     G4SubtractionSolid*    fSolidBottomBox;
+
+     G4LogicalVolume*       fLogicBottomBox;
+
+     G4VPhysicalVolume*     fPhysiBottomBox;
 
      G4Material* 	        fBoxMaterial;
+
+     G4Material*            fSourceMaterial;
 
      
 
