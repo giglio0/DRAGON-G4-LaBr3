@@ -64,7 +64,6 @@ class DetectorMessenger: public G4UImessenger
     G4UIcmdWithAnInteger*      fDetectorGeometryCmd;
     G4UIcmdWithAString*        fWorldMaterialCmd;
     G4UIcmdWithAString*        fDetectorMaterialCmd;
-    G4UIcmdWithAString*        fBoxMaterialCmd;
     G4UIcmdWithADoubleAndUnit* fDetectorDiameterCmd;
     G4UIcmdWithADoubleAndUnit* fDetectorLengthCmd;
     G4UIcmdWithADoubleAndUnit* TemperatureCmd;
