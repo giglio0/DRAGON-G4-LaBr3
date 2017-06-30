@@ -61,11 +61,6 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction * Det)
   fDetectorMaterialCmd->SetParameterName("DetectorMaterial",true);
   fDetectorMaterialCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
   
-  fBoxMaterialCmd = new G4UIcmdWithAString("/testem/det/setBoxMaterial",this);
-  fBoxMaterialCmd->SetGuidance("Select the material of the box.");
-  fBoxMaterialCmd->SetParameterName("BoxMaterial",true);
-  fBoxMaterialCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-  
   fDetectorGeometryCmd = new G4UIcmdWithAnInteger("/testem/det/setDetectorGeometry",this);
   fDetectorGeometryCmd->SetGuidance("Select geometry of the detector.");
   fDetectorGeometryCmd->SetParameterName("DetectorGeometry", true);
@@ -195,7 +190,6 @@ DetectorMessenger::~DetectorMessenger()
   delete fTestemDir;
   delete fWorldMaterialCmd;
   delete fDetectorMaterialCmd;
-  delete fBoxMaterialCmd;
   delete fDetectorGeometryCmd;
   delete fDetectorDiameterCmd;
   delete fDetectorLengthCmd;
@@ -248,9 +242,6 @@ void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
       
   if ( command == fDetectorMaterialCmd )
    {fDetector->SetDetectorMaterial(newValue);}
-   
-  if ( command == fBoxMaterialCmd )
-   {fBox->SetBoxMaterial(newValue);}
    
   if ( command == fCrystalMaterialCmd )
    {fDetector->SetCrystalMaterial(newValue);}
