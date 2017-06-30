@@ -67,6 +67,8 @@ class DetectorMessenger: public G4UImessenger
     G4UIcmdWithAString*        fBoxMaterialCmd;
     G4UIcmdWithADoubleAndUnit* fDetectorDiameterCmd;
     G4UIcmdWithADoubleAndUnit* fDetectorLengthCmd;
+    G4UIcmdWithADoubleAndUnit* TemperatureCmd;
+    G4UIcmdWithADoubleAndUnit* PressureCmd;
     G4UIcmdWithADoubleAndUnit* fGapThicknessCmd;
     G4UIcmdWithAString*        fCrystalMaterialCmd;
     G4UIcmdWithAString*        fGapMaterialCmd;
