@@ -188,6 +188,10 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
      void SetDetectorGeometry           (G4int);
 
+     void SetTemperature             (G4double);
+
+     void SetPressure                (G4double);
+
      void SetTotalDetectorDiameter   (G4double);
 
      void SetDetectorDiameter        (G4double);
@@ -257,6 +261,10 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4Material* GetDetectorMaterial()           {return fDetectorMaterial;};
 
      G4Material* GetBoxMaterial()                {return fBoxMaterial;};
+
+     G4double    GetTemperature()                {return Temperature;};
+
+     G4double    GetPressure()                   {return Pressure;};
 
      G4int       GetDetectorGeometry()           {return fDetectorGeometry;};
 
@@ -373,6 +381,10 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4int                  fDetectorGeometry;
 
      G4Material*            fDetectorMaterial;
+
+     G4double               Temperature;
+
+     G4double               Pressure;
 
      
 
