@@ -32,8 +32,6 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 #include "DetectorConstruction.hh"
 #include "DetectorMessenger.hh"
-#include "G4TransportationManager.hh" 
-#include "G4Navigator.hh"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorConstruction::DetectorConstruction()
