@@ -72,6 +72,7 @@ fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
   fWorldMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Air");
   fDetectorMaterial = G4NistManager::Instance()->FindOrBuildMaterial("LaBr3");
   fBoxMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Plastic");
+  fCoverMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Aluminium");
   fSourceMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Copper");
   fCrystalMaterial = G4NistManager::Instance()->FindOrBuildMaterial("LaBr3");
   fAlCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Aluminium");
@@ -194,7 +195,7 @@ void DetectorConstruction::DefineMaterials()
   BGO->AddElement(O, fractionmass=0.15411);
   BGO->GetIonisation()->SetMeanExcitationEnergy(534.1*eV);
   
-  G4Material* CH = new G4Material("Plastic", density= 1.032*g/cm3, ncomponents=2, kStateSolid, 298*kelvin, 1*atmosphere);
+  G4Material* CH = new G4Material("Plastic", density= 1.032*g/cm3, ncomponents=2, kStateSolid, Temperature, Pressure);
   CH->AddElement(C, fractionmass=0.915000);
   CH->AddElement(H, fractionmass=0.085000);
   CH->GetIonisation()->SetMeanExcitationEnergy(64.7*eV);
@@ -313,14 +314,14 @@ if (fDetectorGeometry == 1){
 //  G4RotationMatrix rotm  = G4RotationMatrix(0,90*deg,-90*deg);     
 //  No Rotation Now
   G4RotationMatrix rotm  = G4RotationMatrix(0,0,0);     
-  G4ThreeVector position = G4ThreeVector(0.,0.,0.);
+  G4ThreeVector position = G4ThreeVector(0.,0.,-0.15*cm);
   G4Transform3D transform = G4Transform3D(rotm,position);
   G4ThreeVector boxposition1 = G4ThreeVector(-0.5*fTotalDetectorDiameter - 0.6*cm, 0., fTotalDetectorLength);
   G4ThreeVector boxposition2 = G4ThreeVector(0.5*fTotalDetectorDiameter + 0.6*cm, 0., fTotalDetectorLength);
   G4ThreeVector boxposition3 = G4ThreeVector(0., -0.5*fTotalDetectorDiameter - 0.6*cm, fTotalDetectorLength);
-  G4ThreeVector sourceposition = G4ThreeVector(0.,0., 0.5*fTotalDetectorLength + 5.*cm);
+  G4ThreeVector sourceposition = G4ThreeVector(0.,0., 0.5*fTotalDetectorLength + 4.85*cm);
   G4ThreeVector topboxposition = G4ThreeVector(0.,0., 1.5*fTotalDetectorLength + 0.5*cm);
-  G4ThreeVector bottomboxposition = G4ThreeVector(0.,0., 0.5*fTotalDetectorLength - 1.2*cm);
+  G4ThreeVector bottomboxposition = G4ThreeVector(0.,0., 0.5*fTotalDetectorLength - 0.55*cm);
   G4Transform3D boxtransform1 = G4Transform3D(rotm,boxposition1);
   G4Transform3D boxtransform2 = G4Transform3D(rotm,boxposition2);
   G4Transform3D boxtransform3 = G4Transform3D(rotm,boxposition3);
@@ -349,7 +350,7 @@ if (fDetectorGeometry == 1){
 				    false); 
 				    
   fSolidBox3 = new G4Box("Box 3", 0.5*fTotalDetectorDiameter, 0.6*cm, 0.5*fTotalDetectorLength);
-  fLogicBox3 = new G4LogicalVolume(fSolidBox3, fBoxMaterial, "Box 3");
+  fLogicBox3 = new G4LogicalVolume(fSolidBox3, fAlCaseMaterial, "Box 3");
   fPhysiBox3 = new G4PVPlacement(boxtransform3,
         			fLogicBox3, 
        				"Box 3", 
@@ -358,7 +359,21 @@ if (fDetectorGeometry == 1){
     			    	0,
 				    false); 
 				    
-  fSolidSource = new G4Box("Source", 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorDiameter, 0.1*cm);			    
+  G4Box* oCover = new G4Box("oCover", 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorDiameter, 0.1*cm);	
+  G4Box* iCover = new G4Box("iCover", 0.5*fTotalDetectorDiameter - 0.4*cm, 0.5*fTotalDetectorDiameter - 0.4*cm, 0.1*cm);	
+  fSolidCover = new G4SubtractionSolid("Source", oCover, iCover);			    
+  fLogicCover = new G4LogicalVolume(fSolidCover, fCoverMaterial, "Cover");
+  fPhysiCover = new G4PVPlacement(sourcetransform,
+        			fLogicCover, 
+       				"Cover", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+				    false);
+				    
+  G4Box* oSource = new G4Box("oSource", 0.5*fTotalDetectorDiameter - 0.4*cm, 0.5*fTotalDetectorDiameter - 0.4*cm, 0.1*cm);
+  G4Tubs* iSource = new G4Tubs("Detector", 0., 0.125*cm, 0.1*cm, 0.*deg, 360.*deg);
+  fSolidSource = new G4SubtractionSolid("Source", oSource, iSource);			    
   fLogicSource = new G4LogicalVolume(fSolidSource, fSourceMaterial, "Source");
   fPhysiSource = new G4PVPlacement(sourcetransform,
         			fLogicSource, 
@@ -366,9 +381,9 @@ if (fDetectorGeometry == 1){
        				fLogicWorld, 
        				false, 
     			    	0,
-				    false); 
+				    false);  
 				    
-  fSolidTopBox = new G4Box("TopBox", 6.6*cm, 6.6*cm, 0.5*cm);
+  fSolidTopBox = new G4Box("TopBox", 5.35*cm, 5.35*cm, 0.5*cm);
   fLogicTopBox = new G4LogicalVolume(fSolidTopBox, fBoxMaterial, "TopBox");
   fPhysiTopBox = new G4PVPlacement(topboxtransform,
         			fLogicTopBox, 
@@ -378,8 +393,8 @@ if (fDetectorGeometry == 1){
     			    	0,
 				    false); 
   
-  G4Box *oBox = new G4Box("oBox", 6.6*cm, 6.6*cm, 1.2*cm);
-  G4Tubs *iTube = new G4Tubs("iTube", 0., 0.5*fTotalDetectorDiameter, 1.2*cm, 0.*deg, 360.*deg);
+  G4Box *oBox = new G4Box("oBox", 5.35*cm, 5.35*cm, 1.1*cm);
+  G4Tubs *iTube = new G4Tubs("iTube", 0., 0.5*fTotalDetectorDiameter, 1.1*cm, 0.*deg, 360.*deg);
   fSolidBottomBox = new G4SubtractionSolid("BottomBox", oBox, iTube);
   fLogicBottomBox = new G4LogicalVolume(fSolidBottomBox, fBoxMaterial, "BottomBox");
   fPhysiBottomBox = new G4PVPlacement(bottomboxtransform,
@@ -391,7 +406,7 @@ if (fDetectorGeometry == 1){
 				    false);  
 
   fSolidDetector = new G4Tubs("Detector", 0., 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorLength, 0.*deg, 360.*deg);
-  fLogicDetector = new G4LogicalVolume(fSolidDetector,fWorldMaterial, "Detector");
+  fLogicDetector = new G4LogicalVolume(fSolidDetector, fDetectorMaterial, "Detector");
   fPhysiDetector = new G4PVPlacement(transform,
         			fLogicDetector, 
        				"Detector", 
@@ -418,7 +433,7 @@ if (fDetectorGeometry == 1){
   // Crystal
   //
   fSolidCrystal = new G4Tubs("Crystal", 0., 0.5*fDetectorDiameter, 0.5*fDetectorLength, 0.*deg, 360.*deg);
-  fLogicCrystal = new G4LogicalVolume(fSolidCrystal, fDetectorMaterial, "Crystal");
+  fLogicCrystal = new G4LogicalVolume(fSolidCrystal, fCrystalMaterial, "Crystal");
   fPhysiCrystal = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZpos), 
         			fLogicCrystal, 
@@ -443,7 +458,7 @@ if (fDetectorGeometry == 1){
   //FaceGap (gap between face of crystal and casing or a reflector as required)
   //
   fSolidFaceGap = new G4Tubs("FaceGap", 0., 0.5*fDetectorDiameter, 0.5*fGapThickness, 0.*deg, 360.*deg);
-  fLogicFaceGap = new G4LogicalVolume(fSolidFaceGap, fGapMaterial, "FaceGap");
+  fLogicFaceGap = new G4LogicalVolume(fSolidFaceGap, fFaceGapMaterial, "FaceGap");
   fPhysiFaceGap = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZposFaceGap), 
         			fLogicFaceGap, 
@@ -472,7 +487,7 @@ if (fDetectorGeometry == 1){
   //Aluminum Face Casing (casing covering face of crystal)
   //
   fSolidFaceAlCase = new G4Tubs("FaceAlCase", 0., 0.5*fGapDiameter, 0.5*fAlCaseThickness, 0.*deg, 360.*deg);
-  fLogicFaceAlCase = new G4LogicalVolume(fSolidFaceAlCase, fAlCaseMaterial, "FaceAlCase");
+  fLogicFaceAlCase = new G4LogicalVolume(fSolidFaceAlCase, fFaceAlCaseMaterial, "FaceAlCase");
   fPhysiFaceAlCase = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZposFaceAlCase), 
         			fLogicFaceAlCase, 
@@ -498,7 +513,7 @@ if (fDetectorGeometry == 1){
   if (fPbCaseDiameter<fPMTDiameter){  
 	fSolidPbCollar = new G4Tubs("PbCollar", 0.5*fPbCaseDiameter, 0.5*fPMTDiameter, 0.5*fPbCaseThickness, 0.*deg,    
         360.*deg);
-	fLogicPbCollar = new G4LogicalVolume(fSolidPbCollar, fPbCaseMaterial, "PbCollar");
+	fLogicPbCollar = new G4LogicalVolume(fSolidPbCollar, fPbCollarMaterial, "PbCollar");
 	fPhysiPbCollar = new G4PVPlacement(0, 
 						G4ThreeVector(0.,0.,fZposPbCollar), 
 						fLogicPbCollar, 
@@ -549,14 +564,14 @@ if (fDetectorGeometry == 2){
   const G4double rOuter4[2] = {0.5*fPMTDiameter, 0.5*fPMTDiameter};
   
   G4RotationMatrix rotm  = G4RotationMatrix(0,0,0);     
-  G4ThreeVector position = G4ThreeVector(0.,0.,0.);
+  G4ThreeVector position = G4ThreeVector(0.,0.,-0.15*cm);
   G4Transform3D transform = G4Transform3D(rotm,position);
   G4ThreeVector boxposition1 = G4ThreeVector(-0.5*fTotalDetectorDiameter - 0.6*cm, 0., fTotalDetectorLength);
   G4ThreeVector boxposition2 = G4ThreeVector(0.5*fTotalDetectorDiameter + 0.6*cm, 0., fTotalDetectorLength);
   G4ThreeVector boxposition3 = G4ThreeVector(0., -0.5*fTotalDetectorDiameter - 0.6*cm, fTotalDetectorLength);
-  G4ThreeVector sourceposition = G4ThreeVector(0.,0., 0.5*fTotalDetectorLength + 5.*cm);
+  G4ThreeVector sourceposition = G4ThreeVector(0.,0., 0.5*fTotalDetectorLength + 4.85*cm);
   G4ThreeVector topboxposition = G4ThreeVector(0.,0., 1.5*fTotalDetectorLength + 0.5*cm);
-  G4ThreeVector bottomboxposition = G4ThreeVector(0.,0., 0.5*fTotalDetectorLength - 1.2*cm);
+  G4ThreeVector bottomboxposition = G4ThreeVector(0.,0., 0.5*fTotalDetectorLength - 0.55*cm);
   G4Transform3D boxtransform1 = G4Transform3D(rotm,boxposition1);
   G4Transform3D boxtransform2 = G4Transform3D(rotm,boxposition2);
   G4Transform3D boxtransform3 = G4Transform3D(rotm,boxposition3);
@@ -585,7 +600,7 @@ if (fDetectorGeometry == 2){
 				    false); 
 				    
   fSolidBox3 = new G4Box("Box 3", 0.5*fTotalDetectorDiameter, 0.6*cm, 0.5*fTotalDetectorLength);
-  fLogicBox3 = new G4LogicalVolume(fSolidBox3, fBoxMaterial, "Box 3");
+  fLogicBox3 = new G4LogicalVolume(fSolidBox3, fAlCaseMaterial, "Box 3");
   fPhysiBox3 = new G4PVPlacement(boxtransform3,
         			fLogicBox3, 
        				"Box 3", 
@@ -594,7 +609,21 @@ if (fDetectorGeometry == 2){
     			    	0,
 				    false); 
 				    
-  fSolidSource = new G4Box("Source", 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorDiameter, 0.1*cm);			    
+  G4Box* oCover = new G4Box("oCover", 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorDiameter, 0.1*cm);	
+  G4Box* iCover = new G4Box("iCover", 0.5*fTotalDetectorDiameter - 0.4*cm, 0.5*fTotalDetectorDiameter - 0.4*cm, 0.1*cm);	
+  fSolidCover = new G4SubtractionSolid("Source", oCover, iCover);			    
+  fLogicCover = new G4LogicalVolume(fSolidCover, fCoverMaterial, "Cover");
+  fPhysiCover = new G4PVPlacement(sourcetransform,
+        			fLogicCover, 
+       				"Cover", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+				    false);
+				    
+  G4Box* oSource = new G4Box("oSource", 0.5*fTotalDetectorDiameter - 0.4*cm, 0.5*fTotalDetectorDiameter - 0.4*cm, 0.1*cm);
+  G4Tubs* iSource = new G4Tubs("Detector", 0., 0.125*cm, 0.1*cm, 0.*deg, 360.*deg);
+  fSolidSource = new G4SubtractionSolid("Source", oSource, iSource);			    
   fLogicSource = new G4LogicalVolume(fSolidSource, fSourceMaterial, "Source");
   fPhysiSource = new G4PVPlacement(sourcetransform,
         			fLogicSource, 
@@ -602,9 +631,9 @@ if (fDetectorGeometry == 2){
        				fLogicWorld, 
        				false, 
     			    	0,
-				    false); 
+				    false);   
 				    
-  fSolidTopBox = new G4Box("TopBox", 6.6*cm, 6.6*cm, 0.5*cm);
+  fSolidTopBox = new G4Box("TopBox", 5.35*cm, 5.35*cm, 0.5*cm);
   fLogicTopBox = new G4LogicalVolume(fSolidTopBox, fBoxMaterial, "TopBox");
   fPhysiTopBox = new G4PVPlacement(topboxtransform,
         			fLogicTopBox, 
@@ -614,7 +643,7 @@ if (fDetectorGeometry == 2){
     			    	0,
 				    false); 
   
-  G4Box *oBox = new G4Box("oBox", 6.6*cm, 6.6*cm, 1.2*cm);
+  G4Box *oBox = new G4Box("oBox", 5.35*cm, 5.35*cm, 1.1*cm);
   G4Polyhedra *iPoly = new G4Polyhedra("iPoly", 0.*deg, 360.*deg, 6, 2, zPlane, rInner, rOuter);
   fSolidBottomBox = new G4SubtractionSolid("BottomBox", oBox, iPoly);
   fLogicBottomBox = new G4LogicalVolume(fSolidBottomBox, fBoxMaterial, "BottomBox");
@@ -627,7 +656,7 @@ if (fDetectorGeometry == 2){
 				    false); 
   
   fSolidDetector1 = new G4Polyhedra{"Detector", 0.*deg, 360.*deg, 6, 2, zPlane, rInner, rOuter};
-  fLogicDetector = new G4LogicalVolume(fSolidDetector1,fWorldMaterial, "Detector");
+  fLogicDetector = new G4LogicalVolume(fSolidDetector1,fDetectorMaterial, "Detector");
   fPhysiDetector = new G4PVPlacement(transform,
         			fLogicDetector, 
        				"Detector", 
@@ -654,7 +683,7 @@ if (fDetectorGeometry == 2){
   // Crystal
   //
   fSolidCrystal1 = new G4Polyhedra("Crystal", 0.*deg, 360.*deg, 6, 2, zPlane2, rInner, rInner1);
-  fLogicCrystal = new G4LogicalVolume(fSolidCrystal1, fDetectorMaterial, "Crystal");
+  fLogicCrystal = new G4LogicalVolume(fSolidCrystal1, fCrystalMaterial, "Crystal");
   fPhysiCrystal = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZpos), 
         			fLogicCrystal, 
@@ -679,7 +708,7 @@ if (fDetectorGeometry == 2){
   //FaceGap (gap between face of crystal and casing or a reflector as required)
   //
   fSolidFaceGap1 = new G4Polyhedra("FaceGap", 0.*deg, 360.*deg, 6, 2, zPlane4, rInner, rInner1);
-  fLogicFaceGap = new G4LogicalVolume(fSolidFaceGap1, fGapMaterial, "FaceGap");
+  fLogicFaceGap = new G4LogicalVolume(fSolidFaceGap1, fFaceGapMaterial, "FaceGap");
   fPhysiFaceGap = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZposFaceGap), 
         			fLogicFaceGap, 
@@ -708,7 +737,7 @@ if (fDetectorGeometry == 2){
   //Aluminum Face Casing (casing covering face of crystal)
   //
   fSolidFaceAlCase1 = new G4Polyhedra("FaceAlCase", 0.*deg, 360.*deg, 6, 2, zPlane6, rInner, rOuter1);
-  fLogicFaceAlCase = new G4LogicalVolume(fSolidFaceAlCase1, fAlCaseMaterial, "FaceAlCase");
+  fLogicFaceAlCase = new G4LogicalVolume(fSolidFaceAlCase1, fFaceAlCaseMaterial, "FaceAlCase");
   fPhysiFaceAlCase = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZposFaceAlCase), 
         			fLogicFaceAlCase, 
@@ -733,7 +762,7 @@ if (fDetectorGeometry == 2){
   //Check to see if collar is needed first. Large enough crystal and small PMT will not require collar.
   if (fPbCaseDiameter<fPMTDiameter){  
 	fSolidPbCollar1 = new G4Polyhedra("PbCollar", 0.*deg, 360.*deg, 6, 2, zPlane8, rInner4, rOuter4);
-	fLogicPbCollar = new G4LogicalVolume(fSolidPbCollar1, fPbCaseMaterial, "PbCollar");
+	fLogicPbCollar = new G4LogicalVolume(fSolidPbCollar1, fPbCollarMaterial, "PbCollar");
 	fPhysiPbCollar = new G4PVPlacement(0, 
 						G4ThreeVector(0.,0.,fZposPbCollar), 
 						fLogicPbCollar, 
@@ -766,12 +795,13 @@ if (fDetectorGeometry == 3){
 //  No Rotation Now
   
   fSolidDetector = new G4Tubs("Detector", 0., 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorLength, 0.*deg, 360.*deg);
-  fLogicDetector = new G4LogicalVolume(fSolidDetector,fWorldMaterial, "Detector");
+  fLogicDetector = new G4LogicalVolume(fSolidDetector,fDetectorMaterial, "Detector");
   G4RotationMatrix rotm = G4RotationMatrix(0,0,0); 
   G4RotationMatrix rotm180 = G4RotationMatrix(0,180.*deg,0);    
   G4ThreeVector P;
   G4Transform3D Tr;
   G4AssemblyVolume* assemblyDetector = new G4AssemblyVolume();
+  G4ThreeVector GetPointOnSurface(0,0,0.5*fDetectorLength);
   //10 detectors with 10 straddling detectors
   //bottom 3
   P.setX(-1.5*fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) + 1/(16*sqrt(3)))*fTotalDetectorDiameter); P.setZ(fTotalDetectorLength - 0.5*fTotalDetectorDiameter + 0.5*cm);
@@ -916,7 +946,7 @@ if (fDetectorGeometry == 3){
   // Crystal
   //
   fSolidCrystal = new G4Tubs("Crystal", 0., 0.5*fDetectorDiameter, 0.5*fDetectorLength, 0.*deg, 360.*deg);
-  fLogicCrystal = new G4LogicalVolume(fSolidCrystal, fDetectorMaterial, "Crystal");
+  fLogicCrystal = new G4LogicalVolume(fSolidCrystal, fCrystalMaterial, "Crystal");
   fPhysiCrystal = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZpos), 
         			fLogicCrystal, 
@@ -941,7 +971,7 @@ if (fDetectorGeometry == 3){
   //FaceGap (gap between face of crystal and casing or a reflector as required)
   //
   fSolidFaceGap = new G4Tubs("FaceGap", 0., 0.5*fDetectorDiameter, 0.5*fGapThickness, 0.*deg, 360.*deg);
-  fLogicFaceGap = new G4LogicalVolume(fSolidFaceGap, fGapMaterial, "FaceGap");
+  fLogicFaceGap = new G4LogicalVolume(fSolidFaceGap, fFaceGapMaterial, "FaceGap");
   fPhysiFaceGap = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZposFaceGap), 
         			fLogicFaceGap, 
@@ -970,7 +1000,7 @@ if (fDetectorGeometry == 3){
   //Aluminum Face Casing (casing covering face of crystal)
   //
   fSolidFaceAlCase = new G4Tubs("FaceAlCase", 0., 0.5*fGapDiameter, 0.5*fAlCaseThickness, 0.*deg, 360.*deg);
-  fLogicFaceAlCase = new G4LogicalVolume(fSolidFaceAlCase, fAlCaseMaterial, "FaceAlCase");
+  fLogicFaceAlCase = new G4LogicalVolume(fSolidFaceAlCase, fFaceAlCaseMaterial, "FaceAlCase");
   fPhysiFaceAlCase = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZposFaceAlCase), 
         			fLogicFaceAlCase, 
@@ -996,7 +1026,7 @@ if (fDetectorGeometry == 3){
   if (fPbCaseDiameter<fPMTDiameter){  
 	fSolidPbCollar = new G4Tubs("PbCollar", 0.5*fPbCaseDiameter, 0.5*fPMTDiameter, 0.5*fPbCaseThickness, 0.*deg,    
         360.*deg);
-	fLogicPbCollar = new G4LogicalVolume(fSolidPbCollar, fPbCaseMaterial, "PbCollar");
+	fLogicPbCollar = new G4LogicalVolume(fSolidPbCollar, fPbCollarMaterial, "PbCollar");
 	fPhysiPbCollar = new G4PVPlacement(0, 
 						G4ThreeVector(0.,0.,fZposPbCollar), 
 						fLogicPbCollar, 
@@ -1047,7 +1077,7 @@ if (fDetectorGeometry == 4){
   const G4double rOuter4[2] = {0.5*fPMTDiameter, 0.5*fPMTDiameter};
   
   fSolidDetector1 = new G4Polyhedra{"Detector", 0.*deg, 360.*deg, 6, 2, zPlane, rInner, rOuter};
-  fLogicDetector = new G4LogicalVolume(fSolidDetector1,fWorldMaterial, "Detector");
+  fLogicDetector = new G4LogicalVolume(fSolidDetector1,fDetectorMaterial, "Detector");
   G4RotationMatrix rotm = G4RotationMatrix(0,0,0); 
   G4RotationMatrix rotm180 = G4RotationMatrix(0,180.*deg,0); 
   //G4RotationMatrix rotm90 = G4RotationMatrix (0,180.*deg,90.*deg);  
@@ -1200,7 +1230,7 @@ if (fDetectorGeometry == 4){
   // Crystal
   //
   fSolidCrystal1 = new G4Polyhedra("Crystal", 0.*deg, 360.*deg, 6, 2, zPlane2, rInner, rInner1);
-  fLogicCrystal = new G4LogicalVolume(fSolidCrystal1, fDetectorMaterial, "Crystal");
+  fLogicCrystal = new G4LogicalVolume(fSolidCrystal1, fCrystalMaterial, "Crystal");
   fPhysiCrystal = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZpos), 
         			fLogicCrystal, 
@@ -1225,7 +1255,7 @@ if (fDetectorGeometry == 4){
   //FaceGap (gap between face of crystal and casing or a reflector as required)
   //
   fSolidFaceGap1 = new G4Polyhedra("FaceGap", 0.*deg, 360.*deg, 6, 2, zPlane4, rInner, rInner1);
-  fLogicFaceGap = new G4LogicalVolume(fSolidFaceGap1, fGapMaterial, "FaceGap");
+  fLogicFaceGap = new G4LogicalVolume(fSolidFaceGap1, fFaceGapMaterial, "FaceGap");
   fPhysiFaceGap = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZposFaceGap), 
         			fLogicFaceGap, 
@@ -1254,7 +1284,7 @@ if (fDetectorGeometry == 4){
   //Aluminum Face Casing (casing covering face of crystal)
   //
   fSolidFaceAlCase1 = new G4Polyhedra("FaceAlCase", 0.*deg, 360.*deg, 6, 2, zPlane6, rInner, rOuter1);
-  fLogicFaceAlCase = new G4LogicalVolume(fSolidFaceAlCase1, fAlCaseMaterial, "FaceAlCase");
+  fLogicFaceAlCase = new G4LogicalVolume(fSolidFaceAlCase1, fFaceAlCaseMaterial, "FaceAlCase");
   fPhysiFaceAlCase = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZposFaceAlCase), 
         			fLogicFaceAlCase, 
@@ -1280,7 +1310,7 @@ if (fDetectorGeometry == 4){
   //Check to see if collar is needed first. Large enough crystal and small PMT will not require collar.
   if (fPbCaseDiameter<fPMTDiameter){  
 	fSolidPbCollar1 = new G4Polyhedra("PbCollar", 0.*deg, 360.*deg, 6, 2, zPlane8, rInner4, rOuter4);
-	fLogicPbCollar = new G4LogicalVolume(fSolidPbCollar1, fPbCaseMaterial, "PbCollar");
+	fLogicPbCollar = new G4LogicalVolume(fSolidPbCollar1, fPbCollarMaterial, "PbCollar");
 	fPhysiPbCollar = new G4PVPlacement(0, 
 						G4ThreeVector(0.,0.,fZposPbCollar), 
 						fLogicPbCollar, 
@@ -1329,7 +1359,7 @@ if (fDetectorGeometry == 4){
   G4cout << "\n" << "The geometry is hexagonal. The detectors are stacked in an array (4)." << G4endl;
 }
   G4cout << "\n" << "The detector is made of " << fDetectorMaterial << G4endl;
-  G4cout << "\n" << "The box is made of" << fBoxMaterial << G4endl;
+  G4cout << "\n" << "The box is made of" << fBoxMaterial << "and its back is made of" << fAlCaseMaterial << G4endl;
   G4cout << "\n" << "The objects' temperature is: " << Temperature << " kelvin" << G4endl;
   G4cout << "\n" << "The objects' pressure is: " << G4BestUnit(Pressure, "Pressure") << G4endl;
   G4cout << "\n" << "The crystal is made of" << fCrystalMaterial << G4endl;
@@ -1340,7 +1370,7 @@ if (fDetectorGeometry == 4){
   G4cout << "\n" << "The lead case is made of " << fPbCaseMaterial << G4endl;
   G4cout << "\n" << "The lead collar is made of " << fPbCollarMaterial << G4endl;
   G4cout << "\n" << "The photomultiplier tube is made of" << fPMTMaterial << G4endl;
-  G4cout << "\n" << "The photomultiplier tube window is made of" << fBoxMaterial << G4endl;
+  G4cout << "\n" << "The photomultiplier tube window is made of" << fPMTWinMaterial << G4endl;
   G4cout << "\n" << "Total Detector Diameter: " << G4BestUnit(fTotalDetectorDiameter, "Length") << G4endl;
   G4cout << "\n" << "Detector Diameter: " << G4BestUnit(fDetectorDiameter, "Length") << G4endl;
   G4cout << "\n" << "Total Detector Length: " << G4BestUnit(fTotalDetectorLength, "Length") << G4endl;
