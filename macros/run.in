@@ -40,28 +40,28 @@
 /testem/det/update
 /run/initialize
 # 5 cm from the face
-/gps/pos/centre 0. 0. 18.9575 cm
+/gps/pos/centre 0. 0. 18.6575 cm
 /gps/particle gamma
 /gps/pos/type Point
 /gps/ang/type iso
 /gps/energy 10 MeV
 /vis/disable
 /vis/scene/endOfEventAction accumulate 0
-/run/beamOn 10000
+/run/beamOn 100000
 /vis/reviewKeptEvents
 
 /testem/det/setDetectorGeometry 2
 /testem/det/update
 /run/initialize
 # 5 cm from the face
-/gps/pos/centre 0. 0. 18.9575 cm
+/gps/pos/centre 0. 0. 18.6575 cm
 /gps/particle gamma
 /gps/pos/type Point
 /gps/ang/type iso
 /gps/energy 10 MeV
 /vis/disable
 /vis/scene/endOfEventAction accumulate 0
-/run/beamOn 10000
+/run/beamOn 100000
 /vis/reviewKeptEvents
 
 /testem/det/setDetectorGeometry 3
@@ -76,7 +76,7 @@
 /gps/energy 10 MeV
 /vis/disable
 /vis/scene/endOfEventAction accumulate 0
-/run/beamOn 10000
+/run/beamOn 100000
 /vis/reviewKeptEvents
 
 /testem/det/setDetectorGeometry 4
@@ -91,5 +91,5 @@
 /gps/energy 10 MeV
 /vis/disable
 /vis/scene/endOfEventAction accumulate 0
-/run/beamOn 10000
+/run/beamOn 100000
 /vis/reviewKeptEvents
