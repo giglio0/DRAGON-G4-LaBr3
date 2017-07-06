@@ -60,7 +60,7 @@ fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
   fAlCaseThickness = 0.2*cm;
   fPbCaseThickness = 0.5*cm;
   Temperature = 298*kelvin;
-  Pressure = 1*atmosphere;
+  Pressure = 101325*pascal;
   
   ComputeCalorParameters();
   
@@ -80,7 +80,7 @@ fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
   fPMTMaterial = G4NistManager::Instance()->FindOrBuildMaterial("PMTMix");
   fPMTWinMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Pyrex");
   //Set Default Gap Material i.e. no reflector
-  fGapMaterial 	= G4NistManager::Instance()->FindOrBuildMaterial("Teflon");
+  fGapMaterial 	= G4NistManager::Instance()->FindOrBuildMaterial("LaBr3");
   fFaceGapMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Teflon");
 
   //Set Visualization Attributes
@@ -156,7 +156,7 @@ void DetectorConstruction::DefineMaterials()
   Copper->GetIonisation()->SetMeanExcitationEnergy(322.*eV);
   new G4Material("Germanium",z=32, a= 72.61*g/mole, density= 5.323*g/cm3);
   G4Material* Silver = new G4Material("Silver",   z=47, a=107.87*g/mole, density= 10.50*g/cm3);
-  Silver->GetIonisation()->SetMeanExcitationEnergy(322.*eV);
+  Silver->GetIonisation()->SetMeanExcitationEnergy(470.*eV);
   new G4Material("Tungsten", z=74, a=183.85*g/mole, density= 19.30*g/cm3);
   new G4Material("Gold",     z=79, a=196.97*g/mole, density= 19.32*g/cm3);
   
@@ -212,7 +212,7 @@ void DetectorConstruction::DefineMaterials()
   Water->AddElement(O, fractionmass=0.888106);
   Water->GetIonisation()->SetMeanExcitationEnergy(75.*eV);
   
-  G4Material* Air = new G4Material("Air", density= 0.001225*g/cm3, ncomponents=5, kStateGas, 298*kelvin, 1*atmosphere);
+  G4Material* Air = new G4Material("Air", density= 0.001225*g/cm3, ncomponents=5, kStateGas, 298*kelvin, 101325*pascal);
   Air->AddElement(N, fractionmass=0.755268);
   Air->AddElement(O, fractionmass=0.231781);
   Air->AddElement(C, fractionmass=0.000124);
@@ -229,7 +229,7 @@ void DetectorConstruction::DefineMaterials()
   // example of vacuum
   //from PhysicalConstants.h
   new G4Material("Galactic", z=1, a=1.01*g/mole, universe_mean_density,
-                 kStateGas,2.73*kelvin,((3.e-18)/101325)*atmosphere);
+                 kStateGas,2.73*kelvin,(3.e-18)*pascal);
 }
 
 void DetectorConstruction::UpdateGeometry()
