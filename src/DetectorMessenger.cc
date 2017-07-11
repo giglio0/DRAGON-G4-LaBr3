@@ -56,6 +56,11 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction * Det)
   fWorldMaterialCmd->SetParameterName("WorldMaterial",true);
   fWorldMaterialCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
   
+  fGasTargetMaterialCmd = new G4UIcmdWithAString("/testem/det/setGasTargetMaterial",this);
+  fGasTargetMaterialCmd->SetGuidance("Select the material of the gas target.");
+  fGasTargetMaterialCmd->SetParameterName("GasTargetMaterial",true);
+  fGasTargetMaterialCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+  
   fDetectorMaterialCmd = new G4UIcmdWithAString("/testem/det/setDetectorMaterial",this);
   fDetectorMaterialCmd->SetGuidance("Select the material of the detector.");
   fDetectorMaterialCmd->SetParameterName("DetectorMaterial",true);
@@ -189,6 +194,7 @@ DetectorMessenger::~DetectorMessenger()
   delete fDetDir;  
   delete fTestemDir;
   delete fWorldMaterialCmd;
+  delete fGasTargetMaterialCmd;
   delete fDetectorMaterialCmd;
   delete fDetectorGeometryCmd;
   delete fDetectorDiameterCmd;
@@ -218,6 +224,9 @@ void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
 { 
   if ( command == fWorldMaterialCmd )
    {fDetector->SetWorldMaterial(newValue);}
+   
+  if ( command == fGasTargetMaterialCmd )
+   {fDetector->SetGasTargetMaterial(newValue);}
   
   if ( command == fDetectorMaterialCmd )
    {fDetector->SetDetectorMaterial(newValue);}
@@ -239,9 +248,6 @@ void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
    
   if ( command == fGapThicknessCmd )
    {fDetector->SetGapThickness(fGapThicknessCmd->GetNewDoubleValue(newValue));}
-      
-  if ( command == fDetectorMaterialCmd )
-   {fDetector->SetDetectorMaterial(newValue);}
    
   if ( command == fCrystalMaterialCmd )
    {fDetector->SetCrystalMaterial(newValue);}
