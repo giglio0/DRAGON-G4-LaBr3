@@ -3,7 +3,8 @@
 # Macro file for "LaBr3_v3.cc"
 # default settings
 /testem/det/setWorldMaterial Air
-/testem/det/setDetectorMaterial LaBr3
+/testem/det/setGasTargetMaterial Aluminium
+/testem/det/setDetectorMaterial Air
 /testem/det/setCrystalMaterial LaBr3
 /testem/det/setGapMaterial Teflon
 /testem/det/setFaceGapMaterial 
@@ -67,8 +68,6 @@
 /testem/det/setDetectorGeometry 3
 /testem/det/update
 /run/initialize
-# /gps/pos/centre fTotalDetectorDiameter 3*fTotalDetectorDiameter fTotalDetectorDiameter - 1 cm
-# /gps/pos/centre 7.5 22.5 6.5 cm, moved to approximately (0,0,0)
 /gps/pos/centre 0. 0. 0. cm
 /gps/particle gamma
 /gps/pos/type Point
@@ -76,14 +75,12 @@
 /gps/energy 10 MeV
 /vis/disable
 /vis/scene/endOfEventAction accumulate 0
-/run/beamOn 100000
+/run/beamOn 10000
 /vis/reviewKeptEvents
 
 /testem/det/setDetectorGeometry 4
 /testem/det/update
 /run/initialize
-# /gps/pos/centre (4*sqrt(3) + 1 / (4*(sqrt(3)))*fTotalDetectorDiameter fTotalDetectorDiameter fTotalDetectorDiameter - 1 cm
-# /gps/pos/centre 8.582531755 7.5 6.5 cm, moved to approximately (0,0,0)
 /gps/pos/centre 0. 0. 0. cm
 /gps/particle gamma
 /gps/pos/type Point
@@ -91,5 +88,5 @@
 /gps/energy 10 MeV
 /vis/disable
 /vis/scene/endOfEventAction accumulate 0
-/run/beamOn 100000
+/run/beamOn 10000
 /vis/reviewKeptEvents
