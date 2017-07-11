@@ -639,7 +639,7 @@ if (fDetectorGeometry == 3){
        				fLogicWorld, 
        				false, 
     			    	0,
-				    false); 
+	               false); 
   
   fSolidDetector = new G4Tubs("Detector", 0., 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorLength, 0.*deg, 360.*deg);
   fLogicDetector = new G4LogicalVolume(fSolidDetector,fDetectorMaterial, "Detector");
