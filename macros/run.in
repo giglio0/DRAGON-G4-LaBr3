@@ -41,7 +41,7 @@
 /testem/det/update
 /run/initialize
 # 5 cm from the face
-/gps/pos/centre 0. 0. 18.6575 cm
+/gps/pos/centre 0. 0. 18.9575 cm
 /gps/particle gamma
 /gps/pos/type Point
 /gps/ang/type iso
@@ -55,7 +55,7 @@
 /testem/det/update
 /run/initialize
 # 5 cm from the face
-/gps/pos/centre 0. 0. 18.6575 cm
+/gps/pos/centre 0. 0. 18.9575 cm
 /gps/particle gamma
 /gps/pos/type Point
 /gps/ang/type iso
