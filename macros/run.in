@@ -12,7 +12,7 @@
 /testem/det/setFaceAlCaseMaterial Aluminium
 /testem/det/setPbCaseMaterial Lead
 /testem/det/setPbCollarMaterial Lead
-/testem/det/setPMTMaterial PMTMix
+/testem/det/setPMTMaterial Aluminium
 /testem/det/setPMTWinMaterial Pyrex
 /testem/det/setTemperature 298 kelvin
 /testem/det/setPressure 101325 pascal
