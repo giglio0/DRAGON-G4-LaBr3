@@ -9,7 +9,7 @@
 // * include a list of copyright holders.                             *
 // *                                                                  *
 // * Neither the authors of this software system, nor their employing *
-// * institutes,nor the agencies providing financial support for this *
+// * institutes,nor the agencies providing finanial support for this *
 // * work  make  any representation or  warranty, express or implied, *
 // * regarding  this  software system or assume any liability for its *
 // * use.  Please see the license in the file  LICENSE  and URL above *
@@ -30,39 +30,22 @@
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 #include "DetectorConstruction.hh"
 #include "DetectorMessenger.hh"
-
-#include "G4Material.hh"
-#include "G4Colour.hh"
-#include "G4VisAttributes.hh"
-#include "G4Box.hh"
-#include "G4Tubs.hh"
-#include "G4LogicalVolume.hh"
-#include "G4RotationMatrix.hh"
-#include "G4Transform3D.hh"
-#include "G4PVPlacement.hh"
-#include "G4UniformMagField.hh"
-
-#include "G4GeometryManager.hh"
-#include "G4PhysicalVolumeStore.hh"
-#include "G4LogicalVolumeStore.hh"
-#include "G4SolidStore.hh"
-
-#include "G4UnitsTable.hh"
-#include "G4NistManager.hh"
-#include "G4RunManager.hh"
-
-#include "G4PhysicalConstants.hh"
-#include "G4SystemOfUnits.hh"
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorConstruction::DetectorConstruction()
 : fSolidWorld(0),fLogicWorld(0),fPhysiWorld(0),
-fSolidLaBr3Det(0),fLogicLaBr3Det(0),fPhysiLaBr3Det(0),
-fSolidLaBr3Crystal(0),fLogicLaBr3Crystal(0),fPhysiLaBr3Crystal(0),
+fSolidGasTarget(0),fLogicGasTarget(0),fPhysiGasTarget(0),
+fSolidGasTargetSideCuts(0),fLogicGasTargetSideCuts(0),fPhysiGasTargetSideCuts(0),
+fSolidInnerTube(0),fLogicInnerTube(0),fPhysiInnerTube(0),
+fSolidGasTargetSides(0),fLogicGasTargetSides(0),fPhysiGasTargetSides(0),
+//fSolidOblique(0),fLogicOblique(0),fPhysiOblique(0),
+fSolidTrapezoidCut(0),fLogicTrapezoidCut(0),fPhysiTrapezoidCut(0),
+fSolidTube(0),fLogicTube(0),fPhysiTube(0),
+fSolidDisk(0),fLogicDisk(0),fPhysiDisk(0),
+fSolidDetector(0),fLogicDetector(0),fPhysiDetector(0),
+fSolidCrystal(0),fLogicCrystal(0),fPhysiCrystal(0),
 fSolidGap(0),fLogicGap(0),fPhysiGap(0),
 fSolidFaceGap(0),fLogicFaceGap(0),fPhysiFaceGap(0),
 fSolidAlCase(0),fLogicAlCase(0),fPhysiAlCase(0),
@@ -71,7 +54,7 @@ fSolidPbCollar(0),fLogicPbCollar(0),fPhysiPbCollar(0),
 fSolidPMT(0),fLogicPMT(0),fPhysiPMT(0),
 fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
 {
-  //Setting the default for the world for the LaBr Sim
+  //Setting the default for the world for the Sim
   fWorldSizeX = 100*cm;
   fWorldSizeYZ = 100*cm;
 
@@ -79,27 +62,35 @@ fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
   fPMTDiameter = 7.5*cm;
   fPMTLength = 22.0*cm;
   fPMTWinThickness = 0.508*cm;
-  fLaBr3Length = 5.08*cm;
-  fLaBr3Diameter = 5.08*cm;
+  fDetectorLength = 5.08*cm;
+  fDetectorDiameter = 5.08*cm;
   fGapThickness = 0.127*cm;
   fAlCaseThickness = 0.2*cm;
   fPbCaseThickness = 0.5*cm;
-
+  Temperature = 298.15*kelvin;
+  Pressure = 101325*pascal;
+  
   ComputeCalorParameters();
   
   // materials  
   DefineMaterials();
   // Default Materials
-  fWorldMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Galactic");
-  fLaBrMaterial	= G4NistManager::Instance()->FindOrBuildMaterial("LaBr3");
-  fAlCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("G4_Al");
-  fPbCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("G4_Pb");
-  fPMTWinMaterial = G4NistManager::Instance()->FindOrBuildMaterial("G4_Pyrex_Glass");
-  fPMTMaterial = G4NistManager::Instance()->FindOrBuildMaterial("G4_Al");
+  fWorldMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Air");
+  fGasTargetMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Aluminium");
+  fTubeMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Artificial Vacuum");
+  fDetectorMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Air");
+  fCrystalMaterial = G4NistManager::Instance()->FindOrBuildMaterial("LaBr3");
+  fAlCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Aluminium");
+  fFaceAlCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Aluminium");
+  fPbCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Lead");
+  fPbCollarMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Lead");
+  fPMTMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Aluminium");
+  fPMTWinMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Pyrex");
   //Set Default Gap Material i.e. no reflector
-  fGapMaterial 	= G4NistManager::Instance()->FindOrBuildMaterial("Galactic");
+  fGapMaterial 	= G4NistManager::Instance()->FindOrBuildMaterial("Air");
+  fFaceGapMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Teflon");
 
- //Set Visualization Attributes
+  //Set Visualization Attributes
 
   // Blue
   fBlueVisAtt = new G4VisAttributes(G4Colour(0.,0.,0.75));
@@ -145,90 +136,155 @@ void DetectorConstruction::DefineMaterials()
 
   G4int ncomponents, natoms;
   G4double fractionmass;
-  G4double temperature, pressure;
-
+  
   // define Elements
-  G4Element* H  = new G4Element("Hydrogen",symbol="H",  z= 1, a=   1.01*g/mole);
-  G4Element* C  = new G4Element("Carbon",  symbol="C",  z= 6, a=  12.01*g/mole);
-  G4Element* N  = new G4Element("Nitrogen",symbol="N",  z= 7, a=  14.01*g/mole);
-  G4Element* O  = new G4Element("Oxygen",  symbol="O",  z= 8, a=  16.00*g/mole);
-  G4Element* Na = new G4Element("Sodium",  symbol="Na", z=11, a=  22.99*g/mole);
-  G4Element* I  = new G4Element("Iodine",  symbol="I" , z=53, a= 126.90*g/mole);
-  G4Element* La = new G4Element("Lanthanum",  symbol="La" , z=57, a= 138.91*g/mole);
+  G4Element* H  = new G4Element("Hydrogen",symbol="H", z=1, a= 1.01*g/mole);
+  G4Element* B = new G4Element("Boron",symbol="B", z=5, a= 10.81*g/mole); 
+  G4Element* C  = new G4Element("Carbon",  symbol="C", z=6, a= 12.01*g/mole);
+  G4Element* N  = new G4Element("Nitrogen",symbol="N", z=7, a= 14.01*g/mole);
+  G4Element* O  = new G4Element("Oxygen",  symbol="O", z=8, a= 16.00*g/mole);
+  G4Element* F = new G4Element("Flourine", symbol="F", z=9, a= 19.00*g/mole);
+  G4Element* Na = new G4Element("Sodium",  symbol="Na", z=11, a= 22.99*g/mole);
+  G4Element* Ar = new G4Element("Argon", symbol="Ar", z=18, a= 39.95*g/mole);
+  G4Element* K = new G4Element("Potassium", symbol="K", z=19, a= 39.10*g/mole);
+  G4Element* I  = new G4Element("Iodine",  symbol="I", z=53, a= 126.90*g/mole);
+  G4Element* La = new G4Element("Lanthanum",  symbol="La", z=57, a= 138.91*g/mole);
   G4Element* Br = new G4Element("Bromine",   symbol="Br", z=35, a= 79.90*g/mole);
-
+  G4Element* Bi = new G4Element("Bismuth", symbol="Bi", z=83, a= 208.980*g/mole);
+  G4Element* Ge = new G4Element("Germanium", symbol="Ge", z=32, a= 72.63*g/mole);
+  G4Element* Cs = new G4Element("Cesium", symbol="Cs", z=55, a= 132.91*g/mole);
+ 
   // define simple materials
   new G4Material("H2Liq"    , z= 1, a= 1.01*g/mole, density= 70.8*mg/cm3);
   new G4Material("Beryllium", z= 4, a= 9.01*g/mole, density= 1.848*g/cm3);
-  new G4Material("Aluminium", z=13, a=26.98*g/mole, density= 2.700*g/cm3);
-  new G4Material("Silicon"  , z=14, a=28.09*g/mole, density= 2.330*g/cm3);
+  G4Material* Silicon = new G4Material("Silicon"  , z=14, a=28.09*g/mole, density= 2.330*g/cm3);
   new G4Material("Iron",     z=26, a= 55.85*g/mole, density= 7.870*g/cm3);
-  new G4Material("Copper",   z=29, a= 63.55*g/mole, density= 8.960*g/cm3);
+  G4Material* Copper = new G4Material("Copper",   z=29, a= 63.55*g/mole, density= 8.960*g/cm3);
+  Copper->GetIonisation()->SetMeanExcitationEnergy(322.*eV);
   new G4Material("Germanium",z=32, a= 72.61*g/mole, density= 5.323*g/cm3);
-  new G4Material("Silver",   z=47, a=107.87*g/mole, density= 10.50*g/cm3);
+  G4Material* Silver = new G4Material("Silver",   z=47, a=107.87*g/mole, density= 10.50*g/cm3);
+  Silver->GetIonisation()->SetMeanExcitationEnergy(470.*eV);
   new G4Material("Tungsten", z=74, a=183.85*g/mole, density= 19.30*g/cm3);
   new G4Material("Gold",     z=79, a=196.97*g/mole, density= 19.32*g/cm3);
-  new G4Material("Lead",     z=82, a=207.19*g/mole, density= 11.35*g/cm3);
+  
+  G4Material* Aluminium = new G4Material("Aluminium", z=13, a=26.98*g/mole, density= 2.699*g/cm3, kStateSolid, Temperature, Pressure);
+  Aluminium->GetIonisation()->SetMeanExcitationEnergy(166*eV);
+  G4Material* Lead = new G4Material("Lead", z=82, a=207.19*g/mole, density= 11.35*g/cm3, kStateSolid, Temperature, Pressure);
+  Lead->GetIonisation()->SetMeanExcitationEnergy(823*eV);
 
   // define a material from elements.   case 1: chemical molecule
-  G4Material* CH = new G4Material("Plastic", density= 1.04*g/cm3, ncomponents=2);
-  CH->AddElement(C, natoms=1);
-  CH->AddElement(H, natoms=1);
-
-  G4Material* NaI = new G4Material("NaI", density= 3.67*g/cm3, ncomponents=2);
+  G4Material* Teflon = new G4Material("Teflon", density= 2.2*g/cm3, ncomponents=2, kStateSolid, Temperature, Pressure);
+  Teflon->AddElement(C, natoms=2);
+  Teflon->AddElement(F, natoms=4);
+  Teflon->GetIonisation()->SetMeanExcitationEnergy(99.1*eV);
+  
+  G4Material* CH = new G4Material("Plastic", density= 1.032*g/cm3, ncomponents=2, kStateSolid, Temperature, Pressure);
+  CH->AddElement(C, natoms=9);
+  CH->AddElement(H, natoms=10);
+  CH->GetIonisation()->SetMeanExcitationEnergy(64.7*eV);
+  
+  G4Material* Cs2O = new G4Material("Cs2O", density= 4.65*g/cm3, ncomponents=2, kStateSolid, Temperature, Pressure);
+  Cs2O->AddElement(Cs, natoms=2);
+  Cs2O->AddElement(O, natoms=1);
+  Cs2O->GetIonisation()->SetMeanExcitationEnergy(1.*eV);
+ 
+  G4Material* NaI = new G4Material("NaI", density= 3.67*g/cm3, ncomponents=2, kStateSolid, Temperature, Pressure);
   NaI->AddElement(Na, natoms=1);
   NaI->AddElement(I , natoms=1);
   NaI->GetIonisation()->SetMeanExcitationEnergy(452*eV);
 
   // define a material from elements.   case 2: mixture by fractional mass
-  G4Material* LaBr3 = new G4Material("LaBr3", density= 5.06*g/cm3, ncomponents=2);
-  LaBr3->AddElement(La, fractionmass = 0.366875);
-  LaBr3->AddElement(Br ,fractionmass = 0.633124);
+  G4Material* LaBr3 = new G4Material("LaBr3", density= 5.06*g/cm3, ncomponents=2, kStateSolid, Temperature, Pressure);
+  LaBr3->AddElement(La, fractionmass=0.366875);
+  LaBr3->AddElement(Br,fractionmass=0.633125);
   LaBr3->GetIonisation()->SetMeanExcitationEnergy(454.5*eV);
-
-  G4Material* Air = new G4Material("Air", density= 1.290*mg/cm3, ncomponents=2);
-  Air->AddElement(N, fractionmass=0.7);
-  Air->AddElement(O, fractionmass=0.3);
-
+  
+  G4Material* BGO = new G4Material("BGO", density = 7.13*g/cm3, ncomponents=3, kStateSolid, Temperature, Pressure);
+  BGO->AddElement(Bi, fractionmass=0.67099);
+  BGO->AddElement(Ge, fractionmass=0.17490);
+  BGO->AddElement(O, fractionmass=0.15411);
+  BGO->GetIonisation()->SetMeanExcitationEnergy(534.1*eV);
+  
+  G4Material* Pyrex = new G4Material("Pyrex", density = 2.23*g/cm3, ncomponents=6, kStateSolid, Temperature, Pressure);
+  Pyrex->AddElement(B, fractionmass=0.0400639);
+  Pyrex->AddElement(O, fractionmass=0.539561);
+  Pyrex->AddElement(Na, fractionmass=0.0281909);
+  Pyrex->AddMaterial(Aluminium, fractionmass=0.011644);
+  Pyrex->AddMaterial(Silicon, fractionmass=0.377219);
+  Pyrex->AddElement(K, fractionmass=0.00332099);
+  Pyrex->GetIonisation()->SetMeanExcitationEnergy(134*eV);
+  
+  G4Material* Water = new G4Material("Water", density= 1.*g/cm3, ncomponents=2, kStateGas, Temperature, Pressure);
+  Water->AddElement(H, fractionmass=0.111894);
+  Water->AddElement(O, fractionmass=0.888106);
+  Water->GetIonisation()->SetMeanExcitationEnergy(75.*eV);
+  
+  G4Material* Air = new G4Material("Air", density= 0.001225*g/cm3, ncomponents=5, kStateGas, 298.15*kelvin, 101325*pascal);
+  Air->AddElement(N, fractionmass=0.755268);
+  Air->AddElement(O, fractionmass=0.231781);
+  Air->AddElement(C, fractionmass=0.000124);
+  Air->AddElement(Ar, fractionmass=0.0064135);
+  Air->AddMaterial(Water, fractionmass=0.0064135);
+  Air->GetIonisation()->SetMeanExcitationEnergy((85.7*0.9935865 + 75.*0.0064135)*eV);
+  //Weighted average of the mean excitation energy for air and water
+  
+  //The density is taken as the weighted average of cesium oxide, silver, and air
+  G4Material* PMTMix = new G4Material("PMTMix", density= 6.109688*g/cm3, ncomponents=3, kStateSolid, Temperature, Pressure);
+  PMTMix->AddMaterial(Cs2O, fractionmass=((2.475/0.0006125)/(3.3/0.0006125)));
+  PMTMix->AddMaterial(Silver, fractionmass=((0.825/0.0006125)-1)/(3.3/0.0006125));
+  PMTMix->AddMaterial(Air, fractionmass=1/(3.3/0.0006125));
+  //Assumed that cesium oxide and silver take up about 75% of the mass
+  PMTMix->GetIonisation()->SetMeanExcitationEnergy(((((265.65/0.0006125)-1)/(3.3/0.0006125)) + (((2.475/0.0006125)-1))/(3.3/0.0006125)) + ((85.7*0.99935865 + 75.*0.00064135)/(3.3/0.0006125))*eV);
+  //Weighted average of the mean excitation energy for cesium oxide, silver, and air
+  
+  // Artificial Vacuum
+  new G4Material("Artificial Vacuum", z=1, a=1.01*g/mole, universe_mean_density, kStateGas, 298.15*kelvin,(3.e-18)*pascal);
+  
   // example of vacuum
-  density     = universe_mean_density;    //from PhysicalConstants.h
-  pressure    = 3.e-18*pascal;
-  temperature = 2.73*kelvin;
-  new G4Material("Galactic", z=1, a=1.01*g/mole,density,
-                 kStateGas,temperature,pressure);
+  //from PhysicalConstants.h
+  new G4Material("Galactic", z=1, a=1.01*g/mole, universe_mean_density,
+                 kStateGas,2.73*kelvin,(3.e-18)*pascal);
 }
 
+void DetectorConstruction::UpdateGeometry()
+{
+  G4RunManager::GetRunManager()->DefineWorldVolume(ConstructCalorimeter());
+  G4RunManager::GetRunManager()->PhysicsHasBeenModified();
+  G4RunManager::GetRunManager()->ReinitializeGeometry();
+}
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void DetectorConstruction::ComputeCalorParameters()
 {
   // Compute derived parameters of the calorimeter
-  fGapLength = fLaBr3Length + fPMTWinThickness + fGapThickness;
-  fGapDiameter = fLaBr3Diameter + 2*fGapThickness;
+  fGapLength = fDetectorLength + fPMTWinThickness + fGapThickness;
+  fGapDiameter = fDetectorDiameter + 2*fGapThickness;
   fAlCaseLength = fGapLength + fAlCaseThickness;
   fAlCaseDiameter = fGapDiameter + 2*fAlCaseThickness;
   fPbCaseDiameter = fAlCaseDiameter + 2*fPbCaseThickness;
-  fLaBr3DetLength = fPMTWinThickness + fLaBr3Length + fPMTLength + fGapThickness + fAlCaseThickness;
+  fTotalDetectorLength = fPMTWinThickness + fDetectorLength + fPMTLength + fGapThickness + fAlCaseThickness;
   if (fPbCaseDiameter>fPMTDiameter){
 	  fPMTDiameter = fPbCaseDiameter;
 	  G4cout << "\n" << "\n" 
 	  << "WARNING: PMT Diameter has been adjusted to compensate for large crystal/lead/aluminum size"  
 	  << G4endl;
-	  fLaBr3DetDiameter = fPMTDiameter;
+	  fTotalDetectorDiameter = fPMTDiameter;
   }
   else
-	fLaBr3DetDiameter = fPMTDiameter;
+	fTotalDetectorDiameter = fPMTDiameter;
 
-  fZposPbCollar = 0.5*fLaBr3DetLength - fAlCaseThickness - fGapThickness - fLaBr3Length - fPMTWinThickness + 0.5*fPbCaseThickness;
-  fZposFaceAlCase = 0.5*fLaBr3DetLength - 0.5*fAlCaseThickness;
-  fZposFaceGap = 0.5*fLaBr3DetLength - fAlCaseThickness - 0.5*fGapThickness ;
-  fZposLaBr3 = 0.5*fLaBr3DetLength - fGapThickness - fAlCaseThickness - 0.5*fLaBr3Length;
+  fZposPbCollar = 0.5*fTotalDetectorLength - fAlCaseThickness - fGapThickness - fDetectorLength - fPMTWinThickness +  
+  0.5*fPbCaseThickness;
+  fZposFaceAlCase = 0.5*fTotalDetectorLength - 0.5*fAlCaseThickness;
+  fZposFaceGap = 0.5*fTotalDetectorLength - fAlCaseThickness - 0.5*fGapThickness ;
+  fZpos = 0.5*fTotalDetectorLength - fGapThickness - fAlCaseThickness - 0.5*fDetectorLength;
 
-  fZposAlCase = 0.5*fLaBr3DetLength - 0.5*fAlCaseLength;
-  fZposGap = 0.5*fLaBr3DetLength - fAlCaseThickness - 0.5*fGapLength ;
-  fZposPMTWin = 0.5*fLaBr3DetLength - fAlCaseThickness - fGapThickness - fLaBr3Length - 0.5*fPMTWinThickness;
-  fZposPMT = 0.5*fLaBr3DetLength - fAlCaseThickness - fGapThickness - fLaBr3Length - fPMTWinThickness - 0.5*fPMTLength;
-
+  fZposAlCase = 0.5*fTotalDetectorLength - 0.5*fAlCaseLength;
+  fZposGap = 0.5*fTotalDetectorLength - fAlCaseThickness - 0.5*fGapLength ;
+  fZposPMTWin = 0.5*fTotalDetectorLength - fAlCaseThickness - fGapThickness - fDetectorLength - 0.5*fPMTWinThickness;
+  fZposPMT = 0.5*fTotalDetectorLength - fAlCaseThickness - fGapThickness - fDetectorLength - fPMTWinThickness - 
+  0.5*fPMTLength;
+  
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -241,10 +297,10 @@ G4VPhysicalVolume* DetectorConstruction::ConstructCalorimeter()
   G4PhysicalVolumeStore::GetInstance()->Clean();
   G4LogicalVolumeStore::GetInstance()->Clean();
   G4SolidStore::GetInstance()->Clean();
-  
+ 
   // complete the Calor parameters definition 
   ComputeCalorParameters();
-        
+
   // World
   //
   fSolidWorld = new G4Box("World",                                //its name
@@ -262,84 +318,86 @@ G4VPhysicalVolume* DetectorConstruction::ConstructCalorimeter()
                                  false,                        //no boolean operation
                                  0);                        //copy number
   fLogicWorld->SetVisAttributes(fWireFrameVisAtt);
-  //LaBr3 Detector Holder Volume for Components
+  //Detector Holder Volume for Components
   //
-
+ 
+if (fDetectorGeometry == 1){  
+//  Single cylindrical detector
 //  If rotation required  
 //  G4RotationMatrix rotm  = G4RotationMatrix(0,90*deg,-90*deg);     
 //  No Rotation Now
   G4RotationMatrix rotm  = G4RotationMatrix(0,0,0);     
   G4ThreeVector position = G4ThreeVector(0.,0.,0.);
   G4Transform3D transform = G4Transform3D(rotm,position);
-
-  fSolidLaBr3Det = new G4Tubs("LaBr3Det", 0., 0.5*fLaBr3DetDiameter, 0.5*fLaBr3DetLength, 0.*deg, 360.*deg);
-  fLogicLaBr3Det = new G4LogicalVolume(fSolidLaBr3Det,fWorldMaterial, "LaBr3Det");
-  fPhysiLaBr3Det = new G4PVPlacement(transform,
-        			fLogicLaBr3Det, 
-       				"LaBr3Det", 
+  
+  fSolidDetector = new G4Tubs("Detector", 0., 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorLength, 0.*deg, 360.*deg);
+  fLogicDetector = new G4LogicalVolume(fSolidDetector, fDetectorMaterial, "Detector");
+  fPhysiDetector = new G4PVPlacement(transform,
+        			fLogicDetector, 
+       				"Detector", 
        				fLogicWorld, 
        				false, 
     			    	0,
-				false);
+				    false);
 
-  fLogicLaBr3Det->SetVisAttributes(fWireFrameVisAtt);
+  fLogicDetector->SetVisAttributes(fWireFrameVisAtt);
 
-  //PMT Optical Window
+  // PMT Optical Window
   //
-  fSolidPMTWin = new G4Tubs("PMTWin", 0., 0.5*fLaBr3Diameter, 0.5*fPMTWinThickness, 0.*deg, 360.*deg);
+  fSolidPMTWin = new G4Tubs("PMTWin", 0., 0.5*fDetectorDiameter, 0.5*fPMTWinThickness, 0.*deg, 360.*deg);
   fLogicPMTWin = new G4LogicalVolume(fSolidPMTWin, fPMTWinMaterial, "PMTWin");
   fPhysiPMTWin = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZposPMTWin), 
         			fLogicPMTWin, 
        				"PMTWin", 
-       				fLogicLaBr3Det, 
+       				fLogicDetector, 
        				false, 
     			    	0);
   fLogicPMTWin->SetVisAttributes(fGreenVisAtt);
 
-  //LaBr3 Crystal
+  // Crystal
   //
-  fSolidLaBr3Crystal = new G4Tubs("LaBr3Crystal", 0., 0.5*fLaBr3Diameter, 0.5*fLaBr3Length, 0.*deg, 360.*deg);
-  fLogicLaBr3Crystal = new G4LogicalVolume(fSolidLaBr3Crystal, fLaBrMaterial, "LaBr3Crystal");
-  fPhysiLaBr3Crystal = new G4PVPlacement(0, 
-        			G4ThreeVector(0.,0.,fZposLaBr3), 
-        			fLogicLaBr3Crystal, 
-       				"LaBr3Crystal", 
-       				fLogicLaBr3Det, 
+  fSolidCrystal = new G4Tubs("Crystal", 0., 0.5*fDetectorDiameter, 0.5*fDetectorLength, 0.*deg, 360.*deg);
+  fLogicCrystal = new G4LogicalVolume(fSolidCrystal, fCrystalMaterial, "Crystal");
+  fPhysiCrystal = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZpos), 
+        			fLogicCrystal, 
+       				"Crystal", 
+       				fLogicDetector, 
        				false, 
     			    	0);
-  fLogicLaBr3Crystal->SetVisAttributes(fRedVisAtt);
+  fLogicCrystal->SetVisAttributes(fRedVisAtt);
 
-  //LaBr3 Gap (gap surrounding crystal and casing or a reflector as required)
+  //Gap (gap surrounding crystal and casing or a reflector as required)
   //
-  fSolidGap = new G4Tubs("Gap", 0.5*fLaBr3Diameter, 0.5*fGapDiameter, 0.5*fGapLength, 0.*deg, 360.*deg);
+  fSolidGap = new G4Tubs("Gap", 0.5*fDetectorDiameter, 0.5*fGapDiameter, 0.5*fGapLength, 0.*deg, 360.*deg);
   fLogicGap = new G4LogicalVolume(fSolidGap, fGapMaterial, "Gap");
   fPhysiGap = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZposGap), 
         			fLogicGap, 
        				"Gap", 
-       				fLogicLaBr3Det, 
+       				fLogicDetector, 
        				false, 
     			    	0);
 
-  //LaBr3 FaceGap (gap between face of crystal and casing or a reflector as required)
+  //FaceGap (gap between face of crystal and casing or a reflector as required)
   //
-  fSolidFaceGap = new G4Tubs("FaceGap", 0., 0.5*fLaBr3Diameter, 0.5*fGapThickness, 0.*deg, 360.*deg);
-  fLogicFaceGap = new G4LogicalVolume(fSolidFaceGap, fGapMaterial, "FaceGap");
+  fSolidFaceGap = new G4Tubs("FaceGap", 0., 0.5*fDetectorDiameter, 0.5*fGapThickness, 0.*deg, 360.*deg);
+  fLogicFaceGap = new G4LogicalVolume(fSolidFaceGap, fFaceGapMaterial, "FaceGap");
   fPhysiFaceGap = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZposFaceGap), 
         			fLogicFaceGap, 
        				"FaceGap", 
-       				fLogicLaBr3Det, 
+       				fLogicDetector, 
        				false, 
     			    	0);
 
-  //fLogicGap->SetVisAttributes(fAuxEdgeVisAtt);
-  //fLogicFaceGap->SetVisAttributes(fAuxEdgeVisAtt);
+  fLogicGap->SetVisAttributes(fAuxEdgeVisAtt);
+  fLogicFaceGap->SetVisAttributes(fAuxEdgeVisAtt);
   fLogicGap->SetVisAttributes(fBlueVisAtt);
   fLogicFaceGap->SetVisAttributes(fBlueVisAtt);
 
-  //LaBr3 Aluminum Casing (casing surrounding crystal)
+  //Aluminum Casing (casing surrounding crystal)
   //
   fSolidAlCase = new G4Tubs("AlCase", 0.5*fGapDiameter, 0.5*fAlCaseDiameter, 0.5*fAlCaseLength, 0.*deg, 360.*deg);
   fLogicAlCase = new G4LogicalVolume(fSolidAlCase, fAlCaseMaterial, "AlCase");
@@ -347,19 +405,19 @@ G4VPhysicalVolume* DetectorConstruction::ConstructCalorimeter()
         			G4ThreeVector(0.,0.,fZposAlCase), 
         			fLogicAlCase, 
        				"AlCase", 
-       				fLogicLaBr3Det, 
+       				fLogicDetector, 
        				false, 
     			    	0);
 
-  //LaBr3 Aluminum Face Casing (casing covering face of crystal)
+  //Aluminum Face Casing (casing covering face of crystal)
   //
   fSolidFaceAlCase = new G4Tubs("FaceAlCase", 0., 0.5*fGapDiameter, 0.5*fAlCaseThickness, 0.*deg, 360.*deg);
-  fLogicFaceAlCase = new G4LogicalVolume(fSolidFaceAlCase, fAlCaseMaterial, "FaceAlCase");
+  fLogicFaceAlCase = new G4LogicalVolume(fSolidFaceAlCase, fFaceAlCaseMaterial, "FaceAlCase");
   fPhysiFaceAlCase = new G4PVPlacement(0, 
         			G4ThreeVector(0.,0.,fZposFaceAlCase), 
         			fLogicFaceAlCase, 
        				"FaceAlCase", 
-       				fLogicLaBr3Det, 
+       				fLogicDetector, 
        				false, 
     			    	0);
   //Lead casing surrounding aluminum casing (around casing surround)
@@ -370,7 +428,7 @@ G4VPhysicalVolume* DetectorConstruction::ConstructCalorimeter()
         			G4ThreeVector(0.,0.,fZposAlCase), 
         			fLogicPbCase, 
        				"PbCase", 
-       				fLogicLaBr3Det, 
+       				fLogicDetector, 
        				false, 
     			    	0);
 
@@ -378,19 +436,20 @@ G4VPhysicalVolume* DetectorConstruction::ConstructCalorimeter()
   //
   //Check to see if collar is needed first. Large enough crystal and small PMT will not require collar.
   if (fPbCaseDiameter<fPMTDiameter){  
-	fSolidPbCollar = new G4Tubs("PbCollar", 0.5*fPbCaseDiameter, 0.5*fPMTDiameter, 0.5*fPbCaseThickness, 0.*deg, 360.*deg);
-	fLogicPbCollar = new G4LogicalVolume(fSolidPbCollar, fPbCaseMaterial, "PbCollar");
+	fSolidPbCollar = new G4Tubs("PbCollar", 0.5*fPbCaseDiameter, 0.5*fPMTDiameter, 0.5*fPbCaseThickness, 0.*deg,    
+        360.*deg);
+	fLogicPbCollar = new G4LogicalVolume(fSolidPbCollar, fPbCollarMaterial, "PbCollar");
 	fPhysiPbCollar = new G4PVPlacement(0, 
 						G4ThreeVector(0.,0.,fZposPbCollar), 
 						fLogicPbCollar, 
 						"PbCollar", 
-						fLogicLaBr3Det, 
+						fLogicDetector, 
 						false, 
     			    	0);
 	fLogicPbCase->SetVisAttributes(fGreyVisAtt);
 	fLogicPbCollar->SetVisAttributes(fGreyVisAtt);
   }
-  //LaBr3 PMT
+  //PMT
   //
   fSolidPMT = new G4Tubs("PMT", 0., 0.5*fPMTDiameter, 0.5*fPMTLength, 0.*deg, 360.*deg);
   fLogicPMT = new G4LogicalVolume(fSolidPMT, fPMTMaterial,"PMT");
@@ -398,42 +457,1033 @@ G4VPhysicalVolume* DetectorConstruction::ConstructCalorimeter()
         			G4ThreeVector(0.,0.,fZposPMT), 
         			fLogicPMT, 
        				"PMT", 
-       				fLogicLaBr3Det, 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+  PrintCalorParameters();
+}
+
+if (fDetectorGeometry == 2){
+//  Single hexagonal prism detector	
+//  If rotation required  
+//  G4RotationMatrix rotm  = G4RotationMatrix(0,90*deg,-90*deg);     
+//  No Rotation Now
+  const G4double zPlane[2] = {-0.5*fTotalDetectorLength, 0.5*fTotalDetectorLength};
+  const G4double zPlane1[2] = {-0.5*fPMTWinThickness, 0.5*fPMTWinThickness};
+  const G4double zPlane2[2] = {-0.5*fDetectorLength, 0.5*fDetectorLength};
+  const G4double zPlane3[2] = {-0.5*fGapLength, 0.5*fGapLength};
+  const G4double zPlane4[2] = {-0.5*fGapThickness, 0.5*fGapThickness};
+  const G4double zPlane5[2] = {-0.5*fAlCaseLength, 0.5*fAlCaseLength};
+  const G4double zPlane6[2] = {-0.5*fAlCaseThickness, 0.5*fAlCaseThickness};
+  const G4double zPlane7[2] = {-0.5*fAlCaseLength, 0.5*fAlCaseLength};
+  const G4double zPlane8[2] = {-0.5*fPbCaseThickness, 0.5*fPbCaseThickness};
+  const G4double zPlane9[2] = {-0.5*fPMTLength, 0.5*fPMTLength};
+  const G4double rInner[2] = {0,0};
+  const G4double rInner1[2] = {0.5*fDetectorDiameter, 0.5*fDetectorDiameter};
+  const G4double rInner2[2] = {0.5*fGapDiameter, 0.5*fGapDiameter};
+  const G4double rInner3[2] = {0.5*fAlCaseDiameter, 0.5*fAlCaseDiameter};
+  const G4double rInner4[2] = {0.5*fPbCaseDiameter,0.5*fPbCaseDiameter};
+  const G4double rOuter[2] = {0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorDiameter};
+  const G4double rOuter1[2] = {0.5*fGapDiameter, 0.5*fGapDiameter};
+  const G4double rOuter2[2] = {0.5*fAlCaseDiameter, 0.5*fAlCaseDiameter};
+  const G4double rOuter3[2] = {0.5*fPbCaseDiameter, 0.5*fPbCaseDiameter};
+  const G4double rOuter4[2] = {0.5*fPMTDiameter, 0.5*fPMTDiameter};
+  
+  G4RotationMatrix rotm  = G4RotationMatrix(0,0,0);     
+  G4ThreeVector position = G4ThreeVector(0.,0.,0.);
+  G4Transform3D transform = G4Transform3D(rotm,position);
+  
+  fSolidDetector1 = new G4Polyhedra{"Detector", 0.*deg, 360.*deg, 6, 2, zPlane, rInner, rOuter};
+  fLogicDetector = new G4LogicalVolume(fSolidDetector1,fDetectorMaterial, "Detector");
+  fPhysiDetector = new G4PVPlacement(transform,
+        			fLogicDetector, 
+       				"Detector", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+				    false);
+
+  fLogicDetector->SetVisAttributes(fWireFrameVisAtt);
+
+  // PMT Optical Window
+  //
+  fSolidPMTWin1 = new G4Polyhedra("PMTWin", 0.*deg, 360.*deg, 6, 2, zPlane1, rInner, rInner1);
+  fLogicPMTWin = new G4LogicalVolume(fSolidPMTWin1, fPMTWinMaterial, "PMTWin");
+  fPhysiPMTWin = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposPMTWin), 
+        			fLogicPMTWin, 
+       				"PMTWin", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+  fLogicPMTWin->SetVisAttributes(fGreenVisAtt);
+
+  // Crystal
+  //
+  fSolidCrystal1 = new G4Polyhedra("Crystal", 0.*deg, 360.*deg, 6, 2, zPlane2, rInner, rInner1);
+  fLogicCrystal = new G4LogicalVolume(fSolidCrystal1, fCrystalMaterial, "Crystal");
+  fPhysiCrystal = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZpos), 
+        			fLogicCrystal, 
+       				"Crystal", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+  fLogicCrystal->SetVisAttributes(fRedVisAtt);
+
+  //Gap (gap surrounding crystal and casing or a reflector as required)
+  //
+  fSolidGap1 = new G4Polyhedra("Gap", 0.*deg, 360.*deg, 6, 2, zPlane3, rInner1, rOuter1);
+  fLogicGap = new G4LogicalVolume(fSolidGap1, fGapMaterial, "Gap");
+  fPhysiGap = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposGap), 
+        			fLogicGap, 
+       				"Gap", 
+       				fLogicDetector, 
        				false, 
     			    	0);
 
-
-  PrintCalorParameters();         
-  
-  //always return the physical World
+  //FaceGap (gap between face of crystal and casing or a reflector as required)
   //
-  return fPhysiWorld;
+  fSolidFaceGap1 = new G4Polyhedra("FaceGap", 0.*deg, 360.*deg, 6, 2, zPlane4, rInner, rInner1);
+  fLogicFaceGap = new G4LogicalVolume(fSolidFaceGap1, fFaceGapMaterial, "FaceGap");
+  fPhysiFaceGap = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposFaceGap), 
+        			fLogicFaceGap, 
+       				"FaceGap", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+
+  fLogicGap->SetVisAttributes(fAuxEdgeVisAtt);
+  fLogicFaceGap->SetVisAttributes(fAuxEdgeVisAtt);
+  fLogicGap->SetVisAttributes(fBlueVisAtt);
+  fLogicFaceGap->SetVisAttributes(fBlueVisAtt);
+
+  //Aluminum Casing (casing surrounding crystal)
+  //
+  fSolidAlCase1 = new G4Polyhedra("AlCase", 0.*deg, 360.*deg, 6, 2, zPlane5, rInner2, rOuter2);
+  fLogicAlCase = new G4LogicalVolume(fSolidAlCase1, fAlCaseMaterial, "AlCase");
+  fPhysiAlCase = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposAlCase), 
+        			fLogicAlCase, 
+       				"AlCase", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+
+  //Aluminum Face Casing (casing covering face of crystal)
+  //
+  fSolidFaceAlCase1 = new G4Polyhedra("FaceAlCase", 0.*deg, 360.*deg, 6, 2, zPlane6, rInner, rOuter1);
+  fLogicFaceAlCase = new G4LogicalVolume(fSolidFaceAlCase1, fFaceAlCaseMaterial, "FaceAlCase");
+  fPhysiFaceAlCase = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposFaceAlCase), 
+        			fLogicFaceAlCase, 
+       				"FaceAlCase", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+  //Lead casing surrounding aluminum casing (around casing surround)
+  //
+  fSolidPbCase1 = new G4Polyhedra("PbCase", 0.*deg, 360.*deg, 6, 2, zPlane7, rInner3, rOuter3);
+  fLogicPbCase = new G4LogicalVolume(fSolidPbCase1, fPbCaseMaterial, "PbCase");
+  fPhysiPbCase = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposAlCase), 
+        			fLogicPbCase, 
+       				"PbCase", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+
+  //Lead Casing Ring (at back in front of PMT face)
+  //
+  //Check to see if collar is needed first. Large enough crystal and small PMT will not require collar.
+  if (fPbCaseDiameter<fPMTDiameter){  
+	fSolidPbCollar1 = new G4Polyhedra("PbCollar", 0.*deg, 360.*deg, 6, 2, zPlane8, rInner4, rOuter4);
+	fLogicPbCollar = new G4LogicalVolume(fSolidPbCollar1, fPbCollarMaterial, "PbCollar");
+	fPhysiPbCollar = new G4PVPlacement(0, 
+						G4ThreeVector(0.,0.,fZposPbCollar), 
+						fLogicPbCollar, 
+						"PbCollar", 
+						fLogicDetector, 
+						false, 
+    			    	0);
+	fLogicPbCase->SetVisAttributes(fGreyVisAtt);
+	fLogicPbCollar->SetVisAttributes(fGreyVisAtt);
+  }
+  //PMT
+  //
+  fSolidPMT1 = new G4Polyhedra("PMT", 0.*deg, 360.*deg, 6, 2, zPlane9, rInner, rOuter4);
+  fLogicPMT = new G4LogicalVolume(fSolidPMT1, fPMTMaterial,"PMT");
+  fPhysiPMT = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposPMT), 
+        			fLogicPMT, 
+       				"PMT", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+  PrintCalorParameters();
+
+  //always return the physical World
+}  
+
+if (fDetectorGeometry == 3){  
+//  Cylindrical detector array	
+  G4ThreeVector P;
+  G4Transform3D Tr;
+  G4RotationMatrix rotm = G4RotationMatrix(0,0,0); 
+  // The components of the gas target are rotated 90° in all 3 axes to be perpendicular to the array
+  G4RotationMatrix rotmxyz = G4RotationMatrix(90.*deg,90.*deg,90.*deg);
+  // Place the trapezoid and the disk with this rotation matrix
+  G4RotationMatrix rotmxyz180 = G4RotationMatrix(180.*deg,90.*deg,180.*deg);
+  //G4RotationMatrix rotmxyz180 = G4RotationMatrix(90.*deg,90.*deg,90.*deg);
+  G4RotationMatrix rotmxyz90 = G4RotationMatrix(90.*deg,90.*deg,180.*deg);
+  // The detectors on each side of the array face each other with this rotation matrix
+  G4RotationMatrix rotm180 = G4RotationMatrix(0., 180.*deg, 0.);
+  G4ThreeVector GasTarget = G4ThreeVector(0, (0.25*sqrt(3) + 1/(4*sqrt(3)))*fTotalDetectorDiameter - 12.85*cm, 0);
+  G4ThreeVector Sides = G4ThreeVector(0, -12.65*cm, 0);
+  G4ThreeVector SideCuts = G4ThreeVector(0,0,0);
+  G4ThreeVector TrapezoidCut = G4ThreeVector(0, (0.25*sqrt(3) + 1/(4*sqrt(3)))*fTotalDetectorDiameter - 6.425*cm, 0);                 
+  
+  G4ThreeVector LeftRing = G4ThreeVector(-9.8845*cm, 0, 0);
+  G4ThreeVector RightRing = G4ThreeVector(9.8845*cm, 0, 0);
+  G4ThreeVector LeftConnectingRing = G4ThreeVector(-12.2845*cm, 0, 0);
+  G4ThreeVector RightConnectingRing = G4ThreeVector(12.2845*cm, 0, 0);
+  G4ThreeVector LeftExternalRing = G4ThreeVector(-15.2845*cm, 0, 0);
+  G4ThreeVector RightExternalRing = G4ThreeVector(15.2845*cm, 0, 0);
+  G4ThreeVector LeftOuterRing = G4ThreeVector(-16.7845*cm, 0, 0);
+  G4ThreeVector RightOuterRing = G4ThreeVector(16.7845*cm, 0, 0);
+  G4ThreeVector Disk = G4ThreeVector(0, (0.25*sqrt(3) + 1/(4*sqrt(3)))*fTotalDetectorDiameter - 26.3*cm, 0); 
+  
+  G4Transform3D gastargettransform = G4Transform3D(rotmxyz, GasTarget);
+  G4Transform3D gastargetsidecutstransform = G4Transform3D(rotmxyz, SideCuts);
+  G4Transform3D gastargetsidestransform = G4Transform3D(rotmxyz, Sides);
+  G4Transform3D obliquetransform = G4Transform3D(rotmxyz, SideCuts);
+  G4Transform3D trapezoidtransform = G4Transform3D(rotmxyz180, TrapezoidCut);
+  
+  G4Transform3D leftringtransform = G4Transform3D(rotmxyz, LeftRing);
+  G4Transform3D rightringtransform = G4Transform3D(rotmxyz, RightRing);
+  G4Transform3D leftconnectingringtransform = G4Transform3D(rotmxyz, LeftConnectingRing);
+  G4Transform3D rightconnectingringtransform = G4Transform3D(rotmxyz, RightConnectingRing);
+  G4Transform3D leftexternalringtransform = G4Transform3D(rotmxyz, LeftExternalRing);
+  G4Transform3D rightexternalringtransform = G4Transform3D(rotmxyz, RightExternalRing);
+  G4Transform3D leftouterringtransform = G4Transform3D(rotmxyz, LeftOuterRing);
+  G4Transform3D rightouterringtransform = G4Transform3D(rotmxyz, RightOuterRing);
+  G4Transform3D disktransform = G4Transform3D(rotmxyz90, Disk);
+   
+  // Outer Box Minus Inner Box for the Hollow Gas Target
+  G4Box* oGasTarget = new G4Box("oGasTarget", 2.5*cm, 12.85*cm, 8.5345*cm);
+  G4Box* iGasTarget = new G4Box("iGasTarget", 2.3*cm, 12.65*cm, 8.5345*cm);
+  fSolidGasTarget = new G4SubtractionSolid("Gas Target", oGasTarget, iGasTarget);			    
+  fLogicGasTarget = new G4LogicalVolume(fSolidGasTarget, fGasTargetMaterial, "Gas Target");
+  fPhysiGasTarget = new G4PVPlacement(gastargettransform,
+        			fLogicGasTarget, 
+       				"Gas Target", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+	                false); 
+ 
+  // Upper Box Minus a Cylinder across 
+  G4Box*  UpperBox = new G4Box("UpperBox", 2.3*cm, (0.25*sqrt(3) + 1/(4*sqrt(3)))*fTotalDetectorDiameter - 0.2*cm, 8.5345*cm);
+  G4Box* TopBottom = new G4Box("TopBottom", 2.3*cm, (0.25*sqrt(3) + 1/(4*sqrt(3)))*fTotalDetectorDiameter - 0.2*cm, 8.5245*cm);
+  G4SubtractionSolid* Opening = new G4SubtractionSolid("Opening", UpperBox, TopBottom);
+  G4Tubs* Hole = new G4Tubs("Hole", 0., 0.55*cm, 8.5345*cm, 0.*deg, 360.*deg);
+  
+  fSolidGasTargetSideCuts = new G4SubtractionSolid("Gas Target Side Cuts", Opening, Hole);			    
+  fLogicGasTargetSideCuts = new G4LogicalVolume(fSolidGasTargetSideCuts, fGasTargetMaterial, "Gas Target Side Cuts");
+  fPhysiGasTargetSideCuts = new G4PVPlacement(gastargetsidecutstransform,
+        			fLogicGasTargetSideCuts, 
+       				"Gas Target Side Cuts", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+	                false); 
+  fLogicGasTargetSideCuts->SetVisAttributes(fBlueVisAtt);
+  
+  // The Inner Tube that Goes through the Box
+  fSolidInnerTube = new G4Tubs("Inner Tube", 0., 0.55*cm, 17.5345*cm, 0.*deg, 360.*deg);	    
+  fLogicInnerTube = new G4LogicalVolume(fSolidInnerTube, fTubeMaterial, "Inner Tube");
+  fPhysiInnerTube = new G4PVPlacement(gastargetsidecutstransform,
+        			fLogicInnerTube, 
+       				"Inner Tube", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+	                false); 
+  fLogicInnerTube->SetVisAttributes(fGreenVisAtt);
+  
+  // Lower Sides
+  G4Box* oSides = new G4Box("oSides", 2.3*cm, 12.85*cm - (0.25*sqrt(3) + 1/(4*sqrt(3)))*fTotalDetectorDiameter, 8.5345*cm);
+  G4Box* iSides = new G4Box("iSides", 2.3*cm, 12.85*cm - (0.25*sqrt(3) + 1/(4*sqrt(3)))*fTotalDetectorDiameter, 8.5245*cm);
+  fSolidGasTargetSides = new G4SubtractionSolid("Gas Target Sides", oSides, iSides);
+  fLogicGasTargetSides = new G4LogicalVolume(fSolidGasTargetSides, fGasTargetMaterial, "Gas Target Sides");
+  fPhysiGasTargetSides = new G4PVPlacement(gastargetsidestransform,
+                    fLogicGasTargetSides,
+                    "Gas Target Sides",
+                    fLogicWorld,
+                    false,
+                        0,
+                    false);
+  
+  // Outer Trapezoid Minus Inner Trapezoid
+  G4Trd* oTrapezoid = new G4Trd("oTrapezoid", 6.759*cm, 2.115*cm, 0.9525*cm, 0.9525*cm, 4.208*cm); 
+  G4Trd* iTrapezoid = new G4Trd("iTrapezoid", 6.124*cm, 1.7975*cm, 0.635*cm, 0.635*cm, 3.8905*cm);
+  //G4Trd* aTrapezoid = new G4Trd("aTrapezoid", 6.759*cm, 2.115*cm, 0.9525*cm, 0.9525*cm, 4.208*cm);
+  //G4Trd* oTrapezoid = new G4Trd("oTrapezoid", 0.9525*cm, 0.9525*cm, 6.759*cm, 2.115*cm, 4.208*cm); 
+  //G4Trd* iTrapezoid = new G4Trd("iTrapezoid", 0.635*cm, 0.635*cm, 6.124*cm, 1.7975*cm, 3.8905*cm);
+  //G4SubtractionSolid* Trapezoid = new G4SubtractionSolid("Trapezoid", oTrapezoid, iTrapezoid);
+  //G4Tubs* iTube = new G4Tubs("iTube", 0., 0.55*cm, 7.*cm, 0.*deg, 360.*deg);
+  //fSolidOblique = new G4CutTubs("Oblique", 0., 0.55*cm, 5.*cm, 0., 2.*pi,G4ThreeVector(0.55,1.*cm,-1.*cm),G4ThreeVector(0.55*cm,1.*cm,1.*cm));
+  //fLogicOblique = new G4LogicalVolume(fSolidOblique, fGasTargetMaterial, "Oblique");
+  //fPhysiOblique = new G4PVPlacement(obliquetransform,
+               //fLogicOblique,
+               //"Oblique",
+               //fLogicWorld,
+               //false,
+                   //0,
+               //false);
+  
+  fSolidTrapezoidCut = new G4SubtractionSolid("TrapezoidCut", oTrapezoid, iTrapezoid);
+  fLogicTrapezoidCut = new G4LogicalVolume(fSolidTrapezoidCut, fGasTargetMaterial, "TrapezoidCut");
+  fPhysiTrapezoidCut = new G4PVPlacement(trapezoidtransform,
+        			fLogicTrapezoidCut, 
+       				"TrapezoidCut", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+	                false); 
+	                
+  // If the trapezoid overlaps with the inner tube, set its thickness to be zero in the overlapping regions
+  //if (fPhysiTrapezoidCut){
+  //fLogicInnerTube = fPhysiTrapezoidCut ->GetLogicalVolume();
+  //if (fLogicTrapezoidCut == fLogicInnerTube)
+  //fSolidTrapezoidCut1 = new G4SubtractionSolid("TrapezoidCut", iTrapezoid, aTrapezoid);
+  //fLogicTrapezoidCut1 = new G4LogicalVolume(fSolidTrapezoidCut1, fGasTargetMaterial, "TrapezoidCut1");
+  //SetfLogicTrapezoidCut(fLogicTrapezoidCut1);
+  //fPhysiTrapezoidCut1 = new G4PVPlacement(trapezoidtransform,
+        			//fLogicTrapezoidCut1, 
+       				//"TrapezoidCut", 
+       				//fLogicWorld, 
+       				//false, 
+    			    	//0,
+	                //false);
+  //}
+  
+  // The Tube Connected to the Upper Gas Target
+  // Outer Tube Minus Inner Tube, and then Minus the Part of the Tube inside the Box
+  G4Tubs* oTube = new G4Tubs("oTube", 0., 1.4*cm, 9.2345*cm, 0.*deg, 360.*deg);
+  G4Tubs* iTube = new G4Tubs("iTube", 0., 0.55*cm, 9.2345*cm, 0.*deg, 360.*deg);
+  G4SubtractionSolid* Tube = new G4SubtractionSolid("Tube", oTube, iTube);	
+  G4Tubs* eTube = new G4Tubs("eTube", 0., 1.4*cm, 8.5345*cm, 0.*deg, 360.*deg);
+  fSolidTube = new G4SubtractionSolid("Tube", Tube, eTube);			    
+  fLogicTube = new G4LogicalVolume(fSolidTube, fGasTargetMaterial, "Tube");
+  fPhysiTube = new G4PVPlacement(gastargetsidecutstransform,
+        			fLogicTube, 
+       				"Tube", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+	                false); 
+  // Collimator                
+  G4Tubs* oTube1 = new G4Tubs("oTube1", 0., 0.9*cm, 0.65*cm, 0.*deg, 360.*deg);
+  G4Tubs* iTube1 = new G4Tubs("iTube1", 0., 0.55*cm, 0.65*cm, 0.*deg, 360.*deg);
+  fSolidLeftRing = new G4SubtractionSolid("Left Ring", oTube1, iTube1);			    
+  fLogicLeftRing = new G4LogicalVolume(fSolidLeftRing, fGasTargetMaterial, "Left Ring");
+  fPhysiLeftRing = new G4PVPlacement(leftringtransform,
+        			fLogicLeftRing, 
+       				"Left Ring", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+	                false); 
+	                
+  fSolidRightRing = new G4SubtractionSolid("Right Ring", oTube1, iTube1);			    
+  fLogicRightRing = new G4LogicalVolume(fSolidRightRing, fGasTargetMaterial, "Right Ring");
+  fPhysiRightRing = new G4PVPlacement(rightringtransform,
+        			fLogicRightRing, 
+       				"Right Ring", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+	                false); 
+  
+  G4Tubs* oTube2 = new G4Tubs("oTube2", 0., 1.75*cm, 1.75*cm, 0.*deg, 360.*deg);
+  G4Tubs* iTube2 = new G4Tubs("iTube2", 0., 0.55*cm, 1.75*cm, 0.*deg, 360.*deg);	
+  fSolidLeftConnectingRing = new G4SubtractionSolid("Left Connecting Ring", oTube2, iTube2);			    
+  fLogicLeftConnectingRing = new G4LogicalVolume(fSolidLeftConnectingRing, fGasTargetMaterial, "Left Connecting Ring");
+  fPhysiLeftConnectingRing = new G4PVPlacement(leftconnectingringtransform,
+        			fLogicLeftConnectingRing, 
+       				"Left Connecting Ring", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+	                false); 
+	                
+  fSolidRightConnectingRing = new G4SubtractionSolid("Right Connecting Ring", oTube2, iTube2);			    
+  fLogicRightConnectingRing = new G4LogicalVolume(fSolidRightConnectingRing, fGasTargetMaterial, "Right Connecting Ring");
+  fPhysiRightConnectingRing = new G4PVPlacement(rightconnectingringtransform,
+        			fLogicRightConnectingRing, 
+       				"Right Connecting Ring", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+	                false); 
+  
+  G4Tubs* oTube3 = new G4Tubs("oTube3", 0., 4.5*cm, 1.25*cm, 0.*deg, 360.*deg);
+  G4Tubs* iTube3 = new G4Tubs("iTube3", 0., 0.55*cm, 1.25*cm, 0.*deg, 360.*deg);	
+  fSolidLeftExternalRing = new G4SubtractionSolid("Left External Ring", oTube3, iTube3);
+  fLogicLeftExternalRing = new G4LogicalVolume(fSolidLeftExternalRing, fGasTargetMaterial, "Left External Ring");
+  fPhysiLeftExternalRing = new G4PVPlacement(leftexternalringtransform,
+        			fLogicLeftExternalRing, 
+       				"Left External Ring", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+	                false); 
+	                
+  fSolidRightExternalRing = new G4SubtractionSolid("Right External Ring", oTube3, iTube3);
+  fLogicRightExternalRing = new G4LogicalVolume(fSolidRightExternalRing, fGasTargetMaterial, "Right External Ring");
+  fPhysiRightExternalRing = new G4PVPlacement(rightexternalringtransform,
+        			fLogicRightExternalRing, 
+       				"Right External Ring", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+	                false);  
+	                
+  G4Tubs* oTube4 = new G4Tubs("oTube4", 0., 5.5*cm, 0.25*cm, 0.*deg, 360.*deg);
+  G4Tubs* iTube4 = new G4Tubs("iTube4", 0., 4.5*cm, 0.25*cm, 0.*deg, 360.*deg); 
+  fSolidLeftOuterRing = new G4SubtractionSolid("Left Outer Ring", oTube4, iTube4);
+  fLogicLeftOuterRing = new G4LogicalVolume(fSolidLeftOuterRing, fGasTargetMaterial, "Left Outer Ring");
+  fPhysiLeftOuterRing = new G4PVPlacement(leftouterringtransform,
+        			fLogicLeftOuterRing, 
+       				"Left Outer Ring", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+	                false);              
+	               
+  fSolidRightOuterRing = new G4SubtractionSolid("Right Outer Ring", oTube4, iTube4);
+  fLogicRightOuterRing = new G4LogicalVolume(fSolidRightOuterRing, fGasTargetMaterial, "Right Outer Ring");
+  fPhysiRightOuterRing = new G4PVPlacement(rightouterringtransform,
+        			fLogicRightOuterRing, 
+       				"Right Outer Ring", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+	                false);
+	                 
+  // The Disk Below the Gas Target
+  fSolidDisk = new G4Tubs("Disk", 0., 8.5*cm, 0.6*cm, 0.*deg, 360.*deg);			    
+  fLogicDisk = new G4LogicalVolume(fSolidDisk, fGasTargetMaterial, "Disk");
+  fPhysiDisk = new G4PVPlacement(disktransform,
+        			fLogicDisk, 
+       				"Disk", 
+       				fLogicWorld, 
+       				false, 
+    			    	0,
+	                false); 
+	                
+  fSolidDetector = new G4Tubs("Detector", 0., 0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorLength, 0.*deg, 360.*deg);
+  fLogicDetector = new G4LogicalVolume(fSolidDetector,fDetectorMaterial, "Detector");
+  
+  G4AssemblyVolume* assemblyDetector = new G4AssemblyVolume();
+  //30 detectors are placed relative to the array volume 
+  //10 detectors with 10 straddling detectors
+  // Some of the straddling detectors are moved 0.5*sqrt(3)*fTotalDetectorDiameter and they are all moved 0.125*sqrt(3)*fTotalDetectorDiameter up to centre them at (0,0,0)
+  //bottom 3
+  P.setX(-fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX(0.); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX(fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //4
+  P.setX(-1.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX(-0.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX(0.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX(1.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //3
+  P.setX(-fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX(0.); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX(fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //10 straddling detectors
+  //top 4
+  P.setX((0.5 + 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((0.625*sqrt(3) + 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX(0.5*fTotalDetectorDiameter); P.setY((0.625*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX(-0.5*fTotalDetectorDiameter); P.setY((0.625*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-0.5 - 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((0.625*sqrt(3) + 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //below the top 4
+  P.setX((1 + 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-1 - 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //4
+  P.setX((1.5 + 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) - 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((1 + 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) - 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-1.5 - 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) - 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-1 - 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) - 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //end straddling detectors
+  //10 detectors
+  //bottom 3
+  P.setX(-fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX(0.); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX(fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //4
+  P.setX(-1.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX(-0.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX(0.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+
+  P.setX(1.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //3
+  P.setX(-fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX(0.); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX(fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+
+  //Assembly Placement in the World
+  G4ThreeVector WorldP(0,0,0);
+  G4RotationMatrix worldrotm = G4RotationMatrix(0,0,0); 
+  G4Transform3D WorldTr = G4Transform3D(worldrotm, WorldP);
+  assemblyDetector->MakeImprint(fLogicWorld, WorldTr);
+  fLogicDetector->SetVisAttributes(fWireFrameVisAtt);
+
+  //PMT Optical Window
+  //
+  fSolidPMTWin = new G4Tubs("PMTWin", 0., 0.5*fDetectorDiameter, 0.5*fPMTWinThickness, 0.*deg, 360.*deg);
+  fLogicPMTWin = new G4LogicalVolume(fSolidPMTWin, fPMTWinMaterial, "PMTWin");
+  fPhysiPMTWin = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposPMTWin), 
+        			fLogicPMTWin,
+       				"PMTWin", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+  fLogicPMTWin->SetVisAttributes(fGreenVisAtt);
+
+  // Crystal
+  //
+  fSolidCrystal = new G4Tubs("Crystal", 0., 0.5*fDetectorDiameter, 0.5*fDetectorLength, 0.*deg, 360.*deg);
+  fLogicCrystal = new G4LogicalVolume(fSolidCrystal, fCrystalMaterial, "Crystal");
+  fPhysiCrystal = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZpos), 
+        			fLogicCrystal, 
+       				"Crystal", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+  fLogicCrystal->SetVisAttributes(fRedVisAtt);
+
+  //Gap (gap surrounding crystal and casing or a reflector as required)
+  //
+  fSolidGap = new G4Tubs("Gap", 0.5*fDetectorDiameter, 0.5*fGapDiameter, 0.5*fGapLength, 0.*deg, 360.*deg);
+  fLogicGap = new G4LogicalVolume(fSolidGap, fGapMaterial, "Gap");
+  fPhysiGap = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposGap), 
+        			fLogicGap, 
+       				"Gap", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+
+  //FaceGap (gap between face of crystal and casing or a reflector as required)
+  //
+  fSolidFaceGap = new G4Tubs("FaceGap", 0., 0.5*fDetectorDiameter, 0.5*fGapThickness, 0.*deg, 360.*deg);
+  fLogicFaceGap = new G4LogicalVolume(fSolidFaceGap, fFaceGapMaterial, "FaceGap");
+  fPhysiFaceGap = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposFaceGap), 
+        			fLogicFaceGap, 
+       				"FaceGap", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+
+  fLogicGap->SetVisAttributes(fAuxEdgeVisAtt);
+  fLogicFaceGap->SetVisAttributes(fAuxEdgeVisAtt);
+  fLogicGap->SetVisAttributes(fBlueVisAtt);
+  fLogicFaceGap->SetVisAttributes(fBlueVisAtt);
+
+  //Aluminum Casing (casing surrounding crystal)
+  //
+  fSolidAlCase = new G4Tubs("AlCase", 0.5*fGapDiameter, 0.5*fAlCaseDiameter, 0.5*fAlCaseLength, 0.*deg, 360.*deg);
+  fLogicAlCase = new G4LogicalVolume(fSolidAlCase, fAlCaseMaterial, "AlCase");
+  fPhysiAlCase = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposAlCase), 
+        			fLogicAlCase, 
+       				"AlCase", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+
+  //Aluminum Face Casing (casing covering face of crystal)
+  //
+  fSolidFaceAlCase = new G4Tubs("FaceAlCase", 0., 0.5*fGapDiameter, 0.5*fAlCaseThickness, 0.*deg, 360.*deg);
+  fLogicFaceAlCase = new G4LogicalVolume(fSolidFaceAlCase, fFaceAlCaseMaterial, "FaceAlCase");
+  fPhysiFaceAlCase = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposFaceAlCase), 
+        			fLogicFaceAlCase, 
+       				"FaceAlCase", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+  //Lead casing surrounding aluminum casing (around casing surround)
+  //
+  fSolidPbCase = new G4Tubs("PbCase", 0.5*fAlCaseDiameter, 0.5*fPbCaseDiameter, 0.5*fAlCaseLength, 0.*deg, 360.*deg);
+  fLogicPbCase = new G4LogicalVolume(fSolidPbCase, fPbCaseMaterial, "PbCase");
+  fPhysiPbCase = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposAlCase), 
+        			fLogicPbCase, 
+       				"PbCase", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+
+  //Lead Casing Ring (at back in front of PMT face)
+  //
+  //Check to see if collar is needed first. Large enough crystal and small PMT will not require collar.
+  if (fPbCaseDiameter<fPMTDiameter){  
+	fSolidPbCollar = new G4Tubs("PbCollar", 0.5*fPbCaseDiameter, 0.5*fPMTDiameter, 0.5*fPbCaseThickness, 0.*deg,    
+        360.*deg);
+	fLogicPbCollar = new G4LogicalVolume(fSolidPbCollar, fPbCollarMaterial, "PbCollar");
+	fPhysiPbCollar = new G4PVPlacement(0, 
+						G4ThreeVector(0.,0.,fZposPbCollar), 
+						fLogicPbCollar, 
+						"PbCollar", 
+						fLogicDetector, 
+						false, 
+    			    	0);
+	fLogicPbCase->SetVisAttributes(fGreyVisAtt);
+	fLogicPbCollar->SetVisAttributes(fGreyVisAtt);
+  }
+  //PMT
+  //
+  fSolidPMT = new G4Tubs("PMT", 0., 0.5*fPMTDiameter, 0.5*fPMTLength, 0.*deg, 360.*deg);
+  fLogicPMT = new G4LogicalVolume(fSolidPMT, fPMTMaterial,"PMT");
+  fPhysiPMT = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposPMT), 
+        			fLogicPMT, 
+       				"PMT", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+  PrintCalorParameters();
+}
+
+if (fDetectorGeometry == 4){
+//  Hexagonal prism detector array	
+  const G4double zPlane[2] = {-0.5*fTotalDetectorLength, 0.5*fTotalDetectorLength};
+  const G4double zPlane1[2] = {-0.5*fPMTWinThickness, 0.5*fPMTWinThickness};
+  const G4double zPlane2[2] = {-0.5*fDetectorLength, 0.5*fDetectorLength};
+  const G4double zPlane3[2] = {-0.5*fGapLength, 0.5*fGapLength};
+  const G4double zPlane4[2] = {-0.5*fGapThickness, 0.5*fGapThickness};
+  const G4double zPlane5[2] = {-0.5*fAlCaseLength, 0.5*fAlCaseLength};
+  const G4double zPlane6[2] = {-0.5*fAlCaseThickness, 0.5*fAlCaseThickness};
+  const G4double zPlane7[2] = {-0.5*fAlCaseLength, 0.5*fAlCaseLength};
+  const G4double zPlane8[2] = {-0.5*fPbCaseThickness, 0.5*fPbCaseThickness};
+  const G4double zPlane9[2] = {-0.5*fPMTLength, 0.5*fPMTLength};
+  const G4double rInner[2] = {0,0};
+  const G4double rInner1[2] = {0.5*fDetectorDiameter, 0.5*fDetectorDiameter};
+  const G4double rInner2[2] = {0.5*fGapDiameter, 0.5*fGapDiameter};
+  const G4double rInner3[2] = {0.5*fAlCaseDiameter, 0.5*fAlCaseDiameter};
+  const G4double rInner4[2] = {0.5*fPbCaseDiameter,0.5*fPbCaseDiameter};
+  const G4double rOuter[2] = {0.5*fTotalDetectorDiameter, 0.5*fTotalDetectorDiameter};
+  const G4double rOuter1[2] = {0.5*fGapDiameter, 0.5*fGapDiameter};
+  const G4double rOuter2[2] = {0.5*fAlCaseDiameter, 0.5*fAlCaseDiameter};
+  const G4double rOuter3[2] = {0.5*fPbCaseDiameter, 0.5*fPbCaseDiameter};
+  const G4double rOuter4[2] = {0.5*fPMTDiameter, 0.5*fPMTDiameter};
+  
+  G4ThreeVector O = G4ThreeVector(0,0,0);  
+  G4ThreeVector P;
+  G4Transform3D Tr;
+  G4RotationMatrix rotm = G4RotationMatrix(0,0,0); 
+  // The detectors on each side of the array face each other with this rotation matrix
+  G4RotationMatrix rotm180 = G4RotationMatrix(0,180.*deg,0);  
+  G4Transform3D gtransform = G4Transform3D(rotm,O);
+  
+  fSolidDetector1 = new G4Polyhedra{"Detector", 0.*deg, 360.*deg, 6, 2, zPlane, rInner, rOuter};
+  fLogicDetector = new G4LogicalVolume(fSolidDetector1,fDetectorMaterial, "Detector");
+  
+  G4AssemblyVolume* assemblyDetector = new G4AssemblyVolume();
+  //30 detectors are placed relative to the array volume and they are moved 0.25*sqrt(3)*fTotalDetectorDiameter to the left to centre them at (0,0,0) 
+  //10 detectors with 10 straddling detectors
+  //leftmost 3
+  P.setX((-0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(-fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(0.); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //4
+  P.setX((-0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(-1.5*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(-0.5*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(0.5*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(1.5*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //3
+  P.setX((0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(-fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(0.); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //10 straddling detectors;
+  //rightmost 4
+  P.setX((0.5 + sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(-1.5*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(-0.5*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(0.5*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((0.5 + sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(1.5*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //next to the rightmost 4
+  P.setX((0.5 + 0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(2*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((0.5 + 0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(-2*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //4
+  P.setX((-0.5 - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(2.5*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-0.5 - 0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(2*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-0.5 - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(-2.5*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-0.5 - 0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(-2*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //end straddling detectors
+  //10 detectors
+  //leftmost 3
+  P.setX((-0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(-fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(0.); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //4
+  P.setX((-0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(-1.5*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(-0.5*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(0.5*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((-0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(1.5*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //3
+  P.setX((0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(-fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(0.); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
+  P.setX((0.5*sqrt(3) - 0.25*sqrt(3))*fTotalDetectorDiameter); P.setY(fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+
+  // Assembly Placement in the World
+  // Rotated 270° along the x-axis to be viewed from the same perspective as the cylindrical array
+  G4ThreeVector WorldP(0,0,0);
+  G4RotationMatrix worldrotm = G4RotationMatrix(270.*deg,0,0);
+  G4Transform3D WorldTr = G4Transform3D(worldrotm, WorldP);
+  assemblyDetector->MakeImprint(fLogicWorld, WorldTr);
+  fLogicDetector->SetVisAttributes(fWireFrameVisAtt);
+
+  // PMT Optical Window
+  //
+  fSolidPMTWin1 = new G4Polyhedra("PMTWin", 0.*deg, 360.*deg, 6, 2, zPlane1, rInner, rInner1);
+  fLogicPMTWin = new G4LogicalVolume(fSolidPMTWin1, fPMTWinMaterial, "PMTWin");
+  fPhysiPMTWin = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposPMTWin), 
+        			fLogicPMTWin, 
+       				"PMTWin", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+  fLogicPMTWin->SetVisAttributes(fGreenVisAtt);
+
+  // Crystal
+  //
+  fSolidCrystal1 = new G4Polyhedra("Crystal", 0.*deg, 360.*deg, 6, 2, zPlane2, rInner, rInner1);
+  fLogicCrystal = new G4LogicalVolume(fSolidCrystal1, fCrystalMaterial, "Crystal");
+  fPhysiCrystal = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZpos), 
+        			fLogicCrystal, 
+       				"Crystal", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+  fLogicCrystal->SetVisAttributes(fRedVisAtt);
+
+  //Gap (gap surrounding crystal and casing or a reflector as required)
+  //
+  fSolidGap1 = new G4Polyhedra("Gap", 0.*deg, 360.*deg, 6, 2, zPlane3, rInner1, rOuter1);
+  fLogicGap = new G4LogicalVolume(fSolidGap1, fGapMaterial, "Gap");
+  fPhysiGap = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposGap), 
+        			fLogicGap, 
+       				"Gap", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+
+  //FaceGap (gap between face of crystal and casing or a reflector as required)
+  //
+  fSolidFaceGap1 = new G4Polyhedra("FaceGap", 0.*deg, 360.*deg, 6, 2, zPlane4, rInner, rInner1);
+  fLogicFaceGap = new G4LogicalVolume(fSolidFaceGap1, fFaceGapMaterial, "FaceGap");
+  fPhysiFaceGap = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposFaceGap), 
+        			fLogicFaceGap, 
+       				"FaceGap", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+
+  fLogicGap->SetVisAttributes(fAuxEdgeVisAtt);
+  fLogicFaceGap->SetVisAttributes(fAuxEdgeVisAtt);
+  fLogicGap->SetVisAttributes(fBlueVisAtt);
+  fLogicFaceGap->SetVisAttributes(fBlueVisAtt);
+
+  //Aluminum Casing (casing surrounding crystal)
+  //
+  fSolidAlCase1 = new G4Polyhedra("AlCase", 0.*deg, 360.*deg, 6, 2, zPlane5, rInner2, rOuter2);
+  fLogicAlCase = new G4LogicalVolume(fSolidAlCase1, fAlCaseMaterial, "AlCase");
+  fPhysiAlCase = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposAlCase), 
+        			fLogicAlCase, 
+       				"AlCase", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+
+  //Aluminum Face Casing (casing covering face of crystal)
+  //
+  fSolidFaceAlCase1 = new G4Polyhedra("FaceAlCase", 0.*deg, 360.*deg, 6, 2, zPlane6, rInner, rOuter1);
+  fLogicFaceAlCase = new G4LogicalVolume(fSolidFaceAlCase1, fFaceAlCaseMaterial, "FaceAlCase");
+  fPhysiFaceAlCase = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposFaceAlCase), 
+        			fLogicFaceAlCase, 
+       				"FaceAlCase", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+    			    	
+  //Lead casing surrounding aluminum casing (around casing surround)
+  //
+  fSolidPbCase1 = new G4Polyhedra("PbCase", 0.*deg, 360.*deg, 6, 2, zPlane7, rInner3, rOuter3);
+  fLogicPbCase = new G4LogicalVolume(fSolidPbCase1, fPbCaseMaterial, "PbCase");
+  fPhysiPbCase = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposAlCase), 
+        			fLogicPbCase, 
+       				"PbCase", 
+       				fLogicDetector, 
+       				false, 
+    			    	0);
+
+  //Lead Casing Ring (at back in front of PMT face)
+  //
+  //Check to see if collar is needed first. Large enough crystal and small PMT will not require collar.
+  if (fPbCaseDiameter<fPMTDiameter){  
+	fSolidPbCollar1 = new G4Polyhedra("PbCollar", 0.*deg, 360.*deg, 6, 2, zPlane8, rInner4, rOuter4);
+	fLogicPbCollar = new G4LogicalVolume(fSolidPbCollar1, fPbCollarMaterial, "PbCollar");
+	fPhysiPbCollar = new G4PVPlacement(0, 
+						G4ThreeVector(0.,0.,fZposPbCollar), 
+						fLogicPbCollar, 
+						"PbCollar", 
+						fLogicDetector, 
+						false, 
+    			    	0);
+	fLogicPbCase->SetVisAttributes(fGreyVisAtt);
+	fLogicPbCollar->SetVisAttributes(fGreyVisAtt);
+  }
+  //PMT
+  //
+  fSolidPMT1 = new G4Polyhedra("PMT", 0.*deg, 360.*deg, 6, 2, zPlane9, rInner, rOuter4);
+  fLogicPMT = new G4LogicalVolume(fSolidPMT1, fPMTMaterial,"PMT");
+  fPhysiPMT = new G4PVPlacement(0, 
+        			G4ThreeVector(0.,0.,fZposPMT), 
+        			fLogicPMT, 
+       				"PMT", 
+       				fLogicDetector, 
+       				false, 
+    			    	0); 			    	
+  PrintCalorParameters();
+
+  //always return the physical World
+	}  
+return fPhysiWorld;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void DetectorConstruction::ConstructSDandField()
-{
-
-}
 void DetectorConstruction::PrintCalorParameters()
 {
-  G4cout << "\n" << fWorldMaterial    << G4endl;
-  G4cout << "\n" << "World Size X is: " << fWorldSizeX    << G4endl;
-  G4cout << "\n" << "World Size YZ is: " << fWorldSizeYZ    << G4endl;  ;
-  G4cout << "\n" << "LaBr3 Diameter is: " << fLaBr3Diameter    << G4endl;
-  G4cout << "\n" << "LaBr3 Length is: " << fLaBr3Length    << G4endl;
-  G4cout << "\n" << "Gap Thickness is: " << fGapThickness    << G4endl;
-  G4cout << "\n" << "Gap  Material is: " << fGapMaterial    << G4endl;
-  G4cout << "\n" << "Al Thickness is: " << fAlCaseThickness    << G4endl;
-  G4cout << "\n" << "Pb Thickness is: " << fPbCaseThickness    << G4endl;
-  G4cout << "\n" << "PMT Diameter is: " << fPMTDiameter    << G4endl;
-  G4cout << "\n" << "PMT Length is: " << fPMTLength    << G4endl;
+  G4cout << "\n" << "The world is made of" << fWorldMaterial << G4endl;
+  G4cout << "\n" << "World Size X: " << G4BestUnit(fWorldSizeX, "Length") << G4endl;
+  G4cout << "\n" << "World Size YZ: " << G4BestUnit(fWorldSizeYZ, "Length") << G4endl;  ;
+if (fDetectorGeometry == 1){
+  G4cout << "\n" << "The geometry is cylindrical (1)." << G4endl;
 }
-/*
+if (fDetectorGeometry == 2){
+  G4cout << "\n" << "The geometry is hexagonal (2)." << G4endl;
+}
+if (fDetectorGeometry == 3){
+  G4cout << "\n" << "The geometry is cylindrical. The detectors are stacked in an array (3)." << G4endl;
+}
+if (fDetectorGeometry == 4){
+  G4cout << "\n" << "The geometry is hexagonal. The detectors are stacked in an array (4)." << G4endl;
+}
+  G4cout << "\n" << "The gas target is made of " << fGasTargetMaterial << G4endl;
+  G4cout << "\n" << "The detector is made of " << fDetectorMaterial << G4endl;
+  G4cout << "\n" << "The objects' temperature is: " << Temperature << " kelvin" << G4endl;
+  G4cout << "\n" << "The objects' pressure is: " << G4BestUnit(Pressure, "Pressure") << G4endl;
+  G4cout << "\n" << "The crystal is made of" << fCrystalMaterial << G4endl;
+  G4cout << "\n" << "The gap is made of " << fGapMaterial << G4endl;
+  G4cout << "\n" << "The face of the gap is made of " << fFaceGapMaterial << G4endl;
+  G4cout << "\n" << "The aluminum case is made of " << fAlCaseMaterial << G4endl;
+  G4cout << "\n" << "The face of the aluminum case is made of " << fFaceAlCaseMaterial << G4endl;
+  G4cout << "\n" << "The lead case is made of " << fPbCaseMaterial << G4endl;
+  G4cout << "\n" << "The lead collar is made of " << fPbCollarMaterial << G4endl;
+  G4cout << "\n" << "The photomultiplier tube is made of" << fPMTMaterial << G4endl;
+  G4cout << "\n" << "The photomultiplier tube window is made of" << fPMTWinMaterial << G4endl;
+  G4cout << "\n" << "Total Detector Diameter: " << G4BestUnit(fTotalDetectorDiameter, "Length") << G4endl;
+  G4cout << "\n" << "Detector Diameter: " << G4BestUnit(fDetectorDiameter, "Length") << G4endl;
+  G4cout << "\n" << "Total Detector Length: " << G4BestUnit(fTotalDetectorLength, "Length") << G4endl;
+  G4cout << "\n" << "Detector Length: " << G4BestUnit(fDetectorLength, "Length") << G4endl;
+  G4cout << "\n" << "Gap Thickness: " << 0.1*fGapThickness << " cm" << G4endl;
+  G4cout << "\n" << "Al Thickness: " << 0.1*fAlCaseThickness << " cm" << G4endl;
+  G4cout << "\n" << "Pb Thickness: " << 0.1*fPbCaseThickness << " cm" << G4endl;
+  G4cout << "\n" << "PMT Diameter: " << G4BestUnit(fPMTDiameter, "Length") << G4endl;
+  G4cout << "\n" << "PMT Length: " << G4BestUnit(fPMTLength, "Length") << G4endl;
+}
+
 void DetectorConstruction::SetWorldMaterial(G4String materialChoice)
 {
-  // search the material by its name
+   //search the material by its name
   G4Material* pttoMaterial =
     G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
 
@@ -442,21 +1492,76 @@ void DetectorConstruction::SetWorldMaterial(G4String materialChoice)
     if(fLogicWorld) fLogicWorld->SetMaterial(fWorldMaterial);
   }
 }
-*/    
 
-void DetectorConstruction::SetLaBr3Diameter(G4double val)
+void DetectorConstruction::SetGasTargetMaterial(G4String materialChoice)
 {
-  fLaBr3Diameter = val;
+   //search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fGasTargetMaterial != pttoMaterial) {
+    fGasTargetMaterial = pttoMaterial;                  
+    if(fLogicGasTarget) fLogicGasTarget->SetMaterial(fGasTargetMaterial);
+  }
 }
 
-void DetectorConstruction::SetLaBr3Length(G4double val)
+void DetectorConstruction::SetTemperature(G4double val)
 {
-  fLaBr3Length = val;
+  Temperature = val;
+}
+
+void DetectorConstruction::SetPressure(G4double val)
+{
+  Pressure = val;
+}
+   
+void DetectorConstruction::SetTotalDetectorDiameter(G4double val)
+{
+  fTotalDetectorDiameter = val;
+}
+
+void DetectorConstruction::SetDetectorDiameter(G4double val)
+{
+  fDetectorDiameter = val;
+}
+
+void DetectorConstruction::SetTotalDetectorLength(G4double val)
+{
+  fTotalDetectorLength = val;
+}
+
+void DetectorConstruction::SetDetectorLength(G4double val)
+{
+  fDetectorLength = val;
 }
 
 void DetectorConstruction::SetGapThickness(G4double val)
 {
   fGapThickness = val;
+}
+
+void DetectorConstruction::SetDetectorMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fDetectorMaterial != pttoMaterial) {
+    fDetectorMaterial = pttoMaterial;                  
+    if(fLogicDetector) fLogicDetector->SetMaterial(fDetectorMaterial);
+  }
+}
+
+void DetectorConstruction::SetCrystalMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fCrystalMaterial != pttoMaterial) {
+    fCrystalMaterial = pttoMaterial;                  
+    if(fLogicCrystal) fLogicCrystal->SetMaterial(fCrystalMaterial);
+  }
 }
 
 void DetectorConstruction::SetGapMaterial(G4String materialChoice)
@@ -468,6 +1573,90 @@ void DetectorConstruction::SetGapMaterial(G4String materialChoice)
   if (pttoMaterial && fGapMaterial != pttoMaterial) {
     fGapMaterial = pttoMaterial;                  
     if(fLogicGap) fLogicGap->SetMaterial(fGapMaterial);
+  }
+}
+
+void DetectorConstruction::SetFaceGapMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fFaceGapMaterial != pttoMaterial) {
+    fFaceGapMaterial = pttoMaterial;                  
+    if(fLogicFaceGap) fLogicFaceGap->SetMaterial(fFaceGapMaterial);
+  }
+}
+
+void DetectorConstruction::SetAlCaseMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fAlCaseMaterial != pttoMaterial) {
+    fAlCaseMaterial = pttoMaterial;                  
+    if(fLogicAlCase) fLogicAlCase->SetMaterial(fAlCaseMaterial);
+  }
+}
+
+void DetectorConstruction::SetFaceAlCaseMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fFaceAlCaseMaterial != pttoMaterial) {
+    fFaceAlCaseMaterial = pttoMaterial;                  
+    if(fLogicFaceAlCase) fLogicFaceAlCase->SetMaterial(fFaceAlCaseMaterial);
+  }
+}
+
+void DetectorConstruction::SetPbCaseMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fPbCaseMaterial != pttoMaterial) {
+    fPbCaseMaterial = pttoMaterial;                  
+    if(fLogicPbCase) fLogicPbCase->SetMaterial(fPbCaseMaterial);
+  }
+}
+
+void DetectorConstruction::SetPbCollarMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fPbCollarMaterial != pttoMaterial) {
+    fPbCollarMaterial = pttoMaterial;                  
+    if(fLogicPbCollar) fLogicPbCollar->SetMaterial(fPbCollarMaterial);
+  }
+}
+
+void DetectorConstruction::SetPMTMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fPMTMaterial != pttoMaterial) {
+    fPMTMaterial = pttoMaterial;                  
+    if(fLogicPMT) fLogicPMT->SetMaterial(fPMTMaterial);
+  }
+}
+
+void DetectorConstruction::SetPMTWinMaterial(G4String materialChoice)
+{
+  // search the material by its name
+  G4Material* pttoMaterial =
+    G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+
+  if (pttoMaterial && fPMTWinMaterial != pttoMaterial) {
+    fPMTWinMaterial = pttoMaterial;                  
+    if(fLogicPMTWin) fLogicPMTWin->SetMaterial(fPMTWinMaterial);
   }
 }
 
@@ -487,12 +1676,8 @@ void DetectorConstruction::SetPMTLength(G4double val)
 {
   fPMTLength = val;
 }
-void DetectorConstruction::UpdateGeometry()
+void DetectorConstruction::SetDetectorGeometry(G4int val)
 {
-  G4RunManager::GetRunManager()->DefineWorldVolume(ConstructCalorimeter());
-  G4RunManager::GetRunManager()->PhysicsHasBeenModified();
-//  G4RunManager::GetRunManager()->ReinitializeGeometry();
+  fDetectorGeometry = val;
 }
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
