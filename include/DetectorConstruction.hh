@@ -84,6 +84,12 @@
 
 #include "G4Tubs.hh"
 
+#include "G4CutTubs.hh"
+
+#include "G4Trd.hh"
+
+#include "G4Trap.hh"
+
 #include "G4Polyhedra.hh"
 
 #include "G4LogicalVolume.hh"
@@ -137,6 +143,12 @@ class G4Box;
 class G4SubtractionSolid;
 
 class G4Tubs;
+
+class G4CutTubs;
+
+class G4Trap;
+
+class G4Trd;
 
 class G4Polyhedra;
 
@@ -352,7 +364,105 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
      G4VPhysicalVolume*     fPhysiGasTarget;
 
+     G4SubtractionSolid*    fSolidGasTargetSideCuts;
+
+     G4LogicalVolume*       fLogicGasTargetSideCuts;
+
+     G4VPhysicalVolume*     fPhysiGasTargetSideCuts;
+
+     G4Tubs*                fSolidInnerTube;
+
+     G4LogicalVolume*       fLogicInnerTube;
+
+     G4VPhysicalVolume*     fPhysiInnerTube;
+
+     G4SubtractionSolid*    fSolidGasTargetSides;
+
+     G4LogicalVolume*       fLogicGasTargetSides;
+
+     G4VPhysicalVolume*     fPhysiGasTargetSides;
+
+     
+
+     // Collimator 
+
+     G4SubtractionSolid*    fSolidLeftRing;
+
+     G4LogicalVolume*       fLogicLeftRing;
+
+     G4VPhysicalVolume*     fPhysiLeftRing;
+
+     G4SubtractionSolid*    fSolidRightRing;
+
+     G4LogicalVolume*       fLogicRightRing;
+
+     G4VPhysicalVolume*     fPhysiRightRing;
+
+     G4SubtractionSolid*    fSolidLeftConnectingRing;
+
+     G4LogicalVolume*       fLogicLeftConnectingRing;
+
+     G4VPhysicalVolume*     fPhysiLeftConnectingRing;
+
+     G4SubtractionSolid*    fSolidRightConnectingRing;
+
+     G4LogicalVolume*       fLogicRightConnectingRing;
+
+     G4VPhysicalVolume*     fPhysiRightConnectingRing;
+
+     G4SubtractionSolid*    fSolidLeftExternalRing;
+
+     G4LogicalVolume*       fLogicLeftExternalRing;
+
+     G4VPhysicalVolume*     fPhysiLeftExternalRing;
+
+     G4SubtractionSolid*    fSolidRightExternalRing;
+
+     G4LogicalVolume*       fLogicRightExternalRing;
+
+     G4VPhysicalVolume*     fPhysiRightExternalRing;
+
+     G4SubtractionSolid*    fSolidLeftOuterRing;
+
+     G4LogicalVolume*       fLogicLeftOuterRing;
+
+     G4VPhysicalVolume*     fPhysiLeftOuterRing;
+
+     G4SubtractionSolid*    fSolidRightOuterRing;
+
+     G4LogicalVolume*       fLogicRightOuterRing;
+
+     G4VPhysicalVolume*     fPhysiRightOuterRing;
+
+    
+
+     G4CutTubs*             fSolidOblique;
+
+     G4LogicalVolume*       fLogicOblique;
+
+     G4VPhysicalVolume*     fPhysiOblique;
+
+     G4SubtractionSolid*    fSolidTrapezoidCut;
+
+     G4LogicalVolume*       fLogicTrapezoidCut;
+
+     G4VPhysicalVolume*     fPhysiTrapezoidCut;
+
+     G4SubtractionSolid*    fSolidTube;
+
+     G4LogicalVolume*       fLogicTube;
+
+     G4VPhysicalVolume*     fPhysiTube;
+
+     G4Tubs*                fSolidDisk;
+
+     G4LogicalVolume*       fLogicDisk;
+
+     G4VPhysicalVolume*     fPhysiDisk;
+
      G4Material*            fGasTargetMaterial;
+
+     G4Material*            fTubeMaterial;
 
      G4double               Temperature;
 
@@ -366,7 +476,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
      G4Tubs* 		        fSolidDetector;
 
-     G4Polyhedra*           fSolidDetector1;
+     G4Polyhedra*           fSolidHDetector;
 
      G4LogicalVolume*	    fLogicDetector;
 
@@ -392,7 +502,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
      G4Tubs* 		        fSolidCrystal;
 
-     G4Polyhedra*           fSolidCrystal1;
+     G4Polyhedra*           fSolidHCrystal;
 
      G4LogicalVolume*	    fLogicCrystal;
 
@@ -414,7 +524,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
      G4Tubs* 		        fSolidGap;
 
-     G4Polyhedra*           fSolidGap1;
+     G4Polyhedra*           fSolidHGap;
 
      G4LogicalVolume*	    fLogicGap;
 
@@ -430,7 +540,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
      G4Tubs* 		        fSolidFaceGap;
 
-     G4Polyhedra*           fSolidFaceGap1;
+     G4Polyhedra*           fSolidHFaceGap;
 
      G4LogicalVolume*	    fLogicFaceGap;
 
@@ -454,7 +564,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
      G4Tubs* 		        fSolidAlCase;
 
-     G4Polyhedra*           fSolidAlCase1;
+     G4Polyhedra*           fSolidHAlCase;
 
      G4LogicalVolume*	    fLogicAlCase;
 
@@ -470,7 +580,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
      G4Tubs* 		        fSolidFaceAlCase;
 
-     G4Polyhedra*           fSolidFaceAlCase1;
+     G4Polyhedra*           fSolidHFaceAlCase;
 
      G4LogicalVolume*	    fLogicFaceAlCase;
 
@@ -494,7 +604,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
      G4Tubs* 		        fSolidPbCase;
 
-     G4Polyhedra*           fSolidPbCase1;
+     G4Polyhedra*           fSolidHPbCase;
 
      G4LogicalVolume*	    fLogicPbCase;
 
@@ -506,7 +616,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
      G4Tubs* 		        fSolidPbCollar;
 
-     G4Polyhedra*           fSolidPbCollar1;
+     G4Polyhedra*           fSolidHPbCollar;
 
      G4LogicalVolume*	    fLogicPbCollar;
 
@@ -530,7 +640,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
      G4Tubs* 		        fSolidPMT;
 
-     G4Polyhedra*           fSolidPMT1;
+     G4Polyhedra*           fSolidHPMT;
 
      G4LogicalVolume*	    fLogicPMT;
 
@@ -550,7 +660,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
      G4Tubs* 		        fSolidPMTWin;
 
-     G4Polyhedra*           fSolidPMTWin1;
+     G4Polyhedra*           fSolidHPMTWin;
 
      G4LogicalVolume*	    fLogicPMTWin;
 
@@ -583,4 +693,3 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
-
