@@ -367,128 +367,128 @@ if (fDetectorGeometry == 1 || fDetectorGeometry == 3){
   //10 detectors with 10 straddling detectors
   // Some of the straddling detectors are moved 0.5*sqrt(3)*fTotalDetectorDiameter and they are all moved 0.125*sqrt(3)*fTotalDetectorDiameter up to centre them at (0,0,0)
   //bottom 3
-  //P.setX(-fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(-fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(0.); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(0.); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
-  ////4
-  //P.setX(-1.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //4
+  P.setX(-1.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(-0.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(-0.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(0.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(0.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(1.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
-  ////3
-  //P.setX(-fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(1.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //3
+  P.setX(-fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(0.); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(0.); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
-  ////10 straddling detectors
-  ////top 4
-  //P.setX((0.5 + 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((0.625*sqrt(3) + 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength + 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //10 straddling detectors
+  //top 4
+  P.setX((0.5 + 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((0.625*sqrt(3) + 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(0.5*fTotalDetectorDiameter); P.setY((0.625*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(0.5*fTotalDetectorDiameter); P.setY((0.625*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(-0.5*fTotalDetectorDiameter); P.setY((0.625*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(-0.5*fTotalDetectorDiameter); P.setY((0.625*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX((-0.5 - 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((0.625*sqrt(3) + 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
-  ////below the top 4
-  //P.setX((1 + 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX((-0.5 - 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((0.625*sqrt(3) + 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //below the top 4
+  P.setX((1 + 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX((-1 - 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
-  ////4
-  //P.setX((1.5 + 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) - 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX((-1 - 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //4
+  P.setX((1.5 + 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) - 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX((1 + 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) - 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX((1 + 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) - 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX((-1.5 - 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) - 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX((-1.5 - 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) - 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX((-1 - 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) - 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
-  ////end straddling detectors
-  ////10 detectors
-  ////bottom 3
-  //P.setX(-fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX((-1 - 0.5*sqrt(3))*fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) - 0.5 + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //end straddling detectors
+  //10 detectors
+  //bottom 3
+  P.setX(-fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(0.); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(0.); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
-  ////4
-  //P.setX(-1.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(fTotalDetectorDiameter); P.setY((-0.875*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //4
+  P.setX(-1.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(-0.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(-0.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(0.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(0.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
 
-  //P.setX(1.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
-  ////3
-  //P.setX(-fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(1.5*fTotalDetectorDiameter); P.setY((-0.375*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //3
+  P.setX(-fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(0.); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(0.); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
-  //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(fTotalDetectorDiameter); P.setY((0.125*sqrt(3) + 0.125*sqrt(3))*fTotalDetectorDiameter); P.setZ(-0.5*fTotalDetectorLength - 2.5*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
 
   // Assembly Placement in the World
   // Rotated 90° along the axes to be perpendicular to the gas target
