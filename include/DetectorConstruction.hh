@@ -41,9 +41,7 @@
 #include "G4Box.hh"
 #include "G4SubtractionSolid.hh"
 #include "G4Tubs.hh"
-#include "G4CutTubs.hh"
 #include "G4Trd.hh"
-#include "G4Trap.hh"
 #include "G4Polyhedra.hh"
 #include "G4LogicalVolume.hh"
 #include "G4RotationMatrix.hh"
@@ -71,8 +69,6 @@
 class G4Box;
 class G4SubtractionSolid;
 class G4Tubs;
-class G4CutTubs;
-class G4Trap;
 class G4Trd;
 class G4Polyhedra;
 class G4VPhysicalVolume;
@@ -217,32 +213,6 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4LogicalVolume*       fLogicRightOuterRing;
      G4VPhysicalVolume*     fPhysiRightOuterRing;
     
-     G4Box*                 fSolidBox1;
-     G4LogicalVolume*       fLogicBox1;
-     G4VPhysicalVolume*     fPhysiBox1;
-     G4Box*                 fSolidBox2;
-     G4LogicalVolume*       fLogicBox2;
-     G4VPhysicalVolume*     fPhysiBox2;
-     G4Box*                 fSolidBox3;
-     G4LogicalVolume*       fLogicBox3;
-     G4VPhysicalVolume*     fPhysiBox3;
-     G4Box*                 fSolidCover;
-     G4LogicalVolume*       fLogicCover;
-     G4VPhysicalVolume*     fPhysiCover;
-     G4Box*                 fSolidSource;
-     G4LogicalVolume*       fLogicSource;
-     G4VPhysicalVolume*     fPhysiSource;
-     G4Box*                 fSolidTopBox;
-     G4LogicalVolume*       fLogicTopBox;
-     G4VPhysicalVolume*     fPhysiTopBox;
-     G4Box*                 fSolidBottomBox;
-     G4LogicalVolume*       fLogicBottomBox;
-     G4VPhysicalVolume*     fPhysiBottomBox;
-     
-     
-     G4CutTubs*             fSolidOblique;
-     G4LogicalVolume*       fLogicOblique;
-     G4VPhysicalVolume*     fPhysiOblique;
      G4SubtractionSolid*    fSolidTrapezoidCut;
      G4LogicalVolume*       fLogicTrapezoidCut;
      G4VPhysicalVolume*     fPhysiTrapezoidCut;
