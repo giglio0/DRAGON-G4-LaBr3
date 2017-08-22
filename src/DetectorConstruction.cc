@@ -1067,7 +1067,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
        				//false, 
     			    	//0,
 	                //false); 
-  //Collimator                
+  // Collimator                
   
   G4Tubs* oTube1 = new G4Tubs("oTube1", 0., 1.27*cm, 3.4925*cm, 0.*deg, 360.*deg);
   G4Tubs* iTube1 = new G4Tubs("iTube1", 0., 0.9525*cm, 3.4925*cm, 0.*deg, 360.*deg); 
