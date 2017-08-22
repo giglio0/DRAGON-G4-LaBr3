@@ -159,6 +159,10 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      const G4VPhysicalVolume* GetScint() {return fPhysiCrystal;};
 
   private:
+     G4VisAttributes* fCyanVisAtt;
+     G4VisAttributes* fYellowVisAtt;
+     G4VisAttributes* fMagnetaVisAtt;
+     G4VisAttributes* fOrangeVisAtt;
      G4VisAttributes* fBlueVisAtt;
      G4VisAttributes* fGreenVisAtt;
      G4VisAttributes* fRedVisAtt;
@@ -180,9 +184,21 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4SubtractionSolid*    fSolidGasTargetSideCuts;
      G4LogicalVolume*       fLogicGasTargetSideCuts;
      G4VPhysicalVolume*     fPhysiGasTargetSideCuts;
-     G4Tubs*                fSolidInnerTube;
+     G4SubtractionSolid*    fSolidInnerTube;
      G4LogicalVolume*       fLogicInnerTube;
      G4VPhysicalVolume*     fPhysiInnerTube;
+     G4SubtractionSolid*    fSolidOuterTube;
+     G4LogicalVolume*       fLogicOuterTube;
+     G4VPhysicalVolume*     fPhysiOuterTube;
+     G4Tubs*                fSolidLeftTube;
+     G4LogicalVolume*       fLogicLeftTube;
+     G4VPhysicalVolume*     fPhysiLeftTube;
+     G4Tubs*                fSolidRightTube;
+     G4LogicalVolume*       fLogicRightTube;
+     G4VPhysicalVolume*     fPhysiRightTube;
+     G4Box*                 fSolidGasTargetAir;
+     G4LogicalVolume*       fLogicGasTargetAir;
+     G4VPhysicalVolume*     fPhysiGasTargetAir;
      G4SubtractionSolid*    fSolidGasTargetSides;
      G4LogicalVolume*       fLogicGasTargetSides;
      G4VPhysicalVolume*     fPhysiGasTargetSides;
@@ -206,6 +222,12 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4SubtractionSolid*    fSolidRightExternalRing;
      G4LogicalVolume*       fLogicRightExternalRing;
      G4VPhysicalVolume*     fPhysiRightExternalRing;
+     G4SubtractionSolid*    fSolidLeftLeadRing;
+     G4LogicalVolume*       fLogicLeftLeadRing;
+     G4VPhysicalVolume*     fPhysiLeftLeadRing;
+     G4SubtractionSolid*    fSolidLeftConnector;
+     G4LogicalVolume*       fLogicLeftConnector;
+     G4VPhysicalVolume*     fPhysiLeftConnector;
      G4SubtractionSolid*    fSolidLeftOuterRing;
      G4LogicalVolume*       fLogicLeftOuterRing;
      G4VPhysicalVolume*     fPhysiLeftOuterRing;
@@ -216,7 +238,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4SubtractionSolid*    fSolidTrapezoidCut;
      G4LogicalVolume*       fLogicTrapezoidCut;
      G4VPhysicalVolume*     fPhysiTrapezoidCut;
-     G4SubtractionSolid*    fSolidTube;
+     G4Tubs*                fSolidTube;
      G4LogicalVolume*       fLogicTube;
      G4VPhysicalVolume*     fPhysiTube;
      G4Tubs*                fSolidDisk;
