@@ -260,6 +260,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4double               fTotalDetectorLength;
      G4double 		        fDetectorLength;
      G4double		        fZposDetector;
+     G4double 				fAirGap;
      G4int                  fDetectorGeometry;
      G4Material*            fDetectorMaterial;
      
