@@ -1,0 +1,26 @@
+# $Id: TestEm0.in 68220 2013-03-19 15:15:02Z maire $
+#
+# Macro file for "LaBr3_v3.cc"
+#
+
+/testem/det/setCrystalDiam 3.0 cm
+/testem/det/setCrystalLength 5.0 cm
+/testem/det/setGapThickness 0.1 cm
+/testem/det/setGapMaterial G4_TEFLON
+/testem/det/setAlCaseThickness 0.2 cm
+/testem/det/setPbCaseThickness 0.5 cm
+/testem/det/setPMTDiameter 8.0 cm
+/testem/det/setPMTLength 25.0 cm
+/testem/det/setNoDets 10
+/testem/det/update
+
+/run/initialize
+#
+/gps/particle alpha
+/gps/pos/type Point
+/gps/pos/centre 0. 0. -10.0 cm
+/gps/ang/type iso
+/gps/ang/mintheta 170 deg
+/gps/energy 0.05 MeV
+
+/run/beamOn 100
