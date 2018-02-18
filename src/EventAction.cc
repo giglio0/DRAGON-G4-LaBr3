@@ -36,6 +36,8 @@
 #include "RunAction.hh"
 #include "HistoManager.hh"
 
+#include <CLHEP/Units/SystemOfUnits.h>
+
 #include "G4Event.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -43,7 +45,7 @@
 EventAction::EventAction(RunAction* run, HistoManager* histo)
 :fRunAct(run),fHistoManager(histo)
 {
- fPrintModulo = 10000; }
+ fPrintModulo = 1000; }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -56,7 +58,7 @@ void EventAction::BeginOfEventAction(const G4Event* evt)
 {  
   G4int evtNb = evt->GetEventID();
   if (evtNb%fPrintModulo == 0) 
-    G4cout << "\n---> Begin of event: " << evtNb << G4endl;
+    G4cout << "---> Beginning of event: " << evtNb << G4endl;
  
  // initialisation per event
  fEnergyScint = 0.;
@@ -74,12 +76,15 @@ void EventAction::EndOfEventAction(const G4Event* )
   
   //fill histograms
 
-  // do not increment the energy histogram if gamma loses no energy
-  if (fEnergyScint > 0.)
+  // do not increment the energy histogram if no energy loss
+  if (fEnergyScint > 1*CLHEP::eV)
     fHistoManager->FillHisto(1, fEnergyScint);
-  // do not increment the energy histogram if gamma loses no energy
-  if (fEnergyResScint > 0.)
+  // do not increment the energy histogram if no energy loss
+  if (fEnergyResScint > 1*CLHEP::eV)
     fHistoManager->FillHisto(2, fEnergyResScint);
+  if ((fEnergyScint > 0.) && (fEnergyScint < 1*CLHEP::eV))
+    fHistoManager->FillHisto(3, fEnergyScint);
+  
 
   //fHistoManager->Fill2Histo(2, fEnergyGas,fEnergyDSSSD);
 

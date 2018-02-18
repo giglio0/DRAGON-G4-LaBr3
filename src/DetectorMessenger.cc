@@ -50,23 +50,28 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction * Det)
   
   fDetDir = new G4UIdirectory("/testem/det/");
   fDetDir->SetGuidance("detector construction commands");
+  
+  fSetNoDetsCmd = new G4UIcmdWithAnInteger("/testem/det/setNoDets",this);
+  fSetNoDetsCmd->SetGuidance("Set the number of detectors for this geometry.");
+  fSetNoDetsCmd->SetGuidance("A value > 1 will create an array from an input file");
+  fSetNoDetsCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  fLaBr3DiamCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setLaBr3Diam",this);
-  fLaBr3DiamCmd->SetGuidance("Set the diameter of the LaBr3 crystal");
-  fLaBr3DiamCmd->SetParameterName("LaBr3Diam",false);
-  fLaBr3DiamCmd->SetRange("LaBr3Diam >0.");
-  fLaBr3DiamCmd->SetUnitCategory("Length");
-  fLaBr3DiamCmd->AvailableForStates(G4State_PreInit,G4State_Idle); 
+  fCrystalDiamCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setCrystalDiam",this);
+  fCrystalDiamCmd->SetGuidance("Set the diameter of the Crystal crystal");
+  fCrystalDiamCmd->SetParameterName("CrystalDiam",false);
+  fCrystalDiamCmd->SetRange("CrystalDiam >0.");
+  fCrystalDiamCmd->SetUnitCategory("Length");
+  fCrystalDiamCmd->AvailableForStates(G4State_PreInit,G4State_Idle); 
 
-  fLaBr3LengthCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setLaBr3Length",this);
-  fLaBr3LengthCmd->SetGuidance("Set the length of the LaBr3 crystal");
-  fLaBr3LengthCmd->SetParameterName("LaBr3Length",false);
-  fLaBr3LengthCmd->SetRange("LaBr3Length >0.");
-  fLaBr3LengthCmd->SetUnitCategory("Length");
-  fLaBr3LengthCmd->AvailableForStates(G4State_PreInit,G4State_Idle); 
+  fCrystalLengthCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setCrystalLength",this);
+  fCrystalLengthCmd->SetGuidance("Set the length of the Crystal crystal");
+  fCrystalLengthCmd->SetParameterName("CrystalLength",false);
+  fCrystalLengthCmd->SetRange("CrystalLength >0.");
+  fCrystalLengthCmd->SetUnitCategory("Length");
+  fCrystalLengthCmd->AvailableForStates(G4State_PreInit,G4State_Idle); 
 
   fGapThicknessCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setGapThickness",this);
-  fGapThicknessCmd->SetGuidance("Set the thickness of the gap between Al and the LaBr3 crystal");
+  fGapThicknessCmd->SetGuidance("Set the thickness of the gap between Al and the Crystal crystal");
   fGapThicknessCmd->SetParameterName("GapThickness",false);
   fGapThicknessCmd->SetRange("GapThickness >0.");
   fGapThicknessCmd->SetUnitCategory("Length");
@@ -84,6 +89,13 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction * Det)
   fAlCaseThicknessCmd->SetUnitCategory("Length");
   fAlCaseThicknessCmd->AvailableForStates(G4State_PreInit,G4State_Idle); 
  
+  fAlFaceThicknessCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setAlFaceThickness",this);
+  fAlFaceThicknessCmd->SetGuidance("Set the thickness of the Al casing");
+  fAlFaceThicknessCmd->SetParameterName("FaceThickness",false);
+  fAlFaceThicknessCmd->SetRange("FaceThickness >0.");
+  fAlFaceThicknessCmd->SetUnitCategory("Length");
+  fAlFaceThicknessCmd->AvailableForStates(G4State_PreInit,G4State_Idle); 
+
   fPbCaseThicknessCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setPbCaseThickness",this);
   fPbCaseThicknessCmd->SetGuidance("Set the thickness of the Pb shielding surround");
   fPbCaseThicknessCmd->SetParameterName("PbThickness",false);
@@ -119,14 +131,16 @@ DetectorMessenger::~DetectorMessenger()
 {
   delete fDetDir;  
   delete fTestemDir;
-  delete fLaBr3DiamCmd;
-  delete fLaBr3LengthCmd;
+  delete fCrystalDiamCmd;
+  delete fCrystalLengthCmd;
   delete fGapThicknessCmd;
   delete fGapMaterialCmd;
   delete fAlCaseThicknessCmd;
+  delete fAlFaceThicknessCmd;
   delete fPbCaseThicknessCmd;
   delete fPMTDiameterCmd;
   delete fPMTLengthCmd;
+  delete fSetNoDetsCmd;
   delete fUpdateCmd;
  }
 
@@ -134,11 +148,11 @@ DetectorMessenger::~DetectorMessenger()
 
 void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
 { 
-  if ( command == fLaBr3DiamCmd )
-   {fDetector->SetLaBr3Diameter(fLaBr3DiamCmd->GetNewDoubleValue(newValue));}
+  if ( command == fCrystalDiamCmd )
+   {fDetector->SetCrystalDiameter(fCrystalDiamCmd->GetNewDoubleValue(newValue));}
 
-  if ( command == fLaBr3LengthCmd )
-   {fDetector->SetLaBr3Length(fLaBr3LengthCmd->GetNewDoubleValue(newValue));}
+  if ( command == fCrystalLengthCmd )
+   {fDetector->SetCrystalLength(fCrystalLengthCmd->GetNewDoubleValue(newValue));}
 
   if ( command == fGapThicknessCmd )
    {fDetector->SetGapThickness(fGapThicknessCmd->GetNewDoubleValue(newValue));}
@@ -149,6 +163,9 @@ void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
   if ( command == fAlCaseThicknessCmd )
    {fDetector->SetAlCaseThickness(fAlCaseThicknessCmd->GetNewDoubleValue(newValue));}
 
+  if ( command == fAlFaceThicknessCmd )
+   {fDetector->SetAlFaceThickness(fAlFaceThicknessCmd->GetNewDoubleValue(newValue));}
+
   if ( command == fPbCaseThicknessCmd)
    {fDetector->SetPbCaseThickness(fPbCaseThicknessCmd->GetNewDoubleValue(newValue));}
 
@@ -157,6 +174,9 @@ void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
 
   if ( command == fPMTLengthCmd)
    {fDetector->SetPMTLength(fPMTLengthCmd->GetNewDoubleValue(newValue));}
+
+  if ( command == fSetNoDetsCmd)
+   {fDetector->SetNoOfDetectors(fSetNoDetsCmd->GetNewIntValue(newValue));}
 
   if  ( command == fUpdateCmd )
    {fDetector->UpdateGeometry(); }

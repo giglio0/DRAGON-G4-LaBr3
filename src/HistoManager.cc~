@@ -80,7 +80,7 @@ void HistoManager::book()
  histo[2] = new TH1D("Energy Res", "Energy Deposited in LaBr3 with Resolution", 1000, 0., 10*CLHEP::MeV);
  if (!histo[2]) G4cout << "\n can't create histo 2" << G4endl;
 
- histo[3] = new TH1D("Low Energy", "Energy Deposited in LaBr3 at Low Energies", 50, 0., 0.5*CLHEP::eV);
+ histo[3] = new TH1D("Low Energy", "Energy Deposited in LaBr3 at Low Energies", 100, 0., 1*CLHEP::eV);
  if (!histo[1]) G4cout << "\n can't create histo 1" << G4endl;
 
  

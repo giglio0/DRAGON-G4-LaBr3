@@ -23,48 +23,84 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file analysis/shared/include/PhysicsList.hh
-/// \brief Definition of the PhysicsList class
+// 
 //
 //
 // $Id$
 //
-// 
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#ifndef PhysicsList_h
-#define PhysicsList_h 1
+#include "RunAction.hh"
+#include "HistoManager.hh"
 
-#include "G4VUserPhysicsList.hh"
-#include "globals.hh"
+#include "G4Run.hh"
+#include "G4RunManager.hh"
+#include "G4UnitsTable.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-class PhysicsList: public G4VUserPhysicsList
+RunAction::RunAction(HistoManager* histo)
+:fHistoManager(histo)
+{}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+RunAction::~RunAction()
+{}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void RunAction::BeginOfRunAction(const G4Run* aRun)
+{ 
+//  G4cout << "### Run " << aRun->GetRunID() << " start." << G4endl;
+  G4cout << "\n--------------------Start of Run " << aRun->GetRunID() 
+         << "--------------------------\n" << G4endl;
+    
+  //initialize cumulative quantities
+  //
+  fSumELaBr3 = fSum2ELaBr3 = 0.;
+  
+  //histograms
+  //
+  fHistoManager->book(); 
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void RunAction::fillPerEvent(G4double EDet)
 {
-public:
-  PhysicsList();
-  virtual ~PhysicsList();
-
-  // Construct particle and physics
-  void ConstructParticle();
-  void ConstructProcess();
- 
-  void SetCuts();
-   
-private:
-
-  // these methods Construct physics processes and register them
-  void ConstructDecay();
-  void ConstructEM();
-  void ConstructRadioactiveDecay();
-};
+  //accumulate statistic
+  //
+  fSumELaBr3 += EDet;
+  fSum2ELaBr3 += EDet+EDet;
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#endif
+void RunAction::EndOfRunAction(const G4Run* aRun)
+{
+  G4int NbOfEvents = aRun->GetNumberOfEvent();
+  if (NbOfEvents == 0) return;
+  
+  //compute statistics: mean and rms
+  //
+  fSumELaBr3 /= NbOfEvents; fSum2ELaBr3 /= NbOfEvents;
+  G4double rmsELaBr3 = fSum2ELaBr3 - fSumELaBr3*fSumELaBr3;
+  if (rmsELaBr3 >0.) rmsELaBr3 = std::sqrt(rmsELaBr3); else rmsELaBr3 = 0.;
+  
+  //print
+  //
+  G4cout
+     << "\n--------------------End of Run------------------------------\n"
+     << "\n mean Energy in LaBr3      : " << G4BestUnit(fSumELaBr3,"Energy")
+     << " +- "                          << G4BestUnit(rmsELaBr3,"Energy")
+     << G4endl;
+          
+  //save histograms
+  //
+  fHistoManager->PrintStatistic();
+  fHistoManager->save();   
+}
 
-
-
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

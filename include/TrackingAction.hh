@@ -57,7 +57,7 @@ class TrackingAction : public G4UserTrackingAction {
     EventAction*          fEventAction;
     HistoManager*	  fHistoManager;
     
-    G4double fPrimaryCharge;
+    G4double fCharge;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

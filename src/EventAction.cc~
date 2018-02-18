@@ -23,9 +23,6 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file analysis/shared/include/PhysicsList.hh
-/// \brief Definition of the PhysicsList class
-//
 //
 // $Id$
 //
@@ -34,37 +31,67 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#ifndef PhysicsList_h
-#define PhysicsList_h 1
+#include "EventAction.hh"
 
-#include "G4VUserPhysicsList.hh"
-#include "globals.hh"
+#include "RunAction.hh"
+#include "HistoManager.hh"
+
+#include <CLHEP/Units/SystemOfUnits.h>
+
+#include "G4Event.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-class PhysicsList: public G4VUserPhysicsList
+EventAction::EventAction(RunAction* run, HistoManager* histo)
+:fRunAct(run),fHistoManager(histo)
 {
-public:
-  PhysicsList();
-  virtual ~PhysicsList();
-
-  // Construct particle and physics
-  void ConstructParticle();
-  void ConstructProcess();
- 
-  void SetCuts();
-   
-private:
-
-  // these methods Construct physics processes and register them
-  void ConstructDecay();
-  void ConstructEM();
-  void ConstructRadioactiveDecay();
-};
+ fPrintModulo = 1000; }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#endif
+EventAction::~EventAction()
+{ }
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+void EventAction::BeginOfEventAction(const G4Event* evt)
+{  
+  G4int evtNb = evt->GetEventID();
+  if (evtNb%fPrintModulo == 0) 
+    G4cout << "---> Beginning of event: " << evtNb << G4endl;
+ 
+ // initialisation per event
+ fEnergyScint = 0.;
+ fEnergyResScint = 0;
+}
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void EventAction::EndOfEventAction(const G4Event* )
+{
+  //accumulates statistic
+  //
+  fRunAct->fillPerEvent(fEnergyScint);
+  fRunAct->fillPerEvent(fEnergyResScint);
+  
+  //fill histograms
+
+  // do not increment the energy histogram if no energy loss
+  if (fEnergyScint > 1*CLHEP::eV)
+    fHistoManager->FillHisto(1, fEnergyScint);
+  if ((fEnergyScint > 0.) && (fEnergyScint < 1*CLHEP::eV))
+    fHistoManager->FillHisto(3, fEnergyScint);
+  // do not increment the energy histogram if no energy loss
+  if (fEnergyResScint > 1*CLHEP::eV)
+    fHistoManager->FillHisto(2, fEnergyResScint);
+  
+
+  //fHistoManager->Fill2Histo(2, fEnergyGas,fEnergyDSSSD);
+
+  
+  //fill ntuple
+  //
+//  fHistoManager->FillNtuple(fEnergyAbs, fEnergyGap, fTrackLAbs, fTrackLGap);
+}  
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
