@@ -86,11 +86,18 @@ void PhysicsList::ConstructParticle()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+//#include "G4EmLowEPPhysics.hh"
+
 void PhysicsList::ConstructProcess()
 {
   AddTransportation();
   ConstructEM();
   ConstructDecay();
+  ConstructRadioactiveDecay();
+/*G4VPhysicsConstructor* fEmPhysicsList;
+  fEmPhysicsList = new G4EmLowEPPhysics();
+  fEmPhysicsList->ConstructProcess();
+*/
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -117,6 +124,9 @@ void PhysicsList::ConstructProcess()
 #include "G4hPairProduction.hh"
 
 #include "G4ionIonisation.hh"
+#include "G4NuclearStopping.hh"
+#include "G4LossTableManager.hh"
+#include "G4UAtomicDeexcitation.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -131,9 +141,9 @@ void PhysicsList::ConstructEM()
     
     if (particleName == "gamma") {
       // gamma         
-      ph->RegisterProcess(new G4PhotoElectricEffect, particle);
-      ph->RegisterProcess(new G4ComptonScattering,   particle);
-      ph->RegisterProcess(new G4GammaConversion,     particle);
+      ph->RegisterProcess(new G4PhotoElectricEffect, particle);      
+      ph->RegisterProcess(new G4ComptonScattering, particle);
+      ph->RegisterProcess(new G4GammaConversion, particle);
       
     } else if (particleName == "e-") {
       //electron
@@ -173,17 +183,24 @@ void PhysicsList::ConstructEM()
      
     } else if( particleName == "GenericIon" ) { 
       //Ions 
-      ph->RegisterProcess(new G4hMultipleScattering, particle);
-      ph->RegisterProcess(new G4ionIonisation,       particle);     
-      
-      } else if ((!particle->IsShortLived()) &&
+      ph->RegisterProcess(new G4hMultipleScattering(), particle);          
+      ph->RegisterProcess(new G4hIonisation, particle);
+      ph->RegisterProcess(new G4NuclearStopping(), particle);        
+    } else if ((!particle->IsShortLived()) &&
                (particle->GetPDGCharge() != 0.0) && 
                (particle->GetParticleName() != "chargedgeantino")) {
       //all others charged particles except geantino
       ph->RegisterProcess(new G4hMultipleScattering, particle);
       ph->RegisterProcess(new G4hIonisation,         particle);        
     }     
-  }
+  }    
+  // Deexcitation
+  //
+  G4VAtomDeexcitation* de = new G4UAtomicDeexcitation();
+  de->SetFluo(true);
+  de->SetAuger(false);   
+  de->SetPIXE(false);  
+  G4LossTableManager::Instance()->SetAtomDeexcitation(de);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -205,6 +222,20 @@ void PhysicsList::ConstructDecay()
   }
 }
 
+#include "G4ParticleTypes.hh"
+#include "G4RadioactiveDecay.hh"
+
+void PhysicsList::ConstructRadioactiveDecay()
+{
+  G4RadioactiveDecay* radioactiveDecay = new G4RadioactiveDecay();
+
+  radioactiveDecay->SetICM(true);                //Internal Conversion
+  radioactiveDecay->SetARM(false);               //Atomic Rearangement
+  
+  G4PhysicsListHelper* ph = G4PhysicsListHelper::GetPhysicsListHelper();  
+  ph->RegisterProcess(radioactiveDecay, G4GenericIon::GenericIon()); 
+}
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void PhysicsList::SetCuts()
@@ -221,9 +252,11 @@ void PhysicsList::SetCuts()
   SetCutValue(defaultCutValue, "e-");
   SetCutValue(defaultCutValue, "e+");
   SetCutValue(defaultCutValue, "proton");
+  SetCutValue(defaultCutValue, "GenericIon");
 
   if (verboseLevel>0) DumpCutValuesTable();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 
