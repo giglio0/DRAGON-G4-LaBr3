@@ -65,7 +65,7 @@ void HistoManager::book()
  // Creating a tree container to handle histograms and ntuples.
  // This tree is associated to an output file.
  //
- G4String fileName = "LaBr3_v3.root";
+ G4String fileName = "Test.root";
  rootFile = new TFile(fileName,"RECREATE");
  if(!rootFile) {
    G4cout << " HistoManager::book :" 
@@ -74,11 +74,21 @@ void HistoManager::book()
    return;
  }
 // 1-D Histos   
- histo[1] = new TH1D("Energy", "Energy Deposited in LaBr3", 1000, 0., 10*CLHEP::MeV);
+ histo[1] = new TH1D("Energy", "Cobalt-60 Spectrum for LaBr3", 1000, 0., 10*CLHEP::MeV);
  if (!histo[1]) G4cout << "\n can't create histo 1" << G4endl;
+histo[1]->GetXaxis()->SetTitle("Energy (MeV)");
+histo[1]->GetYaxis()->SetTitle("Entries Per Energy Channel");
 
- histo[2] = new TH1D("Energy Res", "Energy Deposited in LaBr3 with Resolution", 1000, 0., 10*CLHEP::MeV);
+ histo[2] = new TH1D("Energy Resolution", "Cobalt-60 Spectrum for LaBr3", 1000, 0., 10*CLHEP::MeV);
  if (!histo[2]) G4cout << "\n can't create histo 2" << G4endl;
+histo[2]->GetXaxis()->SetTitle("Energy (MeV)");
+histo[2]->GetYaxis()->SetTitle("Entries Per Energy Channel");
+
+ histo[3] = new TH1D("Low Energy", "Cobalt-60 Spectrum for LaBr3", 50, 0., 0.5*CLHEP::eV);
+ if (!histo[1]) G4cout << "\n can't create histo 1" << G4endl;
+histo[3]->GetXaxis()->SetTitle("Energy (MeV)");
+histo[3]->GetYaxis()->SetTitle("Entries Per Energy Channel");
+ 
 /*
  histo[3] = new TH1D("3", "Energy Deposited in DSSSD", 100, 0., 100*CLHEP::MeV);
  if (!histo[3]) G4cout << "\n can't create histo 3" << G4endl;
@@ -86,14 +96,12 @@ void HistoManager::book()
  if (!histo[4]) G4cout << "\n can't create histo 4" << G4endl;
  histo[5] = new TH1D("5", "Range of Ions (mm)", 100, -50.0*CLHEP::cm, 50.0*CLHEP::cm);
  if (!histo[5]) G4cout << "\n can't create histo 5" << G4endl;
-
 // 2-D Histos
  histo2[1] = new TH2D("1_2D", "YZ Position of Particle in Gas", 100, -5.0*CLHEP::cm, 				
                        5.0*CLHEP::cm, 100, -5.0*CLHEP::cm, 5.0*CLHEP::cm);
  if (!histo2[1]) G4cout << "\n can't create 2Dhisto 1" << G4endl;
  histo2[2] = new TH2D("2_2D", "E-dE", 400, 0.,40*CLHEP::MeV,100, 0.,100*CLHEP::MeV);
  if (!histo2[2]) G4cout << "\n can't create 2Dhisto 2" << G4endl;
-
  // create 1 ntuple in subdirectory "tuples"
  //
  ntupl = new TTree("101", "Edep and TrackL");
@@ -103,7 +111,7 @@ void HistoManager::book()
  ntupl->Branch("Lgap", &Lgap, "Lgap/D");
 */
  
- G4cout << "\n----> Histogram file is opened in " << fileName << G4endl;
+ G4cout << "\n---> Histogram file is opened in " << fileName << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -163,7 +171,6 @@ void HistoManager::FillNtuple(G4double energyAbs, G4double energyGap,
  Egap = energyGap;
  Labs = trackLAbs;
  Lgap = trackLGap;
-
   if (ntupl) ntupl->Fill();
 }
 */
