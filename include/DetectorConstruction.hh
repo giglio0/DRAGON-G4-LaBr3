@@ -41,6 +41,7 @@
 #include "G4Box.hh"
 #include "G4SubtractionSolid.hh"
 #include "G4Tubs.hh"
+#include "G4CutTubs.hh"
 #include "G4Trd.hh"
 #include "G4Polyhedra.hh"
 #include "G4LogicalVolume.hh"
@@ -69,6 +70,7 @@
 class G4Box;
 class G4SubtractionSolid;
 class G4Tubs;
+class G4CutTubs;
 class G4Trd;
 class G4Polyhedra;
 class G4VPhysicalVolume;
@@ -93,7 +95,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
      void SetWorldMaterial           (G4String);
      void SetDetectorMaterial        (G4String);
-     void SetGasTargetMaterial       (G4String);
+     //void SetGasTargetMaterial       (G4String);
      void SetDetectorGeometry           (G4int);
      void SetTemperature             (G4double);
      void SetPressure                (G4double);
@@ -107,6 +109,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      void SetFaceGapMaterial         (G4String);
      void SetAlCaseMaterial          (G4String);   
      void SetFaceAlCaseMaterial      (G4String);
+     void SetfAlFaceThickness        (G4String);
      void SetPbCaseMaterial          (G4String);
      void SetPbCollarMaterial        (G4String);
      void SetPMTMaterial             (G4String);
@@ -131,7 +134,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4double    GetWorldSizeYZ()       {return fWorldSizeYZ;};
 
      G4Material* GetDetectorMaterial()           {return fDetectorMaterial;};
-     G4Material* GetGasTargetMaterial()          {return fGasTargetMaterial;};
+     //G4Material* GetGasTargetMaterial()          {return fGasTargetMaterial;};
      G4double    GetTemperature()                {return Temperature;};
      G4double    GetPressure()                   {return Pressure;};
      G4int       GetDetectorGeometry()           {return fDetectorGeometry;};
@@ -145,6 +148,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4Material* GetFaceGapMaterial()            {return fFaceGapMaterial;};
      G4Material* GetAlCaseMaterial()             {return fAlCaseMaterial;};
      G4Material* GetFaceAlCaseMaterial()         {return fFaceAlCaseMaterial;};
+     G4double    GetAlFaceThickness()            {return fAlFaceThickness;};
      G4Material* GetPbCaseMaterial()             {return fPbCaseMaterial;};
      G4Material* GetPbCollarMaterial()           {return fAlCaseMaterial;};
      G4Material* GetPMTMaterial()                {return fPMTMaterial;};
@@ -154,9 +158,11 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4double	 GetPMTDiameter()		         {return fPMTDiameter;}; 
      G4double	 GetPMTLength()			         {return fPMTLength;};
      G4VPhysicalVolume*    GetCrystal()          {return fPhysiCrystal;};
-		 
+	 G4VPhysicalVolume*    GetCrystal1()          {return fPhysiCrystal1;}; 
+	 
      const G4VPhysicalVolume* GetphysiWorld() {return fPhysiWorld;};
      const G4VPhysicalVolume* GetScint() {return fPhysiCrystal;};
+     const G4VPhysicalVolume* GetScint1() {return fPhysiCrystal1;};
 
   private:
      G4VisAttributes* fCyanVisAtt;
@@ -167,6 +173,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4VisAttributes* fGreenVisAtt;
      G4VisAttributes* fRedVisAtt;
      G4VisAttributes* fGreyVisAtt;
+     G4VisAttributes* fWhiteVisAtt;
      G4VisAttributes* fWireFrameVisAtt; 
      G4VisAttributes* fAuxEdgeVisAtt;
 
@@ -178,74 +185,53 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4double           fWorldSizeX;
      G4double           fWorldSizeYZ;
 
-     G4SubtractionSolid*    fSolidGasTarget;
-     G4LogicalVolume*       fLogicGasTarget;
-     G4VPhysicalVolume*     fPhysiGasTarget;
-     G4SubtractionSolid*    fSolidGasTargetSideCuts;
-     G4LogicalVolume*       fLogicGasTargetSideCuts;
-     G4VPhysicalVolume*     fPhysiGasTargetSideCuts;
-     G4SubtractionSolid*    fSolidInnerTube;
-     G4LogicalVolume*       fLogicInnerTube;
-     G4VPhysicalVolume*     fPhysiInnerTube;
-     G4SubtractionSolid*    fSolidOuterTube;
-     G4LogicalVolume*       fLogicOuterTube;
-     G4VPhysicalVolume*     fPhysiOuterTube;
-     G4Tubs*                fSolidLeftTube;
-     G4LogicalVolume*       fLogicLeftTube;
-     G4VPhysicalVolume*     fPhysiLeftTube;
-     G4Tubs*                fSolidRightTube;
-     G4LogicalVolume*       fLogicRightTube;
-     G4VPhysicalVolume*     fPhysiRightTube;
-     G4Box*                 fSolidGasTargetAir;
-     G4LogicalVolume*       fLogicGasTargetAir;
-     G4VPhysicalVolume*     fPhysiGasTargetAir;
-     G4SubtractionSolid*    fSolidGasTargetSides;
-     G4LogicalVolume*       fLogicGasTargetSides;
-     G4VPhysicalVolume*     fPhysiGasTargetSides;
-     
-     // Collimator 
-     G4SubtractionSolid*    fSolidLeftRing;
-     G4LogicalVolume*       fLogicLeftRing;
-     G4VPhysicalVolume*     fPhysiLeftRing;
-     G4SubtractionSolid*    fSolidRightRing;
-     G4LogicalVolume*       fLogicRightRing;
-     G4VPhysicalVolume*     fPhysiRightRing;
-     G4SubtractionSolid*    fSolidLeftConnectingRing;
-     G4LogicalVolume*       fLogicLeftConnectingRing;
-     G4VPhysicalVolume*     fPhysiLeftConnectingRing;
-     G4SubtractionSolid*    fSolidRightConnectingRing;
-     G4LogicalVolume*       fLogicRightConnectingRing;
-     G4VPhysicalVolume*     fPhysiRightConnectingRing;
-     G4SubtractionSolid*    fSolidLeftExternalRing;
-     G4LogicalVolume*       fLogicLeftExternalRing;
-     G4VPhysicalVolume*     fPhysiLeftExternalRing;
-     G4SubtractionSolid*    fSolidRightExternalRing;
-     G4LogicalVolume*       fLogicRightExternalRing;
-     G4VPhysicalVolume*     fPhysiRightExternalRing;
-     G4SubtractionSolid*    fSolidLeftLeadRing;
-     G4LogicalVolume*       fLogicLeftLeadRing;
-     G4VPhysicalVolume*     fPhysiLeftLeadRing;
-     G4SubtractionSolid*    fSolidLeftConnector;
-     G4LogicalVolume*       fLogicLeftConnector;
-     G4VPhysicalVolume*     fPhysiLeftConnector;
-     G4SubtractionSolid*    fSolidLeftOuterRing;
-     G4LogicalVolume*       fLogicLeftOuterRing;
-     G4VPhysicalVolume*     fPhysiLeftOuterRing;
-     G4SubtractionSolid*    fSolidRightOuterRing;
-     G4LogicalVolume*       fLogicRightOuterRing;
-     G4VPhysicalVolume*     fPhysiRightOuterRing;
-    
-     G4SubtractionSolid*    fSolidTrapezoidCut;
-     G4LogicalVolume*       fLogicTrapezoidCut;
-     G4VPhysicalVolume*     fPhysiTrapezoidCut;
-     G4Tubs*                fSolidTube;
-     G4LogicalVolume*       fLogicTube;
-     G4VPhysicalVolume*     fPhysiTube;
-     G4Tubs*                fSolidDisk;
-     G4LogicalVolume*       fLogicDisk;
-     G4VPhysicalVolume*     fPhysiDisk;
-     G4Material*            fGasTargetMaterial;
-     G4Material*            fTubeMaterial;
+     // Gas Target
+     // Outer Rectangle Target Box
+     G4Box*             fSolidOutTBox;
+     G4LogicalVolume*   fLogicOutTBox;
+     G4VPhysicalVolume* fPhysiOutTBox;
+     G4double 			fOutTBoxX;
+     G4double			fOutTBoxY;
+     G4double			fOutTBoxZ;
+     G4double 			fposEastArray;
+     G4Box*             fSolidInTBox;
+     G4LogicalVolume*   fLogicInTBox;
+     G4VPhysicalVolume* fPhysiInTBox;
+     G4Tubs*			fSolidEntHoleBox;
+     G4LogicalVolume*	fLogicEntHoleBox;
+     G4VPhysicalVolume*	fPhysiEntHoleBox;
+     G4Tubs*			fSolidExitHoleBox;
+     G4LogicalVolume*	fLogicExitHoleBox;
+     G4VPhysicalVolume*	fPhysiExitHoleBox;
+          
+     // Inner Trapezoidal Target
+     G4Trd*		fSolidOutCell;
+     G4LogicalVolume*	fLogicOutCell;
+     G4VPhysicalVolume*	fPhysiOutCell;
+     G4Trd*		fSolidInCell;
+     G4LogicalVolume*	fLogicInCell;
+     G4VPhysicalVolume*	fPhysiInCell;
+     // Entrance Collimators
+     G4Tubs*		fSolidEntHole;
+     G4LogicalVolume*	fLogicEntHole;
+     G4VPhysicalVolume*	fPhysiEntHole;
+     G4Tubs*		fSolidEntDisk;
+     G4LogicalVolume*	fLogicEntDisk;
+     G4VPhysicalVolume*	fPhysiEntDisk;
+     G4CutTubs*		fSolidEntCol;
+     G4LogicalVolume*	fLogicEntCol;
+     G4VPhysicalVolume*	fPhysiEntCol;
+     // Exit Collimators
+     G4Tubs*		fSolidExitHole;
+     G4LogicalVolume*	fLogicExitHole;
+     G4VPhysicalVolume*	fPhysiExitHole;
+     G4Tubs*		fSolidExitDisk;
+     G4LogicalVolume*	fLogicExitDisk;
+     G4VPhysicalVolume*	fPhysiExitDisk;
+     G4CutTubs*		fSolidExitCol;
+     G4LogicalVolume*	fLogicExitCol;
+     G4VPhysicalVolume*	fPhysiExitCol;
+
      G4double               Temperature;
      G4double               Pressure;
      
@@ -254,6 +240,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4Tubs* 		        fSolidDetector;
      G4Polyhedra*           fSolidHDetector;
      G4LogicalVolume*	    fLogicDetector;
+     G4LogicalVolume*	    fLogicDetector1;
      G4VPhysicalVolume*     fPhysiDetector;
      G4double               fTotalDetectorDiameter;
      G4double 		        fDetectorDiameter;
@@ -269,10 +256,13 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4Polyhedra*           fSolidHCrystal;
      G4LogicalVolume*	    fLogicCrystal;
      G4VPhysicalVolume*     fPhysiCrystal;
+     G4LogicalVolume*	    fLogicCrystal1;
+     G4VPhysicalVolume*     fPhysiCrystal1;
      G4double 		        fDiameter;
      G4double 		        fLength;
      G4double		        fZpos;
      G4Material*            fCrystalMaterial;
+     G4Material*            fCrystalMaterial1;
      
      //Gap between scintillator and aluminum casing (reflector?)
      //around crystal
@@ -280,6 +270,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4Polyhedra*           fSolidHGap;
      G4LogicalVolume*	    fLogicGap;
      G4VPhysicalVolume*     fPhysiGap;
+     G4LogicalVolume*	    fLogicGap1;
+     G4VPhysicalVolume*     fPhysiGap1;
      G4double 		        fGapLength;
      G4double		        fZposGap;
      G4Material* 	        fGapMaterial;
@@ -288,6 +280,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4Polyhedra*           fSolidHFaceGap;
      G4LogicalVolume*	    fLogicFaceGap;
      G4VPhysicalVolume*     fPhysiFaceGap;
+     G4LogicalVolume*	    fLogicFaceGap1;
+     G4VPhysicalVolume*     fPhysiFaceGap1;
      G4double		        fZposFaceGap;
      G4Material* 	        fFaceGapMaterial;
      //common to both components of gap
@@ -300,6 +294,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4Polyhedra*           fSolidHAlCase;
      G4LogicalVolume*	    fLogicAlCase;
      G4VPhysicalVolume*     fPhysiAlCase;
+     G4LogicalVolume*	    fLogicAlCase1;
+     G4VPhysicalVolume*     fPhysiAlCase1;
      G4double		        fAlCaseLength;
      G4double		        fZposAlCase;
      G4Material* 	        fAlCaseMaterial;
@@ -308,11 +304,14 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4Polyhedra*           fSolidHFaceAlCase;
      G4LogicalVolume*	    fLogicFaceAlCase;
      G4VPhysicalVolume*     fPhysiFaceAlCase;
+     G4LogicalVolume*	    fLogicFaceAlCase1;
+     G4VPhysicalVolume*     fPhysiFaceAlCase1;
      G4double		        fZposFaceAlCase;
      G4Material* 	        fFaceAlCaseMaterial;
      //common to both components of aluminum case
      G4double 		        fAlCaseDiameter;
      G4double 		        fAlCaseThickness;
+     G4double 				fAlFaceThickness;
 
      //Lead casing surrounding aluminum casing
      //around casing surround
@@ -338,6 +337,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4Polyhedra*           fSolidHPMT;
      G4LogicalVolume*	    fLogicPMT;
      G4VPhysicalVolume*     fPhysiPMT;
+     G4LogicalVolume*	    fLogicPMT1;
+     G4VPhysicalVolume*     fPhysiPMT1;
      G4double 		        fPMTDiameter;
      G4double 		        fPMTLength;
      G4double		        fZposPMT;
@@ -348,6 +349,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4Polyhedra*           fSolidHPMTWin;
      G4LogicalVolume*	    fLogicPMTWin;
      G4VPhysicalVolume*     fPhysiPMTWin;
+     G4LogicalVolume*	    fLogicPMTWin1;
+     G4VPhysicalVolume*     fPhysiPMTWin1;
      G4double 		        fPMTWinThickness;
      G4double		        fZposPMTWin;
      G4Material* 	        fPMTWinMaterial;
