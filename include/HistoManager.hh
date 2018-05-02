@@ -70,7 +70,6 @@ class HistoManager
     TH2D*    histo2[Max2Histo];            
 
 /*    TTree*   ntupl;    
-
     G4double Eabs;
     G4double Egap;
     G4double Labs;
@@ -81,4 +80,3 @@ class HistoManager
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
-
