@@ -67,14 +67,24 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   fRandomEngine = new CLHEP::HepJamesRandom( static_cast< long >( seed ) );
   fRandomGauss = new CLHEP::RandGauss( fRandomEngine );
   //resolution function taken from Saint Gobain document "BrilLanCeTM Scintillators Performance Summary"
-  //G4double fERes = fEOrig * fRandomGauss->fire(1.0, ((76.3/(std::sqrt(fEOrig*1000))/100))); 
-  G4double fERes = fEOrig * fRandomGauss->fire(1.0, 0.01); // for checking
+  G4double fERes = fEOrig * fRandomGauss->fire(1.0, (76.3/std::sqrt(fEOrig*1000000))/100);
+  //G4double fERes = fEOrig * fRandomGauss->fire(1.0, 0.01);
+/*  if (fEOrig > 0.){
+    G4cout << "fEOrig: " << fEOrig << G4endl;
+    G4cout << "Res Func: " << (76.3/std::sqrt(fEOrig*100000))/100 << G4endl;
+  }
+*/
+//  G4double fERes = fEOrig * fRandomGauss->fire(1.0, 0.01); // for checking
 
   // G4double stepLength = 0.;
   // if (aStep->GetTrack()->GetDefinition()->GetPDGCharge() != 0.)
   //   stepLength = aStep->GetStepLength();
      
   if (volume == fDetector->GetScint()){
+    fEventAction->AddScint(fEOrig);
+    fEventAction->AddResScint(fERes);
+  }
+  if (volume == fDetector->GetScint1()){
     fEventAction->AddScint(fEOrig);
     fEventAction->AddResScint(fERes);
   }
