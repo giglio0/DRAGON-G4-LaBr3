@@ -56,34 +56,23 @@ class DetectorMessenger: public G4UImessenger
     
   private:
     DetectorConstruction*      fDetector;
-    DetectorConstruction*      fBox;
     
     G4UIdirectory*             fTestemDir;
     G4UIdirectory*             fDetDir;
 
-    G4UIcmdWithAnInteger*      fDetectorGeometryCmd;
-    G4UIcmdWithAString*        fWorldMaterialCmd;
-    G4UIcmdWithAString*        fGasTargetMaterialCmd;
-    G4UIcmdWithAString*        fDetectorMaterialCmd;
-    G4UIcmdWithADoubleAndUnit* fDetectorDiameterCmd;
-    G4UIcmdWithADoubleAndUnit* fDetectorLengthCmd;
-    G4UIcmdWithADoubleAndUnit* TemperatureCmd;
-    G4UIcmdWithADoubleAndUnit* PressureCmd;
-    G4UIcmdWithADoubleAndUnit* fGapThicknessCmd;
-    G4UIcmdWithAString*        fCrystalMaterialCmd;
+	//G4UIcmdWithADoubleAndUnit* fCrystalDiamCmd;
+	//G4UIcmdWithADoubleAndUnit* fCrystalLengthCmd;
+	G4UIcmdWithADoubleAndUnit* fGapThicknessCmd;
     G4UIcmdWithAString*        fGapMaterialCmd;
-    G4UIcmdWithAString*        fFaceGapMaterialCmd;
-    G4UIcmdWithAString*        fAlCaseMaterialCmd;
-    G4UIcmdWithAString*        fFaceAlCaseMaterialCmd;
-    G4UIcmdWithAString*        fPbCaseMaterialCmd;
-    G4UIcmdWithAString*        fPbCollarMaterialCmd;
-    G4UIcmdWithAString*        fPMTMaterialCmd;
-    G4UIcmdWithAString*        fPMTWinMaterialCmd;
-    G4UIcmdWithADoubleAndUnit* fAlCaseThicknessCmd;
-    G4UIcmdWithADoubleAndUnit* fPbCaseThicknessCmd;
-    G4UIcmdWithADoubleAndUnit* fPMTDiameterCmd;
-    G4UIcmdWithADoubleAndUnit* fPMTLengthCmd;
+	G4UIcmdWithADoubleAndUnit* fAlCaseThicknessCmd;
+	//G4UIcmdWithADoubleAndUnit* fAlFaceThicknessCmd;
+	G4UIcmdWithADoubleAndUnit* fPbCaseThicknessCmd;
+	G4UIcmdWithADoubleAndUnit* fPMTDiameterCmd;
+	G4UIcmdWithADoubleAndUnit* fPMTLengthCmd;
+	G4UIcmdWithAnInteger*	   fDetectorGeometryCmd;
+	//G4UIcmdWithAnInteger*	   fSetNoDetsCmd;
     G4UIcmdWithoutParameter*   fUpdateCmd;
+
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
