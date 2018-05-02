@@ -59,11 +59,9 @@ private:
   // these methods Construct physics processes and register them
   void ConstructDecay();
   void ConstructEM();
+  void ConstructRadioactiveDecay();
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
-
-
-
