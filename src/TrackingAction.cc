@@ -54,10 +54,12 @@ TrackingAction::TrackingAction(DetectorConstruction* DET,RunAction* RA,
 
 void TrackingAction::PreUserTrackingAction(const G4Track* aTrack )
 {
-  // few initialisations
-  //
-  if (aTrack->GetTrackID() == 1) {
-    fPrimaryCharge = aTrack->GetDefinition()->GetPDGCharge();
+  G4ParticleDefinition* particle = aTrack->GetDefinition();
+  fCharge = particle->GetPDGCharge();
+  // For Ions
+  if (fCharge > 2.){
+    G4Track* tr = (G4Track*) aTrack;
+    tr->SetTrackStatus(fStopButAlive);
   }
 }
 
@@ -65,24 +67,6 @@ void TrackingAction::PreUserTrackingAction(const G4Track* aTrack )
 
 void TrackingAction::PostUserTrackingAction(const G4Track* aTrack)
 {
-  G4ThreeVector fPosition = aTrack->GetPosition();
-/*
-  G4double charge = aTrack->GetDefinition()->GetPDGCharge();
-  if(aTrack->GetDefinition()->GetParticleName() != "e-" &&   charge != 0)
-  {
-    //------For Checking remove later Apr1-14 -----------
-    //G4cout   << "Y Position: " << G4BestUnit(fPosition.y(),"Length") << "  "   
-    //         << "Z Position: " << G4BestUnit(fPosition.z(),"Length") << G4endl;   
-    // --------------------------------------------------
-    //G4cout << "Particle is: " << aTrack->GetDefinition()->GetParticleName() << G4endl;
-    fHistoManager->Fill2Histo(1, fPosition.y(),fPosition.z());
-    // Checking X Position
-    //G4cout   << "X Position: " << G4BestUnit(fPosition.x(),"Length") << G4endl;   
-    //G4cout   << "X Position no g4bestunit: " << fPosition.x() << G4endl;   
-    fHistoManager->FillHisto(5, fPosition.x());
-  }
-*/
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
