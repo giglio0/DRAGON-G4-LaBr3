@@ -67,8 +67,14 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   fRandomEngine = new CLHEP::HepJamesRandom( static_cast< long >( seed ) );
   fRandomGauss = new CLHEP::RandGauss( fRandomEngine );
   //resolution function taken from Saint Gobain document "BrilLanCeTM Scintillators Performance Summary"
-  G4double fERes = fEOrig * fRandomGauss->fire(1.0, (76.3/std::sqrt(fEOrig*1000000))/100);
+  //G4double fERes = fEOrig * fRandomGauss->fire(1.0, (76.3/std::sqrt(fEOrig*1000000))/100);
+  //G4double fERes = fEOrig * fRandomGauss->fire(1.0, (7630/std::sqrt(fEOrig)));
   //G4double fERes = fEOrig * fRandomGauss->fire(1.0, 0.01);
+  // BGO
+  //G4double fERes = fEOrig + fEOrig * fRandomGauss->fire(0.0, (76.3/2.35)/std::sqrt(fEOrig*1000));
+  // LaBr3 = BGO/3.34
+  G4double fERes = fEOrig + fEOrig * fRandomGauss->fire(0.0, (32.5)/std::sqrt(fEOrig*1000));
+  
 /*  if (fEOrig > 0.){
     G4cout << "fEOrig: " << fEOrig << G4endl;
     G4cout << "Res Func: " << (76.3/std::sqrt(fEOrig*100000))/100 << G4endl;
