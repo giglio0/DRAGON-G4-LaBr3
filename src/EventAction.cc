@@ -80,7 +80,8 @@ void EventAction::EndOfEventAction(const G4Event* )
   if (fEnergyScint > 1*CLHEP::eV)
     fHistoManager->FillHisto(1, fEnergyScint);
   // do not increment the energy histogram if no energy loss
-  if (fEnergyResScint > 1*CLHEP::eV)
+  // if (fEnergyResScint > 1*CLHEP::eV)
+  if (fEnergyScint > 1*CLHEP::eV)
     fHistoManager->FillHisto(2, fEnergyResScint);
   if ((fEnergyScint > 0.) && (fEnergyScint < 1*CLHEP::eV))
     fHistoManager->FillHisto(3, fEnergyScint);
