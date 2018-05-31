@@ -53,7 +53,8 @@ fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
   //Set BGO and LaBr3 Detector Array Defaults according to the Geant3 dimensions
   fPMTDiameter = 5.9*cm;
   //fPMTDiameter = 5.7*cm;
-  fPMTLength = 20.357*cm;
+  //fPMTLength = 20.357*cm;
+  fPMTLength = 20.293*cm;
   fPMTWinThickness = 0.508*cm;
   fDetectorLength = 7.6*cm;
   fDetectorDiameter = 5.58*cm;
@@ -61,19 +62,28 @@ fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
   fAlCaseThickness = 0.064*cm;
   fAlFaceThickness = 0.064*cm;
   
+  fPMTDiameter1 = 5.9*cm;
+  fPMTLength1 = 20.293*cm;
+  fPMTWinThickness1 = 0.508*cm;
+  fDetectorLength1 = 7.6*cm;
+  fDetectorDiameter1 = 5.58*cm;
+  fGapThickness1 = 0.035*cm;
+  fAlCaseThickness1 = 0.064*cm;
+  fAlFaceThickness1 = 0.064*cm;
+  
   //fGapThickness = 0.01*cm;
   //fAlCaseThickness = 0.05*cm;
   //fAlFaceThickness = 0.025*cm;
   
   //Set Single (not array) LaBr3 Detector Defaults 
-  fPMTDiameter1 = 5.87*cm;
-  fPMTLength1 = 6.2*cm;
-  fPMTWinThickness1 = 0.6199*cm;
-  fDetectorLength1 = 5.08*cm;
-  fDetectorDiameter1 = 5.08*cm;
-  fGapThickness1 = 0.0001*cm;
-  fAlCaseThickness1 = 0.05*cm;
-  fAlFaceThickness1 = 0.05*cm;
+  //fPMTDiameter1 = 5.87*cm;
+  //fPMTLength1 = 6.2*cm;
+  //fPMTWinThickness1 = 0.6199*cm;
+  //fDetectorLength1 = 5.08*cm;
+  //fDetectorDiameter1 = 5.08*cm;
+  //fGapThickness1 = 0.0001*cm;
+  //fAlCaseThickness1 = 0.05*cm;
+  //fAlFaceThickness1 = 0.05*cm;
   
   fPbCaseThickness = 0.01*cm;
   
@@ -103,11 +113,11 @@ fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
   fFaceAlCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Aluminium");
   fPbCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Lead");
   fPbCollarMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Lead");
-  fPMTMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Borosilicate Glass");
+  fPMTMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Pyrex Glass");
   fPMTWinMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Bialkali");
   //Set Default Gap Material i.e. no reflector
-  fGapMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Air");
-  fFaceGapMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Air");
+  fGapMaterial = G4NistManager::Instance()->FindOrBuildMaterial("MgO");
+  fFaceGapMaterial = G4NistManager::Instance()->FindOrBuildMaterial("MgO");
   //fGapMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Artificial Vacuum");
   //fFaceGapMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Artificial Vacuum");
 
@@ -126,8 +136,10 @@ fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
   // Grey
   fGreyVisAtt = new G4VisAttributes(G4Colour(0.5,0.5,0.5));
   fWhiteVisAtt = new G4VisAttributes(G4Colour(1.,1.,1.));
+  fBlackVisAtt = new G4VisAttributes(G4Colour(0.,0.,0.));
   // WireFrame
-  fWireFrameVisAtt = new G4VisAttributes(G4Colour(0.,0.,0.));
+  //fWireFrameVisAtt = new G4VisAttributes(G4Colour(0.,0.,0.));
+  fWireFrameVisAtt = new G4VisAttributes(G4Colour(1.,1.,1.));
   fWireFrameVisAtt->SetForceWireframe(true);
   // Force Aux Edge Visible (Blue colour)
   fAuxEdgeVisAtt = new G4VisAttributes(G4Colour(0.,0.,1.0));
@@ -172,6 +184,7 @@ void DetectorConstruction::DefineMaterials()
   G4Element* F = new G4Element("Flourine", symbol="F", z=9, a= 19.00*g/mole);
   G4Element* Na = new G4Element("Sodium",  symbol="Na", z=11, a= 22.99*g/mole);
   G4Element* Mg = new G4Element("Magnesium", symbol="Mg", z=12, a= 24.305*g/mole);
+  G4Element* Al = new G4Element("Aluminium", symbol="Al", z=13, a=26.98*g/mole);
   G4Element* Si = new G4Element("Silicon", symbol="Si", z=14, a= 28.0855*g/mole);
   G4Element* Ar = new G4Element("Argon", symbol="Ar", z=18, a= 39.95*g/mole);
   G4Element* K = new G4Element("Potassium", symbol="K", z=19, a= 39.10*g/mole);
@@ -206,55 +219,71 @@ void DetectorConstruction::DefineMaterials()
   Lead->GetIonisation()->SetMeanExcitationEnergy(823*eV);
 
   // define a material from elements.   case 1: chemical molecule
- 
-  G4Material* NaI = new G4Material("NaI", density= 3.67*g/cm3, ncomponents=2, kStateSolid, Temperature, Pressure);
+  // G4_SODIUM_IODIDE
+  G4Material* NaI = new G4Material("NaI", density= 3.667*g/cm3, ncomponents=2, kStateSolid, Temperature, Pressure);
   NaI->AddElement(Na, natoms=1);
   NaI->AddElement(I , natoms=1);
   NaI->GetIonisation()->SetMeanExcitationEnergy(452*eV);
 
   // define a material from elements.   case 2: mixture by fractional mass
+ 
   G4Material* LaBr3 = new G4Material("LaBr3", density= 5.06*g/cm3, ncomponents=2, kStateSolid, Temperature, Pressure);
-  LaBr3->AddElement(La, fractionmass=0.366875);
-  LaBr3->AddElement(Br,fractionmass=0.633125);
+  LaBr3->AddElement(La, natoms=1);
+  LaBr3->AddElement(Br, natoms=3);
   LaBr3->GetIonisation()->SetMeanExcitationEnergy(400.96625*eV);
   
   G4Material* BGO = new G4Material("BGO", density = 7.13*g/cm3, ncomponents=3, kStateSolid, Temperature, Pressure);
-  BGO->AddElement(Bi, fractionmass=0.67099);
-  BGO->AddElement(Ge, fractionmass=0.17490);
-  BGO->AddElement(O, fractionmass=0.15411);
+  BGO->AddElement(Bi, natoms=1);
+  BGO->AddElement(Ge, natoms=1);
+  BGO->AddElement(O, natoms=1);
   BGO->GetIonisation()->SetMeanExcitationEnergy(534.1*eV);
   
   G4Material* PMTWinMaterial = new G4Material("Bialkali", density = 4.733761*g/cm3, ncomponents=3, kStateSolid, Temperature, Pressure);
-  PMTWinMaterial->AddElement(Na, fractionmass=0.125);
-  PMTWinMaterial->AddElement(K, fractionmass=0.213);
-  PMTWinMaterial->AddElement(Sb, fractionmass=0.662);
+  PMTWinMaterial->AddElement(Na, natoms=1);
+  PMTWinMaterial->AddElement(K, natoms=1);
+  PMTWinMaterial->AddElement(Sb, natoms=1);
   PMTWinMaterial->GetIonisation()->SetMeanExcitationEnergy(381.489*eV);
   
-  G4Material* PMTMaterial = new G4Material("Borosilicate Glass", density = 1.131962*g/cm3, ncomponents=4, kStateSolid, Temperature, Pressure);
-  PMTMaterial->AddElement(Si, fractionmass=0.361);
-  PMTMaterial->AddElement(O, fractionmass=0.482);
-  PMTMaterial->AddElement(B, fractionmass=0.027);
-  PMTMaterial->AddElement(Mg, fractionmass=0.13);
-  PMTMaterial->GetIonisation()->SetMeanExcitationEnergy(130.575*eV);
+  // G4_PYREX_GLASS
+  G4Material* PMTMaterial = new G4Material("Pyrex Glass", density = 2.23*g/cm3, ncomponents=6, kStateSolid, Temperature, Pressure);
+  PMTMaterial->AddElement(B, fractionmass=0.0400639);
+  PMTMaterial->AddElement(O, fractionmass=0.539561);
+  PMTMaterial->AddElement(Na, fractionmass=0.0281909);
+  PMTMaterial->AddElement(Al, fractionmass=0.011644);
+  PMTMaterial->AddElement(Si, fractionmass=0.377219);
+  PMTMaterial->AddElement(K, fractionmass=0.00332099);
+  PMTMaterial->GetIonisation()->SetMeanExcitationEnergy(134*eV);
   
-  G4Material* Water = new G4Material("Water", density= 1.*g/cm3, ncomponents=2, kStateGas, Temperature, Pressure);
-  Water->AddElement(H, fractionmass=0.111894);
-  Water->AddElement(O, fractionmass=0.888106);
-  Water->GetIonisation()->SetMeanExcitationEnergy(75.*eV);
+  // G4_WATER
+  G4Material* Water = new G4Material("Water", density= 1.*g/cm3, ncomponents=2, kStateLiquid, Temperature, Pressure);
+  Water->AddElement(H, natoms=2);
+  Water->AddElement(O, natoms=1);
+  Water->GetIonisation()->SetMeanExcitationEnergy(78.*eV);
   
-  G4Material* Air = new G4Material("Air", density= 0.001225*g/cm3, ncomponents=5, kStateGas, 298.15*kelvin, 101325*pascal);
+  // G4_WATER_VAPOR
+  G4Material* WaterVapor = new G4Material("Water Vapor", density= 0.000756182*g/cm3, ncomponents=2, kStateGas, Temperature, Pressure);
+  WaterVapor->AddElement(H, natoms=2);
+  WaterVapor->AddElement(O, natoms=1);
+  WaterVapor->GetIonisation()->SetMeanExcitationEnergy(71.6*eV);
+  
+  // G4_AIR
+  G4Material* Air = new G4Material("Air", density= 0.00120479*g/cm3, ncomponents=4, kStateGas, 298.15*kelvin, 101325*pascal);
+  Air->AddElement(C, fractionmass=0.000124);
   Air->AddElement(N, fractionmass=0.755268);
   Air->AddElement(O, fractionmass=0.231781);
-  Air->AddElement(C, fractionmass=0.000124);
-  Air->AddElement(Ar, fractionmass=0.0064135);
-  Air->AddMaterial(Water, fractionmass=0.0064135);
-  Air->GetIonisation()->SetMeanExcitationEnergy((85.7*0.9935865 + 75.*0.0064135)*eV);
+  Air->AddElement(Ar, fractionmass=0.012827);
+  Air->GetIonisation()->SetMeanExcitationEnergy(85.7*eV);
   
+  // G4_MAGNESIUM_OXIDE
   G4Material* MgO = new G4Material("MgO", density= 3.58*g/cm3, ncomponents=2, kStateGas, Temperature, Pressure);
-  MgO->AddElement(Mg, fractionmass=0.603);
-  MgO->AddElement(O, fractionmass=0.397);
-  MgO->GetIonisation()->SetMeanExcitationEnergy(8.76*eV);
-  //Weighted average of the mean excitation energy for air and water
+  MgO->AddElement(Mg, natoms=1);
+  MgO->AddElement(O, natoms=1);
+  MgO->GetIonisation()->SetMeanExcitationEnergy(143.8*eV);
+  
+  // G4_H
+  G4Material* H2 = new G4Material("Hydrogen Gas", density= 0.000083748*g/cm3, ncomponents=1, kStateGas, Temperature, Pressure);
+  H2->AddElement(H, natoms=2);
+  H2->GetIonisation()->SetMeanExcitationEnergy(19.2*eV);
   
   // Artificial Vacuum
   new G4Material("Artificial Vacuum", z=1, a=1.01*g/mole, universe_mean_density, kStateGas, 298.15*kelvin,(3.e-18)*pascal);
@@ -381,20 +410,20 @@ if (fDetectorGeometry == 1 || fDetectorGeometry == 3){
   fSolidDetector1 = new G4Tubs("Detector", 0., 0.5*fTotalDetectorDiameter1, 0.5*fTotalDetectorLength1, 0.*deg, 360.*deg);
   fLogicDetector = new G4LogicalVolume(fSolidDetector, fDetectorMaterial, "BGO Detector");
   fLogicDetector1 = new G4LogicalVolume(fSolidDetector1, fDetectorMaterial, "LaBr3 Detector");
-  //fPhysiDetector = new G4PVPlacement(transform,
-        			//fLogicDetector, 
-       				//"BGO Detector", 
-       				//fLogicWorld, 
-       				//false, 
-    			    	//0,
-				    //false);
-  fPhysiDetector1 = new G4PVPlacement(transform,
-        			fLogicDetector1, 
-       				"LaBr3 Detector", 
+  fPhysiDetector = new G4PVPlacement(transform,
+        			fLogicDetector, 
+       				"BGO Detector", 
        				fLogicWorld, 
        				false, 
     			    	0,
 				    false);
+  //fPhysiDetector1 = new G4PVPlacement(transform,
+        			//fLogicDetector1, 
+       				//"LaBr3 Detector", 
+       				//fLogicWorld, 
+       				//false, 
+    			    	//0,
+				    //false);
 
   fLogicDetector->SetVisAttributes(fWireFrameVisAtt);
   fLogicDetector1->SetVisAttributes(fWireFrameVisAtt);
@@ -411,246 +440,246 @@ if (fDetectorGeometry == 1 || fDetectorGeometry == 3){
   // Back - 24, 23, 22, 20, 18, 16, 14, 12, 26, 28, 30
   // 10.351 cm forward in Z for BGO detector positions, rotm180
   // 1
-  //P.setX(14.78*cm); P.setY(-4.96*cm); P.setZ(2.091*cm);
-  //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  P.setX(14.78*cm); P.setY(-4.96*cm); P.setZ(2.092*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(14.78*cm); P.setY(-4.96*cm); P.setZ(2.091*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 2
-  //P.setX(11.83*cm); P.setY(-10.08*cm); P.setZ(9.291*cm);
+  //P.setX(14.78*cm); P.setY(-4.96*cm); P.setZ(2.092*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 2
+  P.setX(11.83*cm); P.setY(-10.08*cm); P.setZ(9.292*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(11.83*cm); P.setY(-10.08*cm); P.setZ(9.291*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 3
+  //P.setX(11.83*cm); P.setY(-10.08*cm); P.setZ(9.292*cm);
+  //Tr = G4Transform3D(rotm180,P);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 3
+  P.setX(11.83*cm); P.setY(4.96*cm); P.setZ(2.591*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  
   //P.setX(11.83*cm); P.setY(4.96*cm); P.setZ(2.591*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 4
+  P.setX(8.87*cm); P.setY(10.08*cm); P.setZ(9.292*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(11.83*cm); P.setY(4.96*cm); P.setZ(2.591*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 4
-  //P.setX(8.87*cm); P.setY(10.08*cm); P.setZ(9.291*cm);
+  //P.setX(8.87*cm); P.setY(10.08*cm); P.setZ(9.292*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 5
+  P.setX(2.96*cm); P.setY(7.68*cm); P.setZ(9.292*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(8.87*cm); P.setY(10.08*cm); P.setZ(9.291*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 5
-  //P.setX(2.96*cm); P.setY(7.68*cm); P.setZ(9.291*cm);
+  //P.setX(2.96*cm); P.setY(7.68*cm); P.setZ(9.292*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 6
+  P.setX(-2.96*cm); P.setY(7.68*cm); P.setZ(9.292*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(2.96*cm); P.setY(7.68*cm); P.setZ(9.291*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 6
-  //P.setX(-2.96*cm); P.setY(7.68*cm); P.setZ(9.291*cm);
+  //P.setX(-2.96*cm); P.setY(7.68*cm); P.setZ(9.292*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 7
+  P.setX(-8.87*cm); P.setY(10.08*cm); P.setZ(9.292*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(-2.96*cm); P.setY(7.68*cm); P.setZ(9.291*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 7
-  //P.setX(-8.87*cm); P.setY(10.08*cm); P.setZ(9.291*cm);
+  //P.setX(-8.87*cm); P.setY(10.08*cm); P.setZ(9.292*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 8
+  P.setX(-11.83*cm); P.setY(-10.08*cm); P.setZ(9.292*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(-8.87*cm); P.setY(10.08*cm); P.setZ(9.291*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 8
-  //P.setX(-11.83*cm); P.setY(-10.08*cm); P.setZ(9.291*cm);
+  //P.setX(-11.83*cm); P.setY(-10.08*cm); P.setZ(9.292*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 9
+  P.setX(-11.83*cm); P.setY(4.96*cm); P.setZ(9.292*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(-11.83*cm); P.setY(-10.08*cm); P.setZ(9.291*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 9
-  //P.setX(-11.83*cm); P.setY(4.96*cm); P.setZ(9.291*cm);
+  //P.setX(-11.83*cm); P.setY(4.96*cm); P.setZ(9.292*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 10
+  P.setX(-14.78*cm); P.setY(-4.96*cm); P.setZ(9.292*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(-11.83*cm); P.setY(4.96*cm); P.setZ(9.291*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 10
-  //P.setX(-14.78*cm); P.setY(-4.96*cm); P.setZ(9.291*cm);
+  //P.setX(-14.78*cm); P.setY(-4.96*cm); P.setZ(9.292*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 11
+  P.setX(8.87*cm); P.setY(-2.56*cm); P.setZ(18.141*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(-14.78*cm); P.setY(-4.96*cm); P.setZ(9.291*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 11
   //P.setX(8.87*cm); P.setY(-2.56*cm); P.setZ(18.141*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 13
+  P.setX(5.91*cm); P.setY(-7.68*cm); P.setZ(18.141*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(8.87*cm); P.setY(-2.56*cm); P.setZ(18.141*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 13
   //P.setX(5.91*cm); P.setY(-7.68*cm); P.setZ(18.141*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 15
+  P.setX(5.91*cm); P.setY(2.56*cm); P.setZ(18.141*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(5.91*cm); P.setY(-7.68*cm); P.setZ(18.141*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 15
   //P.setX(5.91*cm); P.setY(2.56*cm); P.setZ(18.141*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 17
+  P.setX(2.96*cm); P.setY(-2.56*cm); P.setZ(18.141*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(5.91*cm); P.setY(2.56*cm); P.setZ(18.141*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 17
   //P.setX(2.96*cm); P.setY(-2.56*cm); P.setZ(18.141*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 19
+  P.setX(0.00*cm); P.setY(-7.68*cm); P.setZ(18.141*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(2.96*cm); P.setY(-2.56*cm); P.setZ(18.141*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 19
   //P.setX(0.00*cm); P.setY(-7.68*cm); P.setZ(18.141*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 21
+  P.setX(0.00*cm); P.setY(2.56*cm); P.setZ(18.141*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(0.00*cm); P.setY(-7.68*cm); P.setZ(18.141*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 21
   //P.setX(0.00*cm); P.setY(2.56*cm); P.setZ(18.141*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 23
+  P.setX(-2.96*cm); P.setY(-2.56*cm); P.setZ(18.141*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(0.00*cm); P.setY(2.56*cm); P.setZ(18.141*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 23
   //P.setX(-2.96*cm); P.setY(-2.56*cm); P.setZ(18.141*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 25
+  P.setX(-5.91*cm); P.setY(-7.68*cm); P.setZ(18.141*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(-2.96*cm); P.setY(-2.56*cm); P.setZ(18.141*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 25
   //P.setX(-5.91*cm); P.setY(-7.68*cm); P.setZ(18.141*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 27
+  P.setX(-5.91*cm); P.setY(2.56*cm); P.setZ(18.141*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(-5.91*cm); P.setY(-7.68*cm); P.setZ(18.141*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 27
   //P.setX(-5.91*cm); P.setY(2.56*cm); P.setZ(18.141*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 29
+  P.setX(-8.87*cm); P.setY(-2.56*cm); P.setZ(18.141*cm);
+  Tr = G4Transform3D(rotm180,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(-5.91*cm); P.setY(2.56*cm); P.setZ(18.141*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 29
   //P.setX(-8.87*cm); P.setY(-2.56*cm); P.setZ(18.141*cm);
   //Tr = G4Transform3D(rotm180,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 10.351 cm back in Z for BGO detector positions, rotm
+  // 30
+  P.setX(-8.87*cm); P.setY(-2.56*cm); P.setZ(-18.141*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(-8.87*cm); P.setY(-2.56*cm); P.setZ(18.141*cm);
-  ////Tr = G4Transform3D(rotm180,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 10.351 cm back in Z for BGO detector positions, rotm
-  //// 30
   //P.setX(-8.87*cm); P.setY(-2.56*cm); P.setZ(-18.141*cm);
   //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 28
+  P.setX(-5.91*cm); P.setY(2.56*cm); P.setZ(-18.141*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(-8.87*cm); P.setY(-2.56*cm); P.setZ(-18.141*cm);
-  ////Tr = G4Transform3D(rotm,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 28
   //P.setX(-5.91*cm); P.setY(2.56*cm); P.setZ(-18.141*cm);
   //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 22
+  P.setX(0.00*cm); P.setY(2.56*cm); P.setZ(-18.141*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(-5.91*cm); P.setY(2.56*cm); P.setZ(-18.141*cm);
-  ////Tr = G4Transform3D(rotm,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 22
   //P.setX(0.00*cm); P.setY(2.56*cm); P.setZ(-18.141*cm);
   //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 16
+  P.setX(5.91*cm); P.setY(2.56*cm); P.setZ(-18.141*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(0.00*cm); P.setY(2.56*cm); P.setZ(-18.141*cm);
-  ////Tr = G4Transform3D(rotm,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 16
   //P.setX(5.91*cm); P.setY(2.56*cm); P.setZ(-18.141*cm);
   //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 24
+  P.setX(-2.96*cm); P.setY(-2.56*cm); P.setZ(-18.141*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(5.91*cm); P.setY(2.56*cm); P.setZ(-18.141*cm);
-  ////Tr = G4Transform3D(rotm,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 24
   //P.setX(-2.96*cm); P.setY(-2.56*cm); P.setZ(-18.141*cm);
   //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 18
+  P.setX(2.96*cm); P.setY(-2.56*cm); P.setZ(-18.141*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(-2.96*cm); P.setY(-2.56*cm); P.setZ(-18.141*cm);
-  ////Tr = G4Transform3D(rotm,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 18
   //P.setX(2.96*cm); P.setY(-2.56*cm); P.setZ(-18.141*cm);
   //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 12
+  P.setX(8.87*cm); P.setY(-2.56*cm); P.setZ(-18.141*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(2.96*cm); P.setY(-2.56*cm); P.setZ(-18.141*cm);
-  ////Tr = G4Transform3D(rotm,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 12
   //P.setX(8.87*cm); P.setY(-2.56*cm); P.setZ(-18.141*cm);
   //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 26
+  P.setX(-5.91*cm); P.setY(-7.68*cm); P.setZ(-18.141*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(8.87*cm); P.setY(-2.56*cm); P.setZ(-18.141*cm);
-  ////Tr = G4Transform3D(rotm,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 26
   //P.setX(-5.91*cm); P.setY(-7.68*cm); P.setZ(-18.141*cm);
   //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 20
+  P.setX(0.00*cm); P.setY(-7.68*cm); P.setZ(-18.141*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(-5.91*cm); P.setY(-7.68*cm); P.setZ(-18.141*cm);
-  ////Tr = G4Transform3D(rotm,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 20
   //P.setX(0.00*cm); P.setY(-7.68*cm); P.setZ(-18.141*cm);
   //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  // 14
+  P.setX(5.91*cm); P.setY(-7.68*cm); P.setZ(-18.141*cm);
+  Tr = G4Transform3D(rotm,P);
+  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  ////P.setX(0.00*cm); P.setY(-7.68*cm); P.setZ(-18.141*cm);
-  ////Tr = G4Transform3D(rotm,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //// 14
   //P.setX(5.91*cm); P.setY(-7.68*cm); P.setZ(-18.141*cm);
   //Tr = G4Transform3D(rotm,P);
-  //assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
-  
-  ////P.setX(5.91*cm); P.setY(-7.68*cm); P.setZ(-18.141*cm);
-  ////Tr = G4Transform3D(rotm,P);
-  ////assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
+  //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
   
   // Assembly Placement in the World
   // Rotated 90° along the axes to be perpendicular to the gas target
@@ -947,84 +976,84 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
   G4AssemblyVolume* assemblyDetector = new G4AssemblyVolume();
   // Back - 24, 23, 22, 20, 18, 16, 14, 12, 26, 28, 30
   // 10.351 cm forward in Z for BGO detector positions, rotm180
-  // 1
-  P.setX(-4.96*cm); P.setY(14.78*cm); P.setZ(2.091*cm);
+  //1
+  P.setX(-4.96*cm); P.setY(14.78*cm); P.setZ(2.092*cm);
   Tr = G4Transform3D(rotm180,P);
-  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
   
-  //P.setX(-4.96*cm); P.setY(14.78*cm); P.setZ(2.091*cm);
+  //P.setX(-4.96*cm); P.setY(14.78*cm); P.setZ(2.092*cm);
   //Tr = G4Transform3D(rotm180,P);
   //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  // 2
-  P.setX(-10.08*cm); P.setY(11.83*cm); P.setZ(9.291*cm);
+  //2
+  P.setX(-10.08*cm); P.setY(11.83*cm); P.setZ(9.292*cm);
   Tr = G4Transform3D(rotm180,P);
-  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
   
-  //P.setX(-10.08*cm); P.setY(11.83*cm); P.setZ(9.291*cm);
+  //P.setX(-10.08*cm); P.setY(11.83*cm); P.setZ(9.292*cm);
   //Tr = G4Transform3D(rotm180,P);
   //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
   // 3
   P.setX(4.96*cm); P.setY(11.83*cm); P.setZ(2.591*cm);
   Tr = G4Transform3D(rotm180,P);
-  assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
+  assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
   
   //P.setX(4.96*cm); P.setY(11.83*cm); P.setZ(2.591*cm);
   //Tr = G4Transform3D(rotm180,P);
   //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
   // 4
-  P.setX(10.08*cm); P.setY(8.87*cm); P.setZ(9.291*cm);
+  P.setX(10.08*cm); P.setY(8.87*cm); P.setZ(9.292*cm);
   Tr = G4Transform3D(rotm180,P);
   assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(10.08*cm); P.setY(8.87*cm); P.setZ(9.291*cm);
+  //P.setX(10.08*cm); P.setY(8.87*cm); P.setZ(9.292*cm);
   //Tr = G4Transform3D(rotm180,P);
   //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
   // 5
-  P.setX(7.68*cm); P.setY(2.96*cm); P.setZ(9.291*cm);
+  P.setX(7.68*cm); P.setY(2.96*cm); P.setZ(9.292*cm);
   Tr = G4Transform3D(rotm180,P);
   assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(7.68*cm); P.setY(2.96*cm); P.setZ(9.291*cm);
+  //P.setX(7.68*cm); P.setY(2.96*cm); P.setZ(9.292*cm);
   //Tr = G4Transform3D(rotm180,P);
   //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
   // 6
-  P.setX(7.68*cm); P.setY(-2.96*cm); P.setZ(9.291*cm);
+  P.setX(7.68*cm); P.setY(-2.96*cm); P.setZ(9.292*cm);
   Tr = G4Transform3D(rotm180,P);
   assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(7.68*cm); P.setY(-2.96*cm); P.setZ(9.291*cm);
+  //P.setX(7.68*cm); P.setY(-2.96*cm); P.setZ(9.292*cm);
   //Tr = G4Transform3D(rotm180,P);
   //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
   // 7
-  P.setX(10.08*cm); P.setY(-8.87*cm); P.setZ(9.291*cm);
+  P.setX(10.08*cm); P.setY(-8.87*cm); P.setZ(9.292*cm);
   Tr = G4Transform3D(rotm180,P);
   assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(10.08*cm); P.setY(-8.87*cm); P.setZ(9.291*cm);
+  //P.setX(10.08*cm); P.setY(-8.87*cm); P.setZ(9.292*cm);
   //Tr = G4Transform3D(rotm180,P);
   //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
   // 8
-  P.setX(-10.08*cm); P.setY(-11.83*cm); P.setZ(9.291*cm);
+  P.setX(-10.08*cm); P.setY(-11.83*cm); P.setZ(9.292*cm);
   Tr = G4Transform3D(rotm180,P);
   assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(-10.08*cm); P.setY(-11.83*cm); P.setZ(9.291*cm);
+  //P.setX(-10.08*cm); P.setY(-11.83*cm); P.setZ(9.292*cm);
   //Tr = G4Transform3D(rotm180,P);
   //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
   // 9
-  P.setX(4.96*cm); P.setY(-11.83*cm); P.setZ(9.291*cm);
+  P.setX(4.96*cm); P.setY(-11.83*cm); P.setZ(9.292*cm);
   Tr = G4Transform3D(rotm180,P);
   assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(4.96*cm); P.setY(-11.83*cm); P.setZ(9.291*cm);
+  //P.setX(4.96*cm); P.setY(-11.83*cm); P.setZ(9.292*cm);
   //Tr = G4Transform3D(rotm180,P);
   //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
   // 10
-  P.setX(-4.96*cm); P.setY(-14.78*cm); P.setZ(9.291*cm);
+  P.setX(-4.96*cm); P.setY(-14.78*cm); P.setZ(9.292*cm);
   Tr = G4Transform3D(rotm180,P);
   assemblyDetector->AddPlacedVolume(fLogicDetector,Tr);
   
-  //P.setX(-4.96*cm); P.setY(-14.78*cm); P.setZ(9.291*cm);
+  //P.setX(-4.96*cm); P.setY(-14.78*cm); P.setZ(9.292*cm);
   //Tr = G4Transform3D(rotm180,P);
   //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
   // 11
@@ -1218,7 +1247,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
   //fSolidHPMTWin1 = new G4Polyhedra("PMTWin", 0.*deg, 360.*deg, 6, 2, zPlaneL1, rInnerL, rInnerL1);
   fLogicPMTWin1 = new G4LogicalVolume(fSolidPMTWin1, fPMTWinMaterial, "PMTWin");
   fPhysiPMTWin1 = new G4PVPlacement(0, 
-        			G4ThreeVector(0.,0.,fZposPMTWin), 
+        			G4ThreeVector(0.,0.,fZposPMTWin1), 
         			fLogicPMTWin1, 
        				"PMTWin", 
        				fLogicDetector1, 
@@ -1244,7 +1273,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
   //fSolidHCrystal1 = new G4Polyhedra("Crystal", 0.*deg, 360.*deg, 6, 2, zPlaneL2, rInnerL, rInnerL1); 			    	
   fLogicCrystal1 = new G4LogicalVolume(fSolidCrystal1, fCrystalMaterial1, "Crystal");
   fPhysiCrystal1 = new G4PVPlacement(0, 
-        			G4ThreeVector(0.,0.,fZpos), 
+        			G4ThreeVector(0.,0.,fZpos1), 
         			fLogicCrystal1, 
        				"Crystal", 
        				fLogicDetector1, 
@@ -1270,7 +1299,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
   //fSolidHGap1 = new G4Polyhedra("Gap", 0.*deg, 360.*deg, 6, 2, zPlaneL3, rInnerL1, rOuterL1);  			    	
   fLogicGap1 = new G4LogicalVolume(fSolidGap1, fGapMaterial, "Gap");
   fPhysiGap1 = new G4PVPlacement(0, 
-        			G4ThreeVector(0.,0.,fZposGap), 
+        			G4ThreeVector(0.,0.,fZposGap1), 
         			fLogicGap1, 
        				"Gap", 
        				fLogicDetector1, 
@@ -1294,7 +1323,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
   //fSolidHFaceGap1 = new G4Polyhedra("FaceGap", 0.*deg, 360.*deg, 6, 2, zPlaneL4, rInnerL, rInnerL1); 			    	
   fLogicFaceGap1 = new G4LogicalVolume(fSolidFaceGap1, fFaceGapMaterial, "FaceGap");
   fPhysiFaceGap1 = new G4PVPlacement(0, 
-        			G4ThreeVector(0.,0.,fZposFaceGap), 
+        			G4ThreeVector(0.,0.,fZposFaceGap1), 
         			fLogicFaceGap1,
        				"FaceGap", 
        				fLogicDetector1, 
@@ -1327,7 +1356,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
   //fSolidHAlCase1 = new G4Polyhedra("AlCase", 0.*deg, 360.*deg, 6, 2, zPlaneL5, rInnerL2, rOuterL2);			    	
   fLogicAlCase1 = new G4LogicalVolume(fSolidAlCase1, fAlCaseMaterial, "AlCase");
   fPhysiAlCase1 = new G4PVPlacement(0, 
-        			G4ThreeVector(0.,0.,fZposAlCase), 
+        			G4ThreeVector(0.,0.,fZposAlCase1), 
         			fLogicAlCase1, 
        				"AlCase", 
        				fLogicDetector1, 
@@ -1351,7 +1380,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
   //fSolidHFaceAlCase1 = new G4Polyhedra("FaceAlCase", 0.*deg, 360.*deg, 6, 2, zPlaneL6, rInnerL, rOuterL1);
   fLogicFaceAlCase1 = new G4LogicalVolume(fSolidFaceAlCase1, fFaceAlCaseMaterial, "FaceAlCase");
   fPhysiFaceAlCase1 = new G4PVPlacement(0, 
-        			G4ThreeVector(0.,0.,fZposFaceAlCase), 
+        			G4ThreeVector(0.,0.,fZposFaceAlCase1), 
         			fLogicFaceAlCase1, 
        				"FaceAlCase", 
        				fLogicDetector1, 
@@ -1407,7 +1436,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
   //fSolidHPMT1 = new G4Polyhedra("PMT", 0.*deg, 360.*deg, 6, 2, zPlaneL9, rInnerL, rOuterL4);  			    	
   fLogicPMT1 = new G4LogicalVolume(fSolidPMT1, fPMTMaterial,"PMT");
   fPhysiPMT1 = new G4PVPlacement(0, 
-        			G4ThreeVector(0.,0.,fZposPMT), 
+        			G4ThreeVector(0.,0.,fZposPMT1), 
         			fLogicPMT1, 
        				"PMT", 
        				fLogicDetector1, 
@@ -1434,7 +1463,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
        				false, 
     			    	0,
 				    false);			    
-
+  fLogicOutTBox->SetVisAttributes(fWireFrameVisAtt);
   // DRAGON Outer Gas Target Box
   // Inner Wall
   rotm  = G4RotationMatrix(0,0,0);     
@@ -1449,11 +1478,11 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
        				false, 
     			    	0,
 				    false);
-  				    
+  fLogicInTBox->SetVisAttributes(fWireFrameVisAtt);				    
   // Entrance Hole on Target Box				    
   rotm  = G4RotationMatrix(0,0,0);
   rotm.rotateY(90*deg);    
-  position = G4ThreeVector(-8.414*cm,0.,-9.684*cm);
+  position = G4ThreeVector(-8.4145*cm,0.,-9.684*cm);
   transform = G4Transform3D(rotm,position);  
   fSolidEntHoleBox = new G4Tubs("EntHoleBox", 0., 0.95*cm, 0.1585*cm, 0.*deg, 360.*deg);
   fLogicEntHoleBox = new G4LogicalVolume(fSolidEntHoleBox, fWorldMaterial, "EntHoleBox");
@@ -1463,9 +1492,9 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
        				fLogicOutTBox, 
        				false, 
     			    	0);
-   			    	
+  fLogicEntHoleBox->SetVisAttributes(fWireFrameVisAtt);			    	
   // Exit Hole on Target Box    
-  position = G4ThreeVector(8.414*cm,0.,-9.684*cm);
+  position = G4ThreeVector(8.4145*cm,0.,-9.684*cm);
   transform = G4Transform3D(rotm,position);	 
   fSolidExitHoleBox = new G4Tubs("ExitHoleBox", 0., 0.95*cm, 0.1585*cm, 0.*deg, 360.*deg);
   fLogicExitHoleBox = new G4LogicalVolume(fSolidExitHoleBox, fWorldMaterial, "ExitHoleBox");
@@ -1475,7 +1504,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
        				fLogicOutTBox, 
        				false, 
     			    	0);   
-
+  fLogicExitHoleBox->SetVisAttributes(fWireFrameVisAtt);
   // DRAGON Inner Gas Cell
   // Outer Wall
   rotm  = G4RotationMatrix(0,0,0);
@@ -1491,6 +1520,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
        				false, 
     			    	0,
 				    false);
+  fLogicOutCell->SetVisAttributes(fWireFrameVisAtt);
 
   // DRAGON Inner Gas Cell
   // Inner Wall			    
@@ -1504,15 +1534,16 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
        				false, 
     			    	0,
 				    false);
-
+  fLogicInCell->SetVisAttributes(fWireFrameVisAtt);
   // Entrance Collimator
   // Entrance Collimator Hole
   rotm  = G4RotationMatrix(0,0,0);     
   rotm.rotateY(-60*deg);
   // position = G4ThreeVector(5.306*cm,0.,-2.008*cm);
   position = G4ThreeVector(-5.351*cm,0.,-2.087*cm);
-  transform = G4Transform3D(rotm,position); 
-  fSolidEntHole = new G4Tubs("EntHole", 0., 0.80*cm, 0.1585*cm, 0.*deg, 360.*deg);
+  transform = G4Transform3D(rotm,position);
+  //fSolidEntHole = new G4Tubs("EntHole", 0., 0.80*cm, 0.1585*cm, 0.*deg, 360.*deg); 
+  fSolidEntHole = new G4Tubs("EntHole", 0.79*cm, 0.80*cm, 0.1585*cm, 0.*deg, 360.*deg);
   fLogicEntHole = new G4LogicalVolume(fSolidEntHole, fWorldMaterial, "EntHole");
   fPhysiEntHole = new G4PVPlacement(transform,
         			fLogicEntHole, 
@@ -1520,14 +1551,15 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
        				fLogicOutCell, 
        				false, 
     			    	0);   
-    			    	
+  fLogicEntHole->SetVisAttributes(fWireFrameVisAtt);			    	
   // Entrance Collimator Thin Metal Disk without hole
   rotm  = G4RotationMatrix(0,0,0);     
   //rotm.rotateY(60*deg);
   position = G4ThreeVector(0.,0.,0.1196*cm);
   //position = G4ThreeVector(0.,0.,0.);
   transform = G4Transform3D(rotm,position); 
-  fSolidEntDisk = new G4Tubs("EntDisk", 0., 0.79*cm, 0.039*cm, 0.*deg, 360.*deg);
+  //fSolidEntDisk = new G4Tubs("EntDisk", 0., 0.79*cm, 0.039*cm, 0.*deg, 360.*deg);
+  fSolidEntDisk = new G4Tubs("EntDisk", 0.3*cm, 0.79*cm, 0.039*cm, 0.*deg, 360.*deg);
   fLogicEntDisk = new G4LogicalVolume(fSolidEntDisk, fAlCaseMaterial, "EntDisk");
   fPhysiEntDisk = new G4PVPlacement(transform,
         			fLogicEntDisk, 
@@ -1535,16 +1567,19 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
        				fLogicEntHole, 
        				false, 
     			    	0); 
-    			    	  
+  fLogicEntDisk->SetVisAttributes(fWireFrameVisAtt);  			    	  
   // Entrance Collimator 6mm Hole
   rotm  = G4RotationMatrix(0,0,0);    
   rotm.rotateY(30*deg);
   rotm.rotateZ(180*deg);
   position = G4ThreeVector(0.,0.,0.);
   transform = G4Transform3D(rotm,position); 
-  G4ThreeVector pLowNorm = G4ThreeVector(1.0,0.,-1.73);
-  G4ThreeVector pHighNorm = G4ThreeVector(-1.0,0.,1.73);
-  fSolidEntCol = new G4CutTubs("EntCol", 0.*cm, 0.3*cm, 0.046*cm, 0.*deg, 360.*deg,pLowNorm,pHighNorm);
+  //G4ThreeVector pLowNorm = G4ThreeVector(1.0,0.,-1.73);
+  //G4ThreeVector pHighNorm = G4ThreeVector(-1.0,0.,1.73);
+  G4ThreeVector pLowNorm = G4ThreeVector(1.0,0.,-sqrt(3));
+  G4ThreeVector pHighNorm = G4ThreeVector(-1.0,0.,sqrt(3));
+  //fSolidEntCol = new G4CutTubs("EntCol", 0.*cm, 0.3*cm, 0.045*cm, 0.*deg, 360.*deg,pLowNorm,pHighNorm);
+  fSolidEntCol = new G4CutTubs("EntCol", 0.*cm, 0.3*cm, (0.039/cos(30))*cm, 0.*deg, 360.*deg,pLowNorm,pHighNorm);
   fLogicEntCol = new G4LogicalVolume(fSolidEntCol, fWorldMaterial, "EntCol");
   fPhysiEntCol = new G4PVPlacement(transform,
 				fLogicEntCol, 
@@ -1552,7 +1587,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
        				fLogicEntDisk, 
        				false, 
     			    	0); 
-
+  fLogicEntCol->SetVisAttributes(fWireFrameVisAtt);
   // Exit Collimator
   // Exit Collimator Hole
   rotm  = G4RotationMatrix(0,0,0);     
@@ -1560,7 +1595,8 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
 //  position = G4ThreeVector(-5.306*cm,0.,-2.008*cm);
   position = G4ThreeVector(5.351*cm,0.,-2.087*cm);
   transform = G4Transform3D(rotm,position); 
-  fSolidExitHole = new G4Tubs("ExitHole", 0., 0.80*cm, 0.1585*cm, 0.*deg, 360.*deg);
+  //fSolidExitHole = new G4Tubs("ExitHole", 0., 0.80*cm, 0.1585*cm, 0.*deg, 360.*deg);
+  fSolidExitHole = new G4Tubs("ExitHole", 0.79*cm, 0.80*cm, 0.1585*cm, 0.*deg, 360.*deg);
   fLogicExitHole = new G4LogicalVolume(fSolidExitHole, fWorldMaterial, "ExitHole");
   fPhysiExitHole = new G4PVPlacement(transform,
         			fLogicExitHole, 
@@ -1568,14 +1604,15 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
        				fLogicOutCell, 
        				false, 
     			    	0);   
-    			    	
+  fLogicExitHole->SetVisAttributes(fWireFrameVisAtt); 			    	
   // Exit Collimator Thin Metal Disk without hole
   rotm  = G4RotationMatrix(0,0,0);     
   //rotm.rotateY(60*deg);
   position = G4ThreeVector(0.,0.,0.1196*cm);
   //position = G4ThreeVector(0.,0.,0.);
   transform = G4Transform3D(rotm,position); 
-  fSolidExitDisk = new G4Tubs("ExitDisk", 0., 0.79*cm, 0.039*cm, 0.*deg, 360.*deg);
+  //fSolidExitDisk = new G4Tubs("ExitDisk", 0., 0.79*cm, 0.039*cm, 0.*deg, 360.*deg);
+  fSolidExitDisk = new G4Tubs("ExitDisk", 0.4*cm, 0.79*cm, 0.039*cm, 0.*deg, 360.*deg);
   fLogicExitDisk = new G4LogicalVolume(fSolidExitDisk, fAlCaseMaterial, "ExitDisk");
   fPhysiExitDisk = new G4PVPlacement(transform,
         			fLogicExitDisk, 
@@ -1583,15 +1620,19 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
        				fLogicExitHole, 
        				false, 
     			    	0); 
-    			    	  
-  // Exit Collimator 6mm Hole
+  fLogicExitDisk->SetVisAttributes(fWireFrameVisAtt); 			    	  
+  // Exit Collimator 6mm/8mm Hole
   rotm  = G4RotationMatrix(0,0,0);     
   rotm.rotateY(30*deg);
   position = G4ThreeVector(0.,0.,0.);
   transform = G4Transform3D(rotm,position); 
-  pLowNorm = G4ThreeVector(1.0,0.,-1.73);
-  pHighNorm = G4ThreeVector(-1.0,0.,1.73);
-  fSolidExitCol = new G4CutTubs("ExitCol", 0.*cm, 0.3*cm, 0.046*cm, 0.*deg, 360.*deg,pLowNorm,pHighNorm);
+  //pLowNorm = G4ThreeVector(1.0,0.,-1.73);
+  //pHighNorm = G4ThreeVector(-1.0,0.,1.73);
+  pLowNorm = G4ThreeVector(1.0,0.,-sqrt(3));
+  pHighNorm = G4ThreeVector(-1.0,0.,sqrt(3));
+  //fSolidExitCol = new G4CutTubs("ExitCol", 0.*cm, 0.3*cm, 0.046*cm, 0.*deg, 360.*deg,pLowNorm,pHighNorm);
+  //fSolidExitCol = new G4CutTubs("ExitCol", 0.*cm, 0.4*cm, (0.039/cos(30))*cm, 0.*deg, 360.*deg,pLowNorm,pHighNorm);
+  fSolidExitCol = new G4CutTubs("ExitCol", 0.*cm, 0.4*cm, (0.039/cos(30))*cm, 0.*deg, 360.*deg,pLowNorm,pHighNorm);
   fLogicExitCol = new G4LogicalVolume(fSolidExitCol, fWorldMaterial, "ExitCol");
   fPhysiExitCol = new G4PVPlacement(transform,
 				fLogicExitCol, 
@@ -1599,6 +1640,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
        				fLogicExitDisk, 
        				false, 
     			    	0); 
+  fLogicExitCol->SetVisAttributes(fWireFrameVisAtt);
   }
   PrintCalorParameters();
 }
