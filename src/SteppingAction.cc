@@ -72,8 +72,8 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   //G4double fERes = fEOrig * fRandomGauss->fire(1.0, 0.01);
   // BGO
   //G4double fERes = fEOrig + fEOrig * fRandomGauss->fire(0.0, (76.3/2.35)/std::sqrt(fEOrig*1000));
-  // LaBr3 = BGO/3.34
-  G4double fERes = fEOrig + fEOrig * fRandomGauss->fire(0.0, (32.5)/std::sqrt(fEOrig*1000));
+  // LaBr3 = BGO/3.34 and fEOrig is expressed in units of GeV
+  G4double fERes = fEOrig + fEOrig * fRandomGauss->fire(0.0, (9.72)/std::sqrt(fEOrig*1000000));
   
 /*  if (fEOrig > 0.){
     G4cout << "fEOrig: " << fEOrig << G4endl;
