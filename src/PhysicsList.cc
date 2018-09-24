@@ -133,7 +133,7 @@ void PhysicsList::ConstructProcess()
 void PhysicsList::ConstructEM()
 {
   G4PhysicsListHelper* ph = G4PhysicsListHelper::GetPhysicsListHelper();
-  
+  auto theParticleIterator = GetParticleIterator();
   theParticleIterator->reset();
   while( (*theParticleIterator)() ){
     G4ParticleDefinition* particle = theParticleIterator->value();
@@ -210,7 +210,7 @@ void PhysicsList::ConstructEM()
 void PhysicsList::ConstructDecay()
 {
   G4PhysicsListHelper* ph = G4PhysicsListHelper::GetPhysicsListHelper();
-  
+  auto theParticleIterator = GetParticleIterator();
   // Add Decay Process
   G4Decay* theDecayProcess = new G4Decay();
   theParticleIterator->reset();
