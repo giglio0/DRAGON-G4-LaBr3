@@ -52,35 +52,6 @@ public:
   ~PrimaryGeneratorAction();
 
   virtual void GeneratePrimaries(G4Event*);
-  //virtual void GeneratePrimaries2(G4Event*);
-  //virtual void GeneratePrimaries3(G4Event*);
-  //virtual void GeneratePrimaries4(G4Event*);
-  //virtual void GeneratePrimaries5(G4Event*);
-  //virtual void GeneratePrimaries6(G4Event*);
-  //virtual void GeneratePrimaries7(G4Event*);
-  //virtual void GeneratePrimaries8(G4Event*);
-  //virtual void GeneratePrimaries9(G4Event*);
-  //virtual void GeneratePrimaries10(G4Event*);
-  //virtual void GeneratePrimaries11(G4Event*);
-  //virtual void GeneratePrimaries12(G4Event*);
-  //virtual void GeneratePrimaries13(G4Event*);
-  //virtual void GeneratePrimaries14(G4Event*);
-  //virtual void GeneratePrimaries15(G4Event*);
-  //virtual void GeneratePrimaries16(G4Event*);
-  //virtual void GeneratePrimaries17(G4Event*);
-  //virtual void GeneratePrimaries18(G4Event*);
-  //virtual void GeneratePrimaries19(G4Event*);
-  //virtual void GeneratePrimaries20(G4Event*);
-  //virtual void GeneratePrimaries21(G4Event*);
-  //virtual void GeneratePrimaries22(G4Event*);
-  //virtual void GeneratePrimaries23(G4Event*);
-  //virtual void GeneratePrimaries24(G4Event*);
-  //virtual void GeneratePrimaries25(G4Event*);
-  //virtual void GeneratePrimaries26(G4Event*);
-  //virtual void GeneratePrimaries27(G4Event*);
-  //virtual void GeneratePrimaries28(G4Event*);
-  //virtual void GeneratePrimaries29(G4Event*);
-  //virtual void GeneratePrimaries30(G4Event*);
   
 private:
   G4GeneralParticleSource* fParticleGun;  //pointer a to G4 class
