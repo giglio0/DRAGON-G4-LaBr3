@@ -65,7 +65,7 @@ void HistoManager::book()
  // Creating a tree container to handle histograms and ntuples.
  // This tree is associated to an output file.
  //
- G4String fileName = "Test.root";
+ G4String fileName = "LaBr3:Ce Array.root";
  rootFile = new TFile(fileName,"RECREATE");
  if(!rootFile) {
    G4cout << " HistoManager::book :" 
@@ -74,17 +74,19 @@ void HistoManager::book()
    return;
  }
 // 1-D Histos   
- histo[1] = new TH1D("Energy", "Cobalt-60 Spectrum for LaBr3", 1000, 0., 10*CLHEP::MeV);
+ histo[1] = new TH1D("Energy", "LaBr3:Ce Array Spectrum", 950, 0.5*CLHEP::MeV, 10*CLHEP::MeV);
  if (!histo[1]) G4cout << "\n can't create histo 1" << G4endl;
+
 histo[1]->GetXaxis()->SetTitle("Energy (MeV)");
 histo[1]->GetYaxis()->SetTitle("Entries Per Energy Channel");
 
- histo[2] = new TH1D("Energy Resolution", "Cobalt-60 Spectrum for LaBr3", 1000, 0., 10*CLHEP::MeV);
+ histo[2] = new TH1D("Energy Resolution", "LaBr3:Ce Array Spectrum with Energy Resolution", 950, 0.5*CLHEP::MeV, 10*CLHEP::MeV);
  if (!histo[2]) G4cout << "\n can't create histo 2" << G4endl;
+ //histo[2]->SetTitleSize(15.0);
 histo[2]->GetXaxis()->SetTitle("Energy (MeV)");
 histo[2]->GetYaxis()->SetTitle("Entries Per Energy Channel");
 
- histo[3] = new TH1D("Low Energy", "Cobalt-60 Spectrum for LaBr3", 50, 0., 0.5*CLHEP::eV);
+ histo[3] = new TH1D("Low Energy", "LaBr3:Ce Array Spectrum at Low Energies", 50, 0.*CLHEP::MeV, 0.5*CLHEP::MeV);
  if (!histo[1]) G4cout << "\n can't create histo 1" << G4endl;
 histo[3]->GetXaxis()->SetTitle("Energy (MeV)");
 histo[3]->GetYaxis()->SetTitle("Entries Per Energy Channel");
@@ -96,7 +98,7 @@ histo[3]->GetYaxis()->SetTitle("Entries Per Energy Channel");
  if (!histo[4]) G4cout << "\n can't create histo 4" << G4endl;
  histo[5] = new TH1D("5", "Range of Ions (mm)", 100, -50.0*CLHEP::cm, 50.0*CLHEP::cm);
  if (!histo[5]) G4cout << "\n can't create histo 5" << G4endl;
-// 2-D Histos
+// 2-D Histos									
  histo2[1] = new TH2D("1_2D", "YZ Position of Particle in Gas", 100, -5.0*CLHEP::cm, 				
                        5.0*CLHEP::cm, 100, -5.0*CLHEP::cm, 5.0*CLHEP::cm);
  if (!histo2[1]) G4cout << "\n can't create 2Dhisto 1" << G4endl;
@@ -202,5 +204,3 @@ void HistoManager::PrintStatistic()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-
