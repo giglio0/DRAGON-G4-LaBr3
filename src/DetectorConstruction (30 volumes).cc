@@ -84,8 +84,8 @@ fSolidPMT(0),fLogicPMT(0),fPhysiPMT(0)
   // Default Materials
   fWorldMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Air");
   fDetectorMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Air");
-  fCrystalMaterial = G4NistManager::Instance()->FindOrBuildMaterial("LaBr3Ce");
-  fCrystalMaterial1 = G4NistManager::Instance()->FindOrBuildMaterial("LaBr3Ce");
+  fCrystalMaterial = G4NistManager::Instance()->FindOrBuildMaterial("BGO");
+  fCrystalMaterial1 = G4NistManager::Instance()->FindOrBuildMaterial("BGO");
   fAlCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Aluminium");
   fFaceAlCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Aluminium");
   fPbCaseMaterial = G4NistManager::Instance()->FindOrBuildMaterial("Lead");
@@ -1181,7 +1181,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
   Tr = G4Transform3D(rotm180,P);
   assemblyDetector->AddPlacedVolume(fLogicDetector19,Tr);
   
-  //P.setX(-7.68*cm); P.setY(0.00*cm); P.setZ(17.849*cm);
+  P.setX(-7.68*cm); P.setY(0.00*cm); P.setZ(17.849*cm);
   //Tr = G4Transform3D(rotm180,P);
   //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
   //21
@@ -1225,7 +1225,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
   //Tr = G4Transform3D(rotm180,P);
   //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
   //10.059 cm back in Z for BGO detector positions, rotm
-  //30
+  ////30
   P.setX(-2.56*cm); P.setY(-8.87*cm); P.setZ(-17.849*cm);
   Tr = G4Transform3D(rotm,P);
   assemblyDetector->AddPlacedVolume(fLogicDetector30,Tr);
@@ -1241,7 +1241,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
   //P.setX(2.56*cm); P.setY(-5.91*cm); P.setZ(-17.849*cm);
   //Tr = G4Transform3D(rotm,P);
   //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  //22
+  ////22
   P.setX(2.56*cm); P.setY(0.00*cm); P.setZ(-17.849*cm);
   Tr = G4Transform3D(rotm,P);
   assemblyDetector->AddPlacedVolume(fLogicDetector22,Tr);
@@ -1297,7 +1297,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
   ////P.setX(-7.68*cm); P.setY(0.00*cm); P.setZ(-17.849*cm);
   //Tr = G4Transform3D(rotm,P);
   //assemblyDetector->AddPlacedVolume(fLogicDetector1,Tr);
-  // 14
+  //14
   P.setX(-7.68*cm); P.setY(5.91*cm); P.setZ(-17.849*cm);
   Tr = G4Transform3D(rotm,P);
   assemblyDetector->AddPlacedVolume(fLogicDetector14,Tr);
