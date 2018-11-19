@@ -1,0 +1,62 @@
+/testem/det/setDetectorGeometry 1
+/testem/det/update
+
+#
+# Internal Source 1.435811 MeV
+# Position 1 (5 cm away), 2 (10 cm away), 3 (15 cm away)
+/gps/source/intensity 0.848614812
+#/gps/source/add 2.990169764
+#/gps/source/add 11.54924926
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 0. 0. 2.965 cm
+/gps/pos/radius 2.54 cm
+/gps/pos/halfz 2.54 cm
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.435811 MeV
+
+#
+# Internal Source 0.788744 MeV
+#
+/gps/source/add 0.429419543
+#/gps/source/add 1.513097953
+#/gps/source/add 5.844198419
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 0. 0. 2.965 cm
+/gps/pos/radius 2.54 cm
+/gps/pos/halfz 2.54 cm
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.788744 MeV
+
+#
+# External Point Source 1
+# 
+/gps/source/add 1.0
+/gps/particle gamma
+/gps/pos/type Point
+/gps/pos/centre 0. 0. 10.975 cm
+#/gps/pos/centre 0. 0. 15.975 cm
+#/gps/pos/centre 0. 0. 25.975 cm
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.17 MeV
+
+#
+# External Point Source 2
+#
+/gps/source/add 1.0
+/gps/particle gamma
+/gps/pos/type Point
+/gps/pos/centre 0. 0. 10.975 cm
+#/gps/pos/centre 0. 0. 15.975 cm
+#/gps/pos/centre 0. 0. 25.975 cm
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.33 MeV
+
+/run/beamOn 300000

@@ -1,0 +1,19 @@
+/testem/det/setDetectorGeometry 1
+/testem/det/update
+# Position 1 (5 cm away), 2 (10 cm away), 3 (15 cm away)
+/gps/source/intensity 1.0
+/gps/particle gamma
+/gps/pos/type Point
+# BGO
+/gps/pos/centre 0. 0. 19.25 cm
+#/gps/pos/centre 0. 0. 24.25 cm
+#/gps/pos/centre 0. 0. 34.25 cm
+# LaBr3
+#/gps/pos/centre 0. 0. 10.975 cm
+#/gps/pos/centre 0. 0. 15.975 cm
+#/gps/pos/centre 0. 0. 25.975 cm
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 4.44 MeV
+
+/run/beamOn 300000
