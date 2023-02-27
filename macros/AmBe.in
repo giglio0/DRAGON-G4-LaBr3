@@ -16,6 +16,6 @@
 #/gps/pos/centre 0. 0. 25.975 cm
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.6617 MeV
+/gps/energy 4.44 MeV
 
 /run/beamOn 300000
