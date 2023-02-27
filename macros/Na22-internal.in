@@ -11,6 +11,7 @@
 /gps/pos/radius 2.54 cm
 /gps/pos/halfz 2.54 cm
 /gps/ang/type iso
+/random/setSeeds 0 0
 /gps/energy 1.473 MeV
 #
 # Internal Source 0.789 MeV
@@ -23,6 +24,7 @@
 /gps/pos/radius 2.54 cm
 /gps/pos/halfz 2.54 cm
 /gps/ang/type iso
+/random/setSeeds 0 0
 /gps/energy 0.789 MeV
 
 /run/beamOn 100000
