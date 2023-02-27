@@ -32,8 +32,6 @@
 # 10.975 cm = 5 cm away from the detector face
 # 15.975 cm = 10 cm away
 # 25.975 cm = 20 cm away
-# External Point Source 1
-# 
 /gps/source/add 1.0
 /gps/particle gamma
 /gps/pos/type Point
@@ -44,9 +42,6 @@
 /random/setSeeds 0 0
 /gps/energy 1.17 MeV
 
-#
-# External Point Source 2
-#
 /gps/source/add 1.0
 /gps/particle gamma
 /gps/pos/type Point
