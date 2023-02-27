@@ -1,0 +1,31 @@
+/testem/det/setDetectorGeometry 3
+#/testem/det/setDetectorGeometry 4
+/testem/det/update
+
+# Detector 1
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+
+/gps/pos/centre 0. 0. 2.965 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+#
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 0. 0. 2.965 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
