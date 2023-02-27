@@ -16,7 +16,7 @@
 #
 # Internal Source 0.789 MeV
 #
-/gps/source/add 0.355
+/gps/source/add 0.345
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
