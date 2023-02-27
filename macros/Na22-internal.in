@@ -39,6 +39,9 @@
 /random/setSeeds 0 0
 /gps/energy 0.511 MeV
 
+# 10.975 cm = 5 cm away from the detector face
+# 15.975 cm = 10 cm away
+# 25.975 cm = 20 cm away
 /gps/source/add 1.0
 /gps/particle gamma
 /gps/pos/type Point
