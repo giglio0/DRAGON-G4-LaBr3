@@ -10,6 +10,7 @@
 /gps/pos/centre 0. 0. 2.965 cm
 /gps/pos/radius 2.54 cm
 /gps/pos/halfz 2.54 cm
+/gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
 /gps/energy 1.473 MeV
@@ -23,6 +24,7 @@
 /gps/pos/centre 0. 0. 2.965 cm
 /gps/pos/radius 2.54 cm
 /gps/pos/halfz 2.54 cm
+/gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
 /gps/energy 0.789 MeV
