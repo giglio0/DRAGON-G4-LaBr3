@@ -1,12 +1,9 @@
 /testem/det/setDetectorGeometry 1
 /testem/det/update
-
 #
-# Internal Source 1.435811 MeV
-# Position 1 (5 cm away), 2 (10 cm away), 3 (15 cm away)
-/gps/source/intensity 0.848614812
-#/gps/source/add 2.990169764
-#/gps/source/add 11.54924926
+# Internal Source 1.436 MeV
+#
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -14,15 +11,11 @@
 /gps/pos/radius 2.54 cm
 /gps/pos/halfz 2.54 cm
 /gps/ang/type iso
-/random/setSeeds 0 0
-/gps/energy 1.435811 MeV
-
+/gps/energy 1.473 MeV
 #
-# Internal Source 0.788744 MeV
+# Internal Source 0.789 MeV
 #
-/gps/source/add 0.429419543
-#/gps/source/add 1.513097953
-#/gps/source/add 5.844198419
+/gps/source/add 0.355
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -30,10 +23,13 @@
 /gps/pos/radius 2.54 cm
 /gps/pos/halfz 2.54 cm
 /gps/ang/type iso
-/random/setSeeds 0 0
-/gps/energy 0.788744 MeV
+/gps/energy 0.789 MeV
 
-#
+/run/beamOn 100000
+
+# 10.975 cm = 5 cm away from the detector face
+# 15.975 cm = 10 cm away
+# 25.975 cm = 20 cm away
 # External Point Source 1
 # 
 /gps/source/add 1.0
