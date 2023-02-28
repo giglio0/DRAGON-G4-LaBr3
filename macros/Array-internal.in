@@ -3,7 +3,7 @@
 /testem/det/update
 
 # Z switched with X since Z is the beam axis. 
-# The detectors are placed along the X-axis. 
+# The X-axis serves as the detector axis. 
 # Left-Hand Side of the Array
 # Detector 1
 # Internal Source 1.436 MeV
