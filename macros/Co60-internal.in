@@ -1,7 +1,7 @@
 /testem/det/setDetectorGeometry 1
 /testem/det/update
 #
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/intensity 0.655
 /gps/particle gamma
@@ -15,7 +15,7 @@
 /random/setSeeds 0 0
 /gps/energy 1.4358 MeV
 #
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
