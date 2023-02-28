@@ -598,9 +598,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4Tubs* 		        fSolidGap19;
      G4Tubs*                	fSolidGap20;
      G4Tubs* 		        fSolidGap21;
-     G4Tubs*               	 fSolidGap22;
+     G4Tubs*               	fSolidGap22;
      G4Tubs* 		        fSolidGap23;
-     G4Tubs*               	 fSolidGap24;
+     G4Tubs*               	fSolidGap24;
      G4Tubs* 		        fSolidGap25;
      G4Tubs*                	fSolidGap26;
      G4Tubs* 		        fSolidGap27;
