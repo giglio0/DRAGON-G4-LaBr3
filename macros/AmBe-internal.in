@@ -13,7 +13,7 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 #
 # Internal Source 0.789 MeV
 #
@@ -27,7 +27,7 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 /run/beamOn 100000
 
