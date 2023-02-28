@@ -59,7 +59,7 @@ void HistoManager::book()
 // Creating a tree container to handle histograms.
 // This tree is associated with an output file.
 //
- G4String fileName = "LaBr3CeResTestG4.root";
+ G4String fileName = "LaBr3Ce.root";
  rootFile = new TFile(fileName,"RECREATE");
  if(!rootFile) {
    G4cout << " HistoManager::book :" 
