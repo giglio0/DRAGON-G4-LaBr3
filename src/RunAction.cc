@@ -469,7 +469,7 @@ void RunAction::EndOfRunAction(const G4Run* aRun)
   //
   G4cout
      << "\n--------------------End of Run------------------------------\n"
-     << "\n mean Energy in LaBr3      : " << G4BestUnit(fSumELaBr3,"Energy")
+     << "\n mean Energy in LaBr3:Ce     : " << G4BestUnit(fSumELaBr3,"Energy")
      << " +- "                          << G4BestUnit(rmsELaBr3,"Energy")
      << G4endl;
           
