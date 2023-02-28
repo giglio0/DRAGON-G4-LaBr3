@@ -1,0 +1,886 @@
+/testem/det/setDetectorGeometry 3
+#/testem/det/setDetectorGeometry 4
+/testem/det/update
+
+# Left-Hand Side of the Array
+# Detector 1
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 8.259 -4.96 -14.78 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 1
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 8.259 -4.96 -14.78 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 2
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 -10.08 -11.83 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 2
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 -10.08 -11.83 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 3
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.76 4.96 -11.83 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 3
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.76 4.96 -11.83 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 4
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 10.08 -8.87 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 4
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 10.08 -8.87 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 5
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 7.68 -2.96 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 5
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 7.68 -2.96 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 6
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 7.68 2.96 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 6
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 7.68 2.96 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 7
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 10.08 8.87 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 7
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 10.08 8.87 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 8
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 -10.08 11.83 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 8
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 -10.08 11.83 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 9
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 4.96 11.83 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 9
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 4.96 11.83 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 10
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 -4.96 14.78 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 10
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 1.059 -4.96 14.78 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 11
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 -2.56 -8.87 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 11
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 -2.56 -8.87 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 13
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 -7.68 -5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 13
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 -7.68 -5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 15
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 2.56 -5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 15
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 2.56 -5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 17
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 -2.56 -2.96 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 17
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 -2.56 -2.96 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 19
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 -7.68 0.00 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 19
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 -7.68 0.00 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 21
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 2.56 0.00 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 21
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 2.56 0.00 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 23
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 -2.56 2.96 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 23
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 -2.56 2.96 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 25
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 -7.68 5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 25
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 -7.68 5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 27
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 2.56 5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 27
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 2.56 5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 29
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 -2.56 8.87 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 29
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre -7.79 -2.56 8.87 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Right-Hand Side of the Array
+# Detector 12
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 -2.56 -8.87 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 12
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 -2.56 -8.87 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 14
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 -7.68 -5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 14
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 -7.68 -5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 16
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 2.56 -5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 16
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 2.56 -5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 18
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 -2.56 -2.96 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 18
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 -2.56 -2.96 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 20
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 -7.68 0.00 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 20
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 -7.68 0.00 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 22
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 2.56 0.00 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 22
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 2.56 0.00 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 24
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 -2.56 2.96 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 24
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 -2.56 2.96 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 26
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 -7.68 5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 26
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 -7.68 5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 28
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 2.56 5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 28
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 2.56 5.91 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+# Detector 30
+# Internal Source 1.436 MeV
+#
+/gps/source/intensity 0.655
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 -2.56 8.87 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 1.473 MeV
+# Detector 30
+# Internal Source 0.789 MeV
+#
+/gps/source/add 0.345
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 7.79 -2.56 8.87 cm
+/gps/pos/radius 2.79 cm
+/gps/pos/halfx 3.81 cm
+/gps/pos/confine Volume
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 0.789 MeV
+
+/gps/source/add 1.0
+/gps/particle gamma
+/gps/pos/type Point
+/gps/pos/centre 0. 0. 0. cm
+/testem/det/update
+/gps/ang/type iso
+/random/setSeeds 0 0
+/gps/energy 5 MeV
+
+/run/beamOn 100000
