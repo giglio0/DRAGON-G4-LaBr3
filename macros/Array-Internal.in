@@ -35,7 +35,7 @@
 # Detector 2
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -64,7 +64,7 @@
 # Detector 3
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -93,7 +93,7 @@
 # Detector 4
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -122,7 +122,7 @@
 # Detector 5
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -151,7 +151,7 @@
 # Detector 6
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -180,7 +180,7 @@
 # Detector 7
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -209,7 +209,7 @@
 # Detector 8
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -238,7 +238,7 @@
 # Detector 9
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -267,7 +267,7 @@
 # Detector 10
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -296,7 +296,7 @@
 # Detector 11
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -325,7 +325,7 @@
 # Detector 13
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -354,7 +354,7 @@
 # Detector 15
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -383,7 +383,7 @@
 # Detector 17
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -412,7 +412,7 @@
 # Detector 19
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -441,7 +441,7 @@
 # Detector 21
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -470,7 +470,7 @@
 # Detector 23
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -499,7 +499,7 @@
 # Detector 25
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -528,7 +528,7 @@
 # Detector 27
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -557,7 +557,7 @@
 # Detector 29
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -587,7 +587,7 @@
 # Detector 12
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -616,7 +616,7 @@
 # Detector 14
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -645,7 +645,7 @@
 # Detector 16
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -674,7 +674,7 @@
 # Detector 18
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -703,7 +703,7 @@
 # Detector 20
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -732,7 +732,7 @@
 # Detector 22
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -761,7 +761,7 @@
 # Detector 24
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -790,7 +790,7 @@
 # Detector 26
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -819,7 +819,7 @@
 # Detector 28
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
@@ -848,7 +848,7 @@
 # Detector 30
 # Internal Source 1.436 MeV
 #
-/gps/source/intensity 0.655
+/gps/source/add 0.655
 /gps/particle gamma
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
