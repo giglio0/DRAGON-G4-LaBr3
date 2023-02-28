@@ -4,7 +4,7 @@
 
 # Left-Hand Side of the Array
 # Detector 1
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/intensity 0.655
 /gps/particle gamma
@@ -16,9 +16,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 1
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -30,10 +30,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 2
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -45,9 +45,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 2
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -59,10 +59,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 3
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -74,9 +74,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 3
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -88,10 +88,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 4
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -103,9 +103,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 4
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -117,10 +117,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 5
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -132,9 +132,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 5
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -146,10 +146,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 6
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -161,9 +161,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 6
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -175,10 +175,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 7
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -190,9 +190,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 7
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -204,10 +204,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 8
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -219,9 +219,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 8
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -233,10 +233,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 9
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -248,9 +248,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 9
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -262,10 +262,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 10
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -277,9 +277,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 10
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -291,10 +291,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 11
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -306,9 +306,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 11
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -320,10 +320,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 13
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -335,9 +335,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 13
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -349,10 +349,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 15
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -364,9 +364,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 15
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -378,10 +378,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 17
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -393,9 +393,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 17
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -407,10 +407,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 19
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -422,9 +422,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 19
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -436,10 +436,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 21
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -451,9 +451,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 21
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -465,10 +465,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 23
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -480,9 +480,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 23
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -494,10 +494,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 25
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -509,9 +509,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 25
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -523,10 +523,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 27
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -538,9 +538,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 27
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -552,10 +552,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 29
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -567,9 +567,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 29
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -581,11 +581,11 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Right-Hand Side of the Array
 # Detector 12
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -597,9 +597,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 12
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -611,10 +611,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 14
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -626,9 +626,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 14
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -640,10 +640,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 16
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -655,9 +655,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 16
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -669,10 +669,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 18
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -684,9 +684,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 18
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -698,10 +698,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 20
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -713,9 +713,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 20
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -727,10 +727,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 22
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -742,9 +742,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 22
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -756,10 +756,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 24
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -771,9 +771,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 24
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -785,10 +785,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 26
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -800,9 +800,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 26
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -814,10 +814,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 28
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -829,9 +829,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 28
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -843,10 +843,10 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 # Detector 30
-# Internal Source 1.436 MeV
+# Internal Source 1.4358 MeV
 #
 /gps/source/add 0.655
 /gps/particle gamma
@@ -858,9 +858,9 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 1.473 MeV
+/gps/energy 1.4358 MeV
 # Detector 30
-# Internal Source 0.789 MeV
+# Internal Source 0.7887 MeV
 #
 /gps/source/add 0.345
 /gps/particle gamma
@@ -872,7 +872,7 @@
 /gps/pos/confine Volume
 /gps/ang/type iso
 /random/setSeeds 0 0
-/gps/energy 0.789 MeV
+/gps/energy 0.7887 MeV
 
 /gps/source/add 1.0
 /gps/particle gamma
