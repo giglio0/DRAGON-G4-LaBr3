@@ -300,8 +300,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4double               Temperature;
      G4double               Pressure;
      
-     // LaBr3 Components
-     // LaBr3 Detector Mother Holder
+     // LaBr3:Ce Components
+     // LaBr3:Ce Detector Mother Holder
      G4Tubs* 		        fSolidDetector;
      G4Tubs* 		        fSolidDetector1;
      G4Tubs*			fSolidDetector2;
