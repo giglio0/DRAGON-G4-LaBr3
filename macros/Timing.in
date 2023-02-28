@@ -1,0 +1,14 @@
+/testem/det/setDetectorGeometry 5
+/testem/det/update
+
+/gps/source/intensity 1.0
+/gps/particle gamma
+/gps/pos/type Point
+/gps/pos/centre 0. 0. 0. cm
+/testem/det/update
+/gps/ang/type iso
+/random/setSeeds 0 0
+# Williams' thesis has found the gamma ray yield to form a peak around 9 MeV. 
+/gps/energy 9 MeV
+
+/run/beamOn 100000
