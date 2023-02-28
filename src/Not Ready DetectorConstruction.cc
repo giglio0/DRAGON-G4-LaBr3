@@ -43,8 +43,8 @@ fSolidFaceGap(0),fLogicFaceGap(0),fPhysiFaceGap(0),
 fSolidAlCase(0),fLogicAlCase(0),fPhysiAlCase(0),
 fSolidFaceAlCase(0),fLogicFaceAlCase(0),fPhysiFaceAlCase(0),
 fSolidPbCollar(0),fLogicPbCollar(0),fPhysiPbCollar(0),
-fSolidPMT(0),fLogicPMT(0),fPhysiPMT(0)
-//fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
+fSolidPMT(0),fLogicPMT(0),fPhysiPMT(0),
+fSolidPMTWin(0),fLogicPMTWin(0),fPhysiPMTWin(0)
 {
   //Setting the default for the world for the Sim
   fWorldSizeX = 100*cm;
@@ -707,18 +707,6 @@ if (fDetectorGeometry == 1 || fDetectorGeometry == 3){
         			//fLogicPMTWin, 
        				//"PMTWin", 
        				//fLogicDetector, 
-       				//false, 
-    			    	//0);
-  //fLogicPMTWin->SetVisAttributes(fGreenVisAtt);
-  
-  // Extra fPMTWin here which causes overlaps.
-  //fSolidPMTWin = new G4Tubs("PMTWin", 0., 0.5*fDetectorDiameter, 0.5*fPMTWinThickness, 0.*deg, 360.*deg);
-  //fLogicPMTWin = new G4LogicalVolume(fSolidPMTWin, fPMTWinMaterial, "PMTWin");
-  //fPhysiPMTWin = new G4PVPlacement(0, 
-        			//G4ThreeVector(0.,0.,fZposPMTWin), 
-        			//fLogicPMTWin, 
-       				//"PMTWin", 
-       				//fLogicPMT, 
        				//false, 
     			    	//0);
   //fLogicPMTWin->SetVisAttributes(fGreenVisAtt);
@@ -2538,7 +2526,6 @@ if (fDetectorGeometry == 1 || fDetectorGeometry == 3){
        				false, 
     			    	0);
     			    	
-    			    	   			    	
   fSolidPMT4 = new G4Tubs("PMT", 0., 0.5*fPMTDiameter, 0.5*fPMTLength, 0.*deg, 360.*deg);
   fLogicPMT4 = new G4LogicalVolume(fSolidPMT4, fPMTMaterial,"PMT");
   fPhysiPMT4 = new G4PVPlacement(0, 
@@ -2549,7 +2536,6 @@ if (fDetectorGeometry == 1 || fDetectorGeometry == 3){
        				false, 
     			    	0);
     			    	
-    			    	 			    	   			    	
   fSolidPMT5 = new G4Tubs("PMT", 0., 0.5*fPMTDiameter, 0.5*fPMTLength, 0.*deg, 360.*deg);
   fLogicPMT5 = new G4LogicalVolume(fSolidPMT5, fPMTMaterial,"PMT");
   fPhysiPMT5 = new G4PVPlacement(0, 
@@ -2560,7 +2546,6 @@ if (fDetectorGeometry == 1 || fDetectorGeometry == 3){
        				false, 
     			    	0);
     			    	
-    			    	 			    	   			    	
   fSolidPMT6 = new G4Tubs("PMT", 0., 0.5*fPMTDiameter, 0.5*fPMTLength, 0.*deg, 360.*deg);
   fLogicPMT6 = new G4LogicalVolume(fSolidPMT6, fPMTMaterial,"PMT");
   fPhysiPMT6 = new G4PVPlacement(0, 
@@ -2571,7 +2556,6 @@ if (fDetectorGeometry == 1 || fDetectorGeometry == 3){
        				false, 
     			    	0);
     			    	
-    			    	 			    	   			    	
   fSolidPMT7 = new G4Tubs("PMT", 0., 0.5*fPMTDiameter, 0.5*fPMTLength, 0.*deg, 360.*deg);
   fLogicPMT7 = new G4LogicalVolume(fSolidPMT7, fPMTMaterial,"PMT");
   fPhysiPMT7 = new G4PVPlacement(0, 
@@ -6585,6 +6569,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
   }
   if (fDetectorGeometry == 5){
   // Timing method arrangement for 5 GRIFFIN LaBr3:Ce detectors.
+	  
   fSolidDetector1 = new G4Tubs("GRIFFIN LaBr3:Ce Detector 0", 0., 0.5*fTotalDetectorDiameter1, 0.5*fTotalDetectorLength1, 0.*deg, 360.*deg);
   fSolidDetector2 = new G4Tubs("GRIFFIN LaBr3:Ce Detector 1", 0., 0.5*fTotalDetectorDiameter1, 0.5*fTotalDetectorLength1, 0.*deg, 360.*deg);
   fSolidDetector3 = new G4Tubs("GRIFFIN LaBr3:Ce Detector 2", 0., 0.5*fTotalDetectorDiameter1, 0.5*fTotalDetectorLength1, 0.*deg, 360.*deg);
