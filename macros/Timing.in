@@ -5,7 +5,6 @@
 /gps/particle gamma
 /gps/pos/type Point
 /gps/pos/centre 0. 0. 0. cm
-/testem/det/update
 /gps/ang/type iso
 /random/setSeeds 0 0
 # Williams' thesis has found the gamma ray yield to form a peak around 9 MeV. 
