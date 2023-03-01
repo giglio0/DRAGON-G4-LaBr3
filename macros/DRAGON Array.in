@@ -6,7 +6,6 @@
 /gps/particle gamma
 /gps/pos/type Point
 /gps/pos/centre 0. 0. 0. cm
-/testem/det/update
 /gps/ang/type iso
 /random/setSeeds 0 0
 /gps/energy 5 MeV
