@@ -1,0 +1,105 @@
+The code is almost ready.
+Don't use it yet.
+
+The code is divided into 3 folders; src, include, and macros.
+
+LaBr3_v3.cc
+
+src
+
+DetectorConstruction.cc
+DetectorMessenger.cc
+EventAction.cc
+HistoManager.cc
+PhysicsList.cc
+PrimaryGeneratorAction.cc
+RunAction.cc
+SteppingAction.cc
+TrackingAction.cc
+
+DetectorConstruction (Algorithm).cc
+DetectorConstruction (Thesis).cc
+DetectorMessenger (Thesis).cc
+SteppingAction (Thesis).cc
+
+include
+
+DetectorConstruction.hh
+DetectorMessenger.hh
+EventAction.hh
+HistoManager.hh
+PhysicsList.hh
+PrimaryGeneratorAction.hh
+RunAction.hh
+SteppingAction.hh
+TrackingAction.hh
+
+macros
+
+AmBe-internal.in
+AmBe.in
+CmC-internal.in
+CmC.in
+Co60-internal.in
+Co60.in
+Cs137-internal.in
+Cs137.in
+Na22-internal.in
+Na22.in
+DRAGON Array-internal.in
+DRAGON Array.in
+Timing.in
+
+All of the files listed above are needed for
+the simulations. LaBr3_v3.cc is provided in case it's needed. 
+There are 5 modes:
+1 - Single Cylindrical GRIFFIN LaBr3:Ce Detector
+2 - Single Hexagonal BGO Detector
+3 - Cylindrical DRAGON Array
+4 - Hexagonal DRAGON Array
+5 - Timing Method Array
+The simulation uses LaBr3 doped with a 5% mole fraction of Ce.
+5 GRIFFIN detectors follow the timing method arrangement in mode 5.
+
+The macros are used to simulate sources to generate spectra. 
+They show how the simulations are run. The internal radiation
+of 138La can be simulated but it's not required since the experimental
+spectra can have this internal radiation removed. 
+
+The files labelled "(Thesis)" are the files that exactly produce
+the results in the thesis. The other files have small improvements
+in the code, which affect the way the detector efficiency results are randomly produced.
+The most significant improvement is the energy resolution function in SteppingAction.cc, which
+is able to use all of the events in a spectrum to form a peak. However, it can't
+exactly model the energy resolution as given in the code. 
+
+The placement of neighbouring detectors can also affect the detector efficiency results.
+For instance, a source placed 5 cm away from the same detector yields a spectrum
+with more gamma ray counts for mode 5, where this detector is in the middle of a group
+of 5 detectors, compared to mode 1 where this detector is alone. 
+
+DetectorConstruction (Algorithm).cc is able to simulate the DRAGON array
+for any cylindrical or hexagonal size where the air gap between the detectors
+can also be adjusted. This algorithm is also applied on the timing method array. 
+The photomultiplier tube diameter can be adjusted to automatically
+scale the other array detector dimensions. For the GRIFFIN detector,
+the aluminium case diameter is adjusted to scale its other dimensions. 
+DetectorMessenger.cc allows the air gap to be interactively adjusted
+in LaBr3_v3. However, adjusting the photomultiplier tube diameter or
+the aluminium case diameter in LaBr3_v3 changes that dimension alone. 
+The code needs to be changed and recompiled to completely
+scale the detector size. The .hh files are common to all of the different files. 
+
+You can use the code for your research, but check with your supervisor
+or with a Geant4 expert before publishing anything. The code may
+need to be modified for your purposes. Please cite me to provide credit. 
+The citation in the IEEE format is:
+
+W. Huang, "Improving the Energy and Time Resolution of the DRAGON Array," M.Sc. Thesis, University of Northern
+British Columbia, Prince George, BC, 2022. 
+
+There will be no further changes to the code on my end. Any other updates
+are minor to improve the existing content. 
+
+Thank you for your reading. 
+
