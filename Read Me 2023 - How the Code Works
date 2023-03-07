@@ -81,6 +81,8 @@ of 5 detectors, compared to mode 1 where this detector is alone.
 DetectorConstruction (Algorithm).cc is able to simulate the DRAGON array
 for any cylindrical or hexagonal size where the air gap between the detectors
 can also be adjusted. This algorithm is also applied on the timing method array. 
+This algorithm's detector positions are slightly different from the actual
+DRAGON array detector positions and the actual timing method array detector positions.
 The photomultiplier tube diameter can be adjusted to automatically
 scale the other array detector dimensions. For the GRIFFIN detector,
 the aluminium case diameter is adjusted to scale its other dimensions. 
