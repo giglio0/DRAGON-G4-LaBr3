@@ -7,8 +7,6 @@ LaBr3_v3.cc
 
 src
 
-DetectorConstruction.cc
-DetectorMessenger.cc
 EventAction.cc
 HistoManager.cc
 PhysicsList.cc
@@ -18,7 +16,9 @@ SteppingAction.cc
 TrackingAction.cc
 
 DetectorConstruction (Algorithm).cc
+DetectorConstruction (Numbered Positions).cc
 DetectorConstruction (Thesis).cc
+DetectorMessenger (Algorithm).cc
 DetectorMessenger (Thesis).cc
 SteppingAction (Thesis).cc
 
@@ -48,6 +48,7 @@ Na22-internal.in
 Na22.in
 DRAGON Array-internal.in
 DRAGON Array.in
+Timing-internal.in
 Timing.in
 
 All of the files listed above are needed for
@@ -69,6 +70,7 @@ spectra can have this internal radiation removed.
 The files labelled "(Thesis)" are the files that exactly produce
 the results in the thesis. The other files have small improvements
 in the code, which affect the way the detector efficiency results are randomly produced.
+DetectorConstruction (Numbered Positions).cc is the improved version of DetectorConstruction (Thesis).cc. 
 The most significant improvement is the energy resolution function in SteppingAction.cc, which
 is able to use all of the events in a spectrum to form a peak. However, it can't
 exactly model the energy resolution as given in the code. 
@@ -83,14 +85,19 @@ for any cylindrical or hexagonal size where the air gap between the detectors
 can also be adjusted. This algorithm is also applied on the timing method array. 
 This algorithm's detector positions are slightly different from the actual
 DRAGON array detector positions and the actual timing method array detector positions.
+The numbered positions are included as comments in this file. 
 The photomultiplier tube diameter can be adjusted to automatically
 scale the other array detector dimensions. For the GRIFFIN detector,
 the aluminium case diameter is adjusted to scale its other dimensions. 
-DetectorMessenger.cc allows the air gap to be interactively adjusted
-in LaBr3_v3. However, adjusting the photomultiplier tube diameter or
+DetectorMessenger (Algorithm).cc allows the air gap to be interactively adjusted
+in LaBr3_v3. 
+
+However, adjusting the photomultiplier tube diameter or
 the aluminium case diameter in LaBr3_v3 changes that dimension alone. 
 The code needs to be changed and recompiled to completely
 scale the detector size. The .hh files are common to all of the different files. 
+The macro files need to be manually adjusted if the code is changed for
+the internal radiation sources to match the size and shape of the scintillator crystals. 
 
 You can use the code for your research, but check with your supervisor
 or with a Geant4 expert before publishing anything. The code may
