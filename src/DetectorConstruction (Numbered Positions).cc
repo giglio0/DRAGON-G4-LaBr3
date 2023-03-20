@@ -6734,10 +6734,10 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
     			    	4);
     			    	
   fLogicCrystal1->SetVisAttributes(fMagnetaVisAtt);
-  fLogicCrystal1->SetVisAttributes(fMagnetaVisAtt);
   fLogicCrystal2->SetVisAttributes(fMagnetaVisAtt);
   fLogicCrystal3->SetVisAttributes(fMagnetaVisAtt);
   fLogicCrystal4->SetVisAttributes(fMagnetaVisAtt);
+  fLogicCrystal5->SetVisAttributes(fMagnetaVisAtt);
   
   fSolidFaceGap1 = new G4Tubs("FaceGap", 0., 0.5*fDetectorDiameter1, 0.5*fGapFaceThickness1, 0.*deg, 360.*deg);			    	
   fLogicFaceGap1 = new G4LogicalVolume(fSolidFaceGap1, fFaceGapMaterial, "FaceGap");
