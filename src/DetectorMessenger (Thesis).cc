@@ -76,7 +76,7 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction * Det)
   fAlCaseThicknessCmd->AvailableForStates(G4State_PreInit,G4State_Idle); 
 
   fPMTDiameterCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setPMTDiameter",this);
-  fPMTDiameterCmd->SetGuidance("Set the diamter of the PMT");
+  fPMTDiameterCmd->SetGuidance("Set the diameter of the PMT");
   fPMTDiameterCmd->SetParameterName("PMTDiameter",false);
   fPMTDiameterCmd->SetRange("PMTDiameter >0.");
   fPMTDiameterCmd->SetUnitCategory("Length");
