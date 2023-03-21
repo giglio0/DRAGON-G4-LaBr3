@@ -4,6 +4,7 @@ LaBr3_v3.cc
 
 src
 
+DetectorMessenger.cc
 EventAction.cc
 HistoManager.cc
 PhysicsList.cc
@@ -15,8 +16,6 @@ TrackingAction.cc
 DetectorConstruction (Algorithm).cc
 DetectorConstruction (Numbered Positions).cc
 DetectorConstruction (Thesis).cc
-DetectorMessenger (Algorithm).cc
-DetectorMessenger (Thesis).cc
 SteppingAction (Thesis).cc
 
 include
