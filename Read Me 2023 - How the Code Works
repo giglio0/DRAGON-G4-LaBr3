@@ -98,6 +98,9 @@ scale the detector size. The .hh files are common to all of the different files.
 The macro files need to be manually adjusted if the code is changed for
 the internal radiation sources to match the size and shape of the scintillator crystals. 
 
+The labels in the brackets such as (Algorithm) need to be removed so the files can be used to compile the code.
+For example, it would be simply DetectorConstruction.cc, DetectorMessenger.cc, etc. 
+
 You can use the code for your research, but check with your supervisor
 or with a Geant4 expert before publishing anything. The code may
 need to be modified for your purposes. Please cite me to provide credit. 
