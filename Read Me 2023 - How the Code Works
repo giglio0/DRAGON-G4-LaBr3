@@ -4,6 +4,8 @@ LaBr3_v3.cc
 
 src
 
+These files are compatiable with DetectorConstruction (Algorithm).cc.
+
 DetectorMessenger.cc
 EventAction.cc
 HistoManager.cc
