@@ -16,6 +16,7 @@ TrackingAction.cc
 DetectorConstruction (Algorithm).cc
 DetectorConstruction (Numbered Positions).cc
 DetectorConstruction (Thesis).cc
+DetectorMessenger (Thesis).cc
 SteppingAction (Thesis).cc
 
 include
@@ -98,6 +99,8 @@ The macro files need to be manually adjusted if the code is changed for
 the internal radiation sources to match the size and shape of the scintillator crystals. 
 
 The labels in the brackets such as (Algorithm) need to be removed so the files can be used to compile the code.
+DetectorConstruction (Numbered Positions).cc is compatible with DetectorMessenger (Thesis).cc and
+either SteppingAction.cc or SteppingAction (Thesis).cc
 In the Geant4 virtual machine, the files would be simply named DetectorConstruction.cc, DetectorMessenger.cc, etc. 
 
 You can use the code for your research, but check with your supervisor
