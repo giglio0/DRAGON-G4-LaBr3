@@ -99,7 +99,7 @@ The macro files need to be manually adjusted if the code is changed for
 the internal radiation sources to match the size and shape of the scintillator crystals. 
 
 The labels in the brackets such as (Algorithm) need to be removed so the files can be used to compile the code.
-For example, it would be simply DetectorConstruction.cc, DetectorMessenger.cc, etc. 
+In the Geant4 virtual machine, the files would be simply named DetectorConstruction.cc, DetectorMessenger.cc, etc. 
 
 You can use the code for your research, but check with your supervisor
 or with a Geant4 expert before publishing anything. The code may
