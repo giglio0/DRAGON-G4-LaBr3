@@ -16,7 +16,7 @@ TrackingAction.cc
 DetectorConstruction (Algorithm).cc
 DetectorConstruction (Numbered Positions).cc
 DetectorConstruction (Thesis).cc
-DetectorMessenger (Algorithm).cc
+DetectorMessenger (Thesis).cc
 SteppingAction (Thesis).cc
 
 include
