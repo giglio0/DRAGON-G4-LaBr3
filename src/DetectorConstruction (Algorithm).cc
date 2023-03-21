@@ -7368,7 +7368,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
     			    	0);   
   fLogicEntHole->SetVisAttributes(fWireFrameVisAtt);	
   
-  // Entrance Collimator Thin Metal Disk without hole
+  // Entrance Collimator Thin Metal Disk Without Hole
   rotm  = G4RotationMatrix(0,0,0);     
   position = G4ThreeVector(0.,0.,0.1195*cm);
   transform = G4Transform3D(rotm,position); 
