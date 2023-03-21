@@ -7238,7 +7238,7 @@ if (fDetectorGeometry == 2 || fDetectorGeometry == 4){
     			    	0);   
   fLogicExitHole->SetVisAttributes(fWireFrameVisAtt); 	
   
-  // Exit Collimator Thin Metal Disk without hole
+  // Exit Collimator Thin Metal Disk Without Hole
   rotm  = G4RotationMatrix(0,0,0);     
   //rotm.rotateY(60*deg);
   position = G4ThreeVector(0.,0.,0.1195*cm);
