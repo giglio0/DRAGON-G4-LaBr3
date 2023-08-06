@@ -65,6 +65,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   time_t seed = time( NULL );
   fRandomEngine = new CLHEP::HepJamesRandom( static_cast< long >( seed ) );
   fRandomGauss = new CLHEP::RandGaussQ( fRandomEngine );
+  
   // Resolution function taken from Saint Gobain document "BrilLanCeTM Scintillators Performance Summary"
   // Energy resolution at room temperature: BGO - 10.0%, LaBr3:Ce - 3.2%
   // So the LaBr3:Ce detector energy resolution is the BGO energy resolution divided by 10.3/3.2 = 3.125
