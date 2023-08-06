@@ -69,9 +69,11 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   fRandomEngine = new CLHEP::HepJamesRandom( static_cast< long >( seed ) );
   fRandomGauss = new CLHEP::RandGaussQ( fRandomEngine );
   
+  // Original resolution function taken from Saint Gobain document "BrilLanCeTM Scintillators Performance Summary"
   // Energy resolution at room temperature for 0.6617 MeV: BGO - 10.0%, LaBr3:Ce - 3.2%
   // G4RandGauss takes the standard deviation directly, although it might not exactly provide it as written. 
   // The literature values for the FWHM are converted to the standard deviation where FWHM = sqrt(8*log(2))*stdev. 
+  // Gnuplot functional fit for the LaBr3:Ce Detector (3.917% Error within the data range): 2.75475/std::sqrt(fEOrig*1000)
   
   if (volume == fDetector->GetScint()){
     G4double fEOrig = aStep->GetTotalEnergyDeposit();
